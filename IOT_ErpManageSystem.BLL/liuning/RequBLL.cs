@@ -140,7 +140,7 @@ namespace IOT_ErpManageSystem.BLL.liuning
         }
 
         //查询商品表ID
-        public List<GoodsInfo> GetGoodsId()
+        public List<Models.GoodsInfo> GetGoodsId()
         {
             return _IRequDal.GetGoodsId();
         }

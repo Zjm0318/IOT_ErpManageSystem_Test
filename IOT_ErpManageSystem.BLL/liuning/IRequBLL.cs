@@ -31,7 +31,7 @@ namespace IOT_ErpManageSystem.BLL.liuning
         List<RequGoods> GetRequGoods(string Id);
 
         //查询商品ID
-        List<GoodsInfo> GetGoodsId();
+        List<Models.GoodsInfo> GetGoodsId();
 
         //添加请购单,采购单与商品的中间表数据
         int AddRequGoods(string QgId, string GId);

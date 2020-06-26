@@ -209,9 +209,9 @@ namespace IOT_ErpManageSystem.API.Controllers
 
         //查询商品表ID
         [HttpGet]
-        public List<GoodsInfo> GetChaGoodsID()
+        public List<Models.GoodsInfo> GetChaGoodsID()
         {
-            List<GoodsInfo> list = _IRequBLL.GetGoodsId();
+            List<Models.GoodsInfo> list = _IRequBLL.GetGoodsId();
             return list;
         }
         //添加请购单,采购单与商品的中间表数据
