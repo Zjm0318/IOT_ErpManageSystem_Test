@@ -9,6 +9,6 @@ namespace IOT_ErpManageSystem.Models
 	 {
 		 public Guid  ID { get; set; }
 		 public Guid  TID { get; set; }
-		 public Guid  CgID { get; set; }
+		 public Guid  SID { get; set; }
 	 }
 }

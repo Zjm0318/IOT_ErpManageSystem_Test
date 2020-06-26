@@ -1,0 +1,185 @@
+﻿
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<input type="hidden" value="@ViewBag.id" id="id" />
+<input type="hidden" id="lid" />
+<h2>发起信息</h2>
+<table class="table">
+    <tr>
+        <td><span style="color:red">*</span>引进负责人</td>
+        <td>
+            <input type="text" id="Name" />
+        </td>
+    </tr>
+    <tr>
+        <td>供应商编号</td>
+        <td>
+            <input type="text" id="BianHao" />
+        </td>
+    </tr>
+    <tr>
+        <td><span style="color:red">*</span>供应商来源</td>
+        <td>
+            <input type="text" id="LaiYuan" />
+        </td>
+    </tr>
+</table>
+<h2>公司信息</h2>
+<table class="table">
+    <tr>
+        <td><span style="color:red">*</span>单位名称</td>
+        <td>
+            <input type="text" id="DanWei" />
+        </td>
+        <td>供方简称</td>
+        <td>
+            <input type="text" id="JianCheng" />
+        </td>
+    </tr>
+    <tr>
+        <td><span style="color:red">*</span>品牌</td>
+        <td>
+            <input type="text" id="PinPai" />
+        </td>
+        <td><span style="color:red">*</span>经营范围</td>
+        <td>
+            <input type="text" id="FanWei" />
+        </td>
+    </tr>
+</table>
+<h2>联系信息</h2>
+<table class="table">
+    <tr>
+        <td><span style="color:red">*</span>联系人</td>
+        <td>
+            <input type="text" id="LianXiRen" />
+        </td>
+        <td>职业</td>
+        <td>
+            <input type="text" id="ZhiYe" />
+        </td>
+        <td><span style="color:red">*</span>手机</td>
+        <td>
+            <input type="text" id="Phone" />
+        </td>
+    </tr>
+    <tr>
+        <td>固定电话</td>
+        <td>
+            <input type="text" id="DianHua" />
+        </td>
+        <td>传真</td>
+        <td>
+            <input type="text" id="ChuanZhen" />
+        </td>
+        <td>邮件</td>
+        <td>
+            <input type="text" id="Email" />
+        </td>
+    </tr>
+    <tr>
+        <td>QQ</td>
+        <td>
+            <input type="text" id="QQ" />
+        </td>
+        <td>微信</td>
+        <td>
+            <input type="text" id="WeiXin" />
+        </td>
+        <td><span style="color:red">*</span>地址</td>
+        <td>
+            <input type="text" id="DiZhi" />
+        </td>
+    </tr>
+    <tr>
+        <td>网址</td>
+        <td>
+            <input type="text" id="Url" />
+        </td>
+    </tr>
+</table>
+<input type="button" id="Back" value="返回" style="background-color:gray" class="layui-btn layui-btn-normal" />
+<input type="button" id="Save" value="修改" style="background-color:cornflowerblue" class="layui-btn layui-btn-normal" />
+
+<script>
+    //页面初始化
+    $(function () {
+        show();
+    })
+    //显示
+    function show() {
+        $.ajax({
+            url: "http://localhost:52645/api/Supplier/ShowSup?id=" + $("#id").val(),
+            type: "get",
+            dataType: "json",
+            success: function (d) {
+                //反填数据
+                $("#lid").val(d.lxrId); $("#Name").val(d.yJfzr);
+                $("#BianHao").val(d.gid); $("#LaiYuan").val(d.gLaiYuan);
+                $("#JianCheng").val(d.gDesc); $("#DanWei").val(d.dwName);
+                $("#PinPai").val(d.pinPai); $("#FanWei").val(d.jyRange);
+                $("#LianXiRen").val(d.lxrName); $("#ZhiYe").val(d.lJob);
+                $("#Phone").val(d.phone); $("#DianHua").val(d.gDphone);
+                $("#ChuanZhen").val(d.chuanZhen); $("#Email").val(d.email);
+                $("#QQ").val(d.qq); $("#WeiXin").val(d.weiXin);
+                $("#DiZhi").val(d.addresss); $("#Url").val(d.url);
+            }
+        })
+    }
+
+    //修改
+    $("#Save").click(function () {
+        //获取供应商数据
+        var obj = {
+            "GysId": $("#id").val().toString(),
+            "GID": $("#BianHao").val().toString(),
+            "GLaiYuan": $("#LaiYuan").val().toString(),
+            "YJfzr": $("#Name").val().toString(),
+            "DwName": $("#DanWei").val().toString(),
+            "PinPai": $("#PinPai").val().toString(),
+            "JYRange": $("#FanWei").val().toString(),
+            "GDesc": $("#JianCheng").val().toString()
+        };
+        //获取联系人数据
+        var obj1 = {
+            "LxrId": $("#lid").val().toString(),
+            "LxrName": $("#LianXiRen").val().toString(),
+            "LJob": $("#ZhiYe").val().toString(),
+            "Phone": $("#Phone").val().toString(),
+            "Email": $("#Email").val().toString(),
+            "GDphone": $("#DianHua").val().toString(),
+            "ChuanZhen": $("#ChuanZhen").val().toString(),
+            "QQ": $("#QQ").val().toString(),
+            "WeiXin": $("#WeiXin").val().toString(),
+            "Addresss": $("#DiZhi").val().toString(),
+            "Url": $("#Url").val().toString()
+        };
+        //修改
+        $.ajax({
+            url: "http://localhost:52645/api/Supplier/EditSup",
+            type: "post",
+            dataType: "text",
+            data: { supplier: obj, contacts: obj1 },
+            accepts: "application/x-www-form-urlencoded",
+            contentType: "application/x-www-form-urlencoded",
+            success: function (d) {
+                //判断
+                if (d > 0) {
+                    alert("修改成功!");
+                    window.location.href = "Index";
+                }
+                else {
+                    alert("修改失败!");
+                }
+            }
+        })
+    })
+
+    //取消
+    $("#Back").click(function () {
+        window.location.href = "Index";
+    })
+</script>
+

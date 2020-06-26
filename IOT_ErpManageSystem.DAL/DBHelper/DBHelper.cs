@@ -64,7 +64,7 @@ namespace IOT_ErpManageSystem.DAL.DBHelper
         /// <param name="sqlParameters"></param>
         /// <param name="RowsCount"></param>
         /// <returns></returns>
-        public DataTable ExecuteProc(string procName, SqlParameter[] sqlParameters, ref int RowsCount)
+        public DataTable ExecuteProc(string procName, SqlParameter[] sqlParameters, ref int rowCount)
         {
             DataTable tb = new DataTable();
             using (SqlConnection con = new SqlConnection(Connection))

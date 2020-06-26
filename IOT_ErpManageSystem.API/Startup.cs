@@ -4,6 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using IOT_ErpManageSystem.BLL.GoodsInfo;
 using IOT_ErpManageSystem.DAL.IDBHelp;
+using IOT_ErpManageSystem.BLL.Supplier;
+using IOT_ErpManageSystem.BLL.TuiHuo;
+using IOT_ErpManageSystem.DAL.DBHelper;
+using IOT_ErpManageSystem.DAL.IDBHelp;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -49,7 +53,6 @@ namespace IOT_ErpManageSystem.API
             {
                 app.UseDeveloperExceptionPage();
             }
-            
 
             app.UseRouting();
             app.UseCors("ZXL");
