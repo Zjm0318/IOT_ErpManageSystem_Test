@@ -1,0 +1,184 @@
+﻿
+@{
+    ViewData["Title"] = "GoodsPriceInfo";
+}
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+<link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+<link href="~/layuiadmin/style/admin.css" rel="stylesheet" />
+<h1>GoodsPriceInfo</h1>
+<style>
+
+    .layui-col-space15 > * {
+        padding: 7.5px;
+        width: 100%;
+    }
+
+    .alert {
+        width: 90%;
+        text-align: center;
+        color: #fff;
+        margin: 10px auto;
+        border-radius: 5px;
+        line-height: 30px;
+        cursor: pointer;
+        background: #4ab819;
+    }
+
+    .confirm {
+        background: #196fb8;
+    }
+
+    .open {
+        background: #f88408;
+    }
+
+    .toast {
+        background: #f80851;
+    }
+
+    .later {
+        background: #a9a9a9;
+    }
+</style>
+
+
+<div class="layui-inline">
+    <div class="layui-input-inline">
+        <input id="goodsId" type="text" placeholder="请输入关键字" class="layui-input search_input">
+    </div>
+    <a class="layui-btn search_btn" onclick="searchData();"><i class="layui-icon layui-icon-search"></i> 查询</a>
+    <div class="alert open" style="width:80px" onclick="mizhu.open(300, 400, '商品价格本', '/Goods/AddPrice');">增加</div>
+</div>
+
+<div style="padding: 15px; background-color: #F2F2F2;">
+    <table class="layui-table">
+        <tr>
+            <th><input id="Checkall" type="checkbox" /></th>
+            <th>商品编号</th>
+            <th>商品名称</th>
+            <th>商品品牌</th>
+            <th>商品分类</th>
+            <th>商品规格</th>
+            <th>单位</th>
+            <th>出售价格</th>
+            <th>进货价格</th>
+            <th>操作</th>
+        </tr>
+        <tbody id="tb">
+        </tbody>
+    </table>
+</div>
+<div class="page-item">
+    <a id="first">首页</a>
+    <a id="up">上一页</a>
+    <a id="next">下一页</a>
+    <a id="end">尾页</a>
+</div>
+
+<script>
+    var pageIndex = 1;
+    var pageSize = 3;
+    var total = 0;
+
+    $(function () {
+        Show(pageIndex);
+        Page();
+        Fenye();
+    });
+
+    //显示信息
+    function Show(pageIndex) {
+        var obj = {
+            "pageIndex": pageIndex.toString(),
+            "pageSize": pageSize.toString(),
+            "goodsId": $("#goodsId").val().toString()
+        };
+
+        var Type = {};
+        Type.URL = "http://localhost:52645/api/Goods/ShowGoodsPrice"
+
+        $.ajax(Type.URL,
+            {
+                type: "post",
+                data: obj,
+                dataType: "json",
+                contentType: "application/x-www-form-urlencoded"
+            }).done(function (data) {
+                ShowInfo(data.plist);
+                total = data.count;
+            });
+    }
+
+    function ShowInfo(data) {
+        $("#tb").empty();
+        $.each(data, function (index,item) {
+            var list = "<tr>" +
+                '<td><input id="Checkbox1" class="check" type="checkbox" /></td>' +
+                "<td>" + item.goodsId + "</td>" +
+                "<td>" + item.goodsName + "</td>" +
+                "<td>" + item.goodsBrand + "</td>" +
+                "<td>" + item.typeName + "</td>" +
+                "<td>" + item.goodsRule + "</td>" +
+                "<td>" + item.sku + "</td>" +
+                "<td>" + item.goodsPrices + "</td>" +
+                "<td>" + item.jinHPrice + "</td>" +
+                "</tr>";
+            $("#tb").append(list);
+        })
+    }
+
+    //全选
+    function Page() {
+        $("#Checkall").click(function () {
+            if ($("#Checkall").prop("checked") == true) {
+                $(".check").prop("checked", true);
+            }
+            else {
+                $(".check").prop("checked", false);
+            }
+        });
+    };
+
+    //查询
+    function searchData() {
+        Show(pageIndex);
+    }
+
+    //分页
+    function Fenye() {
+        //首页
+        $("#first").click(function () {
+            pageIndex = 1;
+            Show(pageIndex);
+        })
+
+        //上一页
+        $("#up").click(function () {
+            if (pageIndex <= 1) {
+                alert("已经是第一页了");
+            }
+            else {
+                pageIndex = pageIndex - 1;
+                Show(pageIndex);
+            }
+        })
+
+        //下一页
+        $("#next").click(function () {
+            if (pageIndex >= total) {
+                alert("已经是最后一页了");
+            }
+            else {
+                pageIndex = pageIndex + 1;
+                Show(pageIndex);
+            }
+        })
+
+        //尾页
+        $("#end").click(function () {
+            pageIndex = total;
+            Show(pageIndex);
+        })
+    }
+</script>

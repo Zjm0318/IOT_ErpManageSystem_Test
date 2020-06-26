@@ -1,0 +1,189 @@
+﻿
+@{
+    ViewData["Title"] = "Add";
+}
+
+<h1>Add</h1>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+<link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+<link href="~/layuiadmin/style/admin.css" rel="stylesheet" />
+
+<style>
+
+    .layui-col-space15 > * {
+        padding: 7.5px;
+        width: 100%;
+    }
+
+    .alert {
+        width: 90%;
+        text-align: center;
+        color: #fff;
+        margin: 10px auto;
+        border-radius: 5px;
+        line-height: 30px;
+        cursor: pointer;
+        background: #4ab819;
+    }
+
+    .confirm {
+        background: #196fb8;
+    }
+
+    .open {
+        background: #f88408;
+    }
+
+    .toast {
+        background: #f80851;
+    }
+
+    .later {
+        background: #a9a9a9;
+    }
+</style>
+
+<table class="layui-table">
+    <tr>
+        <td>商品编号</td>
+        <td><input id="goodsId" type="text" placeholder="请输入关键字" class="layui-input search_input"></td>
+    </tr>
+    <tr>
+        <td>商品分类</td>
+        <td>
+            <select id="type" class="layui-select" onchange="two()">
+                <option value="">选择一级分类</option>
+
+            </select>
+            <select id="typetwo" class="layui-select">
+                <option value="">选择二级分类</option>
+
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>商品名称</td>
+        <td><input id="goodsname" type="text" placeholder="请输入关键字" class="layui-input search_input"></td>
+    </tr>
+    <tr>
+        <td>商品图片</td>
+        <td>
+            <input id="goodsimg" type="file" />
+        </td>
+    </tr>
+    <tr>
+        <td>商品价格</td>
+        <td><input id="goodsprice" type="text" placeholder="请输入关键字" class="layui-input search_input"></td>
+    </tr>
+    <tr>
+        <td>商品品牌</td>
+        <td><input id="goodsbrand" type="text" placeholder="请输入关键字" class="layui-input search_input"></td>
+    </tr>
+    <tr>
+        <td>商品库存</td>
+        <td><input id="goodsstock" type="number" placeholder="请输入关键字" class="layui-input search_input"></td>
+    </tr>
+    <tr>
+        <td>库存预警值</td>
+        <td><input id="stockyj" type="number" placeholder="请输入关键字" class="layui-input search_input"></td>
+    </tr>
+    <tr>
+        <td>上架时间</td>
+        <td><input id="uptime" type="date" placeholder="请输入关键字" class="layui-input search_input"></td>
+    </tr>
+    <tr>
+        <td>商品规格</td>
+        <td><input id="goodsrule" type="text" placeholder="请输入关键字" class="layui-input search_input"></td>
+    </tr>
+    <tr>
+        <td>SKU</td>
+        <td><input id="sku" type="text" placeholder="请输入关键字" class="layui-input search_input"></td>
+    </tr>
+    <tr>
+        <td><input id="btn_add" type="button" value="保存" class="btn layui-btn-primary" /></td>
+        <td><div class="alert open" style="width:80px" onclick="mizhu.open(300, 600, '商品属性', '/Goods/AddProperty');">添加商品属性</div></td>
+    </tr>
+</table>
+
+<script>
+    $(function () {
+        type();
+        two();
+    });
+
+    //添加商品
+    $("#btn_add").click(function () {
+        var form = new FormData();
+        var fileUpload = $("#goodsimg").get(0);
+        var file = fileUpload.files[0];
+        form.append(file.name, file);
+        var obj =
+        {
+            "GoodsId": $("#goodsId").val().toString(),
+            "GoodsName": $("#goodsname").val().toString(),
+            "GoodsImg": $("#goodsimg").val().toString(),
+            "GoodsPrices": $("#goodsprice").val().toString(),
+            "GoodsBrand": $("#goodsbrand").val().toString(),
+            "GoodsStock": $("#goodsstock").val().toString(),
+            "TypeId": $("#typetwo").val().toString(),
+            "StockYJ": $("#stockyj").val().toString(),
+            "UpTime": $("#uptime").val().toString(),
+            "GoodsRule": $("#goodsrule").val().toString(),
+            "SKU": $("#sku").val().toString(),
+            "GoodsState": "0"
+        };
+
+        $.ajax("http://localhost:52645/api/Goods/AddGoodsInfo?obj=" + JSON.stringify(obj),
+            {
+                type: "post",
+                data: form,
+                dataType: "text",
+                contentType: false,
+                processData: false
+            }).done(function (code) {
+                if (code > 0) {
+                    alert("上架成功!");
+                    location.href = "Index";
+                }
+                else {
+                    alert("上架失败!");
+                }
+            });
+    })
+
+    $("#btn_sx").click(function () {
+        location.href = "AddProperty";
+    })
+
+    //绑定一级分类
+    function type() {
+        $.ajax("http://localhost:52645/api/Goods/BindInfo",
+            {
+                type: "get",
+                dataType: "json"
+            }).done(function (data) {
+
+                $.each(data, function (index, item) {
+                    var option = '<option value="' + item.typeId + '">' + item.typeName + '</option>';
+                    $("#type").append(option);
+                })
+            })
+    }
+
+    //绑定二级分类
+    function two() {
+        var TypeId = $("#type").val();
+        $.ajax("http://localhost:52645/api/Goods/BindTwoInfo?TypeId=" + TypeId,
+            {
+                type: "get",
+                dataType: "json"
+            }).done(function (data) {
+                $("#typetwo").empty();
+                $.each(data, function (index, item) {
+                    var option = '<option value=\"' + item.id + '\">' + item.typeName + '</option>';
+                    $("#typetwo").append(option);
+                })
+            })
+    }
+</script>

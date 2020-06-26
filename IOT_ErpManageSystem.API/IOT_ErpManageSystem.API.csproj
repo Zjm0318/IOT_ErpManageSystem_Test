@@ -4,5 +4,20 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IOT_ErpManageSystem.BLL\IOT_ErpManageSystem.BLL.csproj" />
+    <ProjectReference Include="..\IOT_ErpManageSystem.Models\IOT_ErpManageSystem.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\..\专业\物.专四\第4个月资料\引用(1)\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 
 </Project>

@@ -9,7 +9,7 @@ namespace IOT_ErpManageSystem.DAL.DBHelper
 {
     public class DBHelper : IDBHelper
     {
-        private string Connection = "Data Source=.;Initial Catalog=MonthTest6;Integrated Security=True";
+        private string Connection = "Data Source=192.168.0.190;Initial Catalog=ERP;User ID=sa;pwd=1234";
         /// <summary>
         /// 执行存储过程，返回受影响行数
         /// </summary>
@@ -46,7 +46,11 @@ namespace IOT_ErpManageSystem.DAL.DBHelper
                 using (SqlCommand cmd = new SqlCommand(procName, con))
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmd.Parameters.AddRange(sqlParameters);
+                    if (sqlParameters!=null)
+                    {
+                        cmd.Parameters.AddRange(sqlParameters);
+                    }
+                    
                     SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                     adapter.Fill(tb);
                 }
@@ -72,7 +76,7 @@ namespace IOT_ErpManageSystem.DAL.DBHelper
                     cmd.Parameters.AddRange(sqlParameters);
                     SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                     adapter.Fill(tb);
-                    RowsCount = int.Parse(cmd.Parameters["@RowsCount"].Value.ToString());
+                    RowsCount = int.Parse(cmd.Parameters["@rowCount"].Value.ToString());
                 }
             }
             return tb;
