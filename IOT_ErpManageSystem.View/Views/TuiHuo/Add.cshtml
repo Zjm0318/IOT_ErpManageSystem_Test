@@ -1,0 +1,187 @@
+﻿
+@{
+    ViewData["Title"] = "Add";
+}
+
+<h2>基本信息</h2>
+<div class="layui-form-item">
+    <div class="layui-inline">
+        <label class="layui-form-label"><span style="color:red">*</span>退货日期</label>
+        <div class="layui-input-inline">
+            <input type="date" id="TuiHuoDate" required placeholder="请输入退货日期" class="layui-input" />
+        </div>
+        <label class="layui-form-label"><span style="color:red">*</span>退货发起人</label>
+        <div class="layui-input-inline">
+            <input type="text" id="FaQiRen" required placeholder="请输入退货发起人" class="layui-input" />
+        </div>
+    </div>
+
+    <div class="layui-inline">
+        <label class="layui-form-label"><span style="color:red">*</span>供应商名称</label>
+        <div class="layui-input-inline">
+            <select id="Name" required>
+                <option value="">请选择</option>
+            </select>
+        </div>
+        <label class="layui-form-label"><span style="color:red">*</span>退货仓库</label>
+        <div class="layui-input-inline">
+            <select id="CangKu" required>
+                <option value="">请选择</option>
+
+            </select>
+        </div>
+    </div>
+</div>
+
+<div>
+    <h2>商品添加</h2>
+    <input type="button" value="添加商品" style="width:100px;float:right;" onClick="Javascript:window.open('/TuiHuo/AddGoods','','width=560,height=379;margin:auto')" class="layui-btn" />
+</div>
+
+<table class="layui-table">
+    <colgroup>
+        <col width="150">
+        <col width="200">
+        <col>
+    </colgroup>
+    <thead>
+        <tr style="background-color:gainsboro">
+            <th>商品编号</th>
+            <th>商品名称</th>
+            <th>规格</th>
+            <th>单位</th>
+            <th>采购单价</th>
+            <th>可退货数量</th>
+            <th>退货金额</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+</table>
+<input type="button" id="Back" value="返回" style="background-color:gray" class="layui-btn layui-btn-normal" />
+<input type="button" id="Save" value="保存" style="background-color:cornflowerblue" class="layui-btn layui-btn-normal" />
+
+<script>
+    //页面初始化
+    $(function () {
+        CangKu();
+        GongYingShang();
+        show();
+    })
+
+    //绑定下拉框
+    function CangKu() {
+        $.ajax("http://localhost:52645/api/TuiHuo/GetStorage", {
+            type: "get",
+            dataType: "json",
+            success: function (d) {
+                //循环
+                $(d).each(function (index, item) {
+                    var str = '<option value="' + item.id + '">' + item.storageName + '</option>';
+                    $("#CangKu").append(str);
+                })
+            }
+        })
+    }
+
+    //绑定下拉框
+    function GongYingShang() {
+        $.ajax("http://localhost:52645/api/TuiHuo/GetSuppliers", {
+            type: "get",
+            dataType: "json",
+            success: function (d) {
+                //循环
+                $(d).each(function (index, item) {
+                    var str = '<option value="' + item.gysId + '">' + item.dwName + '</option>';
+                    $("#Name").append(str);
+                })
+            }
+        })
+    }
+
+    //显示商品
+    function show() {
+        $.ajax({
+            url: "http://localhost:52645/api/TuiHuo/GetShowGoods",
+            type: "get",
+            dataType: "json",
+            success: function (d) {
+                //清空
+                $("#tbody").empty();
+                //循环
+                $(d).each(function (index, item) {
+                    var str = '<tr>' +
+                        '<th>' + item.goodsId + '</th>' +
+                        '<th>' + item.goodsName + '</th>' +
+                        '<th>' + item.goodsRule + '</th>' +
+                        '<th>' + item.sku + '</th>' +
+                        '<th>' + item.jinHPrice + '</th>' +
+                        '<th>' + item.goodsStock + '</th>' +
+                        '<th>' + (item.jinHPrice * item.goodsStock) + '</th>' +
+                        '<th><input type="button" onclick="Del(\'' + item.priceId + '\')" value="删除" style="background-color:red" class="layui-btn layui-btn-normal" /></th>'+
+                                '</tr> ';
+
+                    $("#tbody").append(str);
+                })
+            }
+        })
+    }
+
+    //返回
+    $("#Back").click(function () {
+        window.location.href = "Index";
+    })
+
+    //保存
+    $("#Save").click(function () {
+        var obj = {
+            "TuiHuoTime": $("#TuiHuoDate").val(),
+            "GysID": $("#Name").val(),
+            "THFqr": $("#FaQiRen").val(),
+            "TCangKu": $("#CangKu").val(),
+        };
+        //添加
+        $.ajax({
+            url: "http://localhost:52645/api/TuiHuo/AddTuiHuo",
+            type: "post",
+            dataType: "text",
+            data: { m: obj },
+            accepts: "application/x-www-form-urlencoded",
+            contentType: "application/x-www-form-urlencoded",
+            success: function (d) {
+                //判断
+                if (d > 0) {
+                    alert("添加成功!");
+                    window.location.href = "Index";
+                }
+                else {
+                    alert("添加失败!");
+                }
+            }
+        })
+    })
+
+    //删除
+    function Del(id) {
+        if (confirm("确认删除吗?")) {
+            $.ajax({
+                url: "http://localhost:52645/api/TuiHuo/DeleteGoods",
+                type: "post",
+                dataType: "text",
+                data: { id: id },
+                accepts: "application/x-www-form-urlencoded",
+                contentType: "application/x-www-form-urlencoded",
+                success: function (d) {
+                    //判断
+                    if (d > 0) {
+                        alert("删除成功!");
+                        window.location.reload();
+                    }
+                    else {
+                        alert("删除失败!");
+                    }
+                }
+            })
+        }
+    }
+</script>
