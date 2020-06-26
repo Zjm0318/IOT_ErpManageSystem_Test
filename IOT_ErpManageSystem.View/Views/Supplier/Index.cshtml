@@ -97,12 +97,23 @@
 
     //显示
     function Show(PageIndex) {
+        var obj = {
+            "PageIndex": PageIndex,
+            "PageSize": PageSize,
+            "YJfzr": $("#FuZeRen").val(),
+            "GID": $("#BianHao").val(),
+            "GLaiYuan": $("#LaiYuan").val(),
+            "DwName": $("#DanWeiName").val(),
+            "PinPai": $("#PinPai").val(),
+            "JYRange": $("#JingYinFanWei").val(),
+            "CreateDate": $("#CreateDate").val()
+        };
         //显示
         $.ajax({
             url: "http://localhost:52645/api/Supplier/GetSuppliers",
             type: "post",
             dataType: "json",
-            data: { PageIndex: PageIndex, PageSize: PageSize, YJfzr: $("#FuZeRen").val(), GID: $("#BianHao").val(), GLaiYuan: $("#LaiYuan").val(), DwName: $("#DanWeiName").val(), PinPai: $("#PinPai").val(), JYRange: $("#JingYinFanWei").val(), CreateDate: $("#CreateDate").val() },
+            data: obj,
             success: function (d) {
                 count = d.rowCount;
                 //清空

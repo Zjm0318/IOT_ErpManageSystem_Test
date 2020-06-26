@@ -84,11 +84,19 @@
     })
     //显示
     function show(PageIndex) {
+        var obj = {
+            "PageIndex": PageIndex,
+            "PageSize": PageSize,
+            "States": $("#States").val(),
+            "CreateDate": $("#CreateDate").val(),
+            "DwName": $("#GysName").val(), 
+            "StorageName": $("#CangKu").val()
+        };
         //显示
         $.ajax("http://localhost:52645/api/TuiHuo/GetTuiHuos", {
             type: "post",
             dataType: "json",
-            data: { PageIndex: PageIndex, PageSize: PageSize, States: $("#States").val(), CreateDate: $("#CreateDate").val(), DwName: $("#GysName").val(), StorageName: $("#CangKu").val() },
+            data: obj,
             success: function (d) {
                 count = d.rowCount;
                 //清空

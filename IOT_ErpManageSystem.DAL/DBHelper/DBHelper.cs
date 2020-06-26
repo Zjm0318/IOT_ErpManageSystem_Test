@@ -76,7 +76,7 @@ namespace IOT_ErpManageSystem.DAL.DBHelper
                     cmd.Parameters.AddRange(sqlParameters);
                     SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                     adapter.Fill(tb);
-                    RowsCount = int.Parse(cmd.Parameters["@rowCount"].Value.ToString());
+                    rowCount = int.Parse(cmd.Parameters["@rowCount"].Value.ToString());
                 }
             }
             return tb;
