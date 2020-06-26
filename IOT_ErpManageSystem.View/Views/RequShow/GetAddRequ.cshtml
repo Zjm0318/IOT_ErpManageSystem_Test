@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewData["Title"] = "GetAddRequ";
+}
+
+<h1>GetAddRequ</h1>
+
+<table class="layui-table">
+    <tr>
+        <td>请购创建日期</td>
+        <td><input type="text" id="time" /></td>
+    </tr>
+    <tr>
+        <td>到货地址</td>
+        <td><input type="text" id="address" /></td>
+    </tr>
+    <tr>
+        <td>请购人员</td>
+        <td><input type="text" id="qgname" /></td>
+        <td>所在部门</td>
+        <td><input type="text" id="dept" /></td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <input  type="button" id="add" value="添加" class="layui-btn"/>
+        </td>
+    </tr>
+</table>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<script>
+
+    //添加
+    $("#add").click(function () {
+        var obj = {
+            "CreateDate": $("#time").val().toString(),
+            "DhAddress": $("#address").val().toString(),
+            "QgName": $("#qgname").val().toString(),
+            "DeptName": $("#dept").val().toString(),
+        };
+
+        $.ajax("http://localhost:52645/api/RequList/AddRequInfo", {
+            type: "post",
+            data: { m: obj },
+            dataType: "json",
+            accepts: "application/x-www-form-urlencoded",
+            contentType: "application/x-www-form-urlencoded"
+        }).done(function (da) {
+            if (da > 0) {
+                alert("添加成功");
+                window.location.href = "/RequShow/GetRequList";
+            }
+            else {
+                alert("添加失败");
+            }
+        })
+        
+    })
+</script>

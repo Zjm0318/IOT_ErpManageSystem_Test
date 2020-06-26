@@ -1,0 +1,107 @@
+﻿
+@{
+    ViewData["Title"] = "GetRoleList";
+}
+
+<h1>GetRoleList</h1>
+
+<input type="text" value=@ViewBag.QgId id="qgid" />
+员工姓名
+<input type="text" id="rolename" />
+员工编号
+<input type="text" id="rolecode" />
+<input type="button" value="搜索" class="layui-btn" id="cha" />
+
+<table class="layui-table" border="1">
+    <tr>
+        <td>选择</td>
+        <td>员工编号</td>
+        <td>姓名</td>
+        <td>职位</td>
+    </tr>
+    <tbody id="body"></tbody>
+</table>
+<input type="button" id="add" value="指派请购负责人" class="layui-btn" />
+<input type="button" id="add2" value="指派采购处理人" class="layui-btn" />
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+
+    var RId = "";
+    //页面初始化
+    $(function () {
+        show();
+    })
+    //显示
+    function show() {
+        $.ajax("http://localhost:52645/api/RequList/GetRoleList?rolename=" + $("#rolename").val() + '&rolecode=' + $("#rolecode").val(), {
+            data: "get",
+            dataType: "json"
+        }).done(function (da) {
+            showlist(da);
+        })
+    }
+    //显示
+    function showlist(da) {
+        $("#body").empty();
+        $.each(da, function (index, item) {
+            var str = "<tr>"
+                + "<td><input type='radio'  value='" + item.id +"' name='rad'/></td>"
+                + "<td>" + item.role_Code + "</td>"
+                + "<td>" + item.role_Name + "</td>"
+                + "<td>" + item.job_Name + "</td>"
+                + "</tr>";
+            $("#body").append(str);
+        })
+    }
+
+    //查询
+    $("#cha").click(function () {
+        show();
+    })
+
+    //指派请购负责人
+    $("#add").click(function () {
+        RId = $("input[type='radio']:checked").val();
+
+        if (RId != null) {
+            $.ajax("http://localhost:52645/api/RequList/UpdateRole?RId=" + RId + '&QgId=' + $("#qgid").val(), {
+                data: "get",
+                dataType: "text"
+            }).done(function (da) {
+                if (da > 0) {
+                    alert("指派成功");
+                    window.location.href = "/RequShow/GetRequList";
+                }
+                else {
+                    alert("指派失败");
+                }
+            })
+        }
+        else {
+            alert("请选择用户");
+        }
+    })
+
+    //指派采购处理人
+    $("#add2").click(function () {
+        RId = $("input[type='radio']:checked").val();
+
+        if (RId != null) {
+            $.ajax("http://localhost:52645/api/RequList/ZhiPaiPur?Id=" + $("#qgid").val() + '&Cgclr=' + RId, {
+                data: "get",
+                dataType: "text"
+            }).done(function (da) {
+                if (da > 0) {
+                    alert("指派成功");
+                    window.location.href = "/PurShow/GetPurList";
+                }
+                else {
+                    alert("指派失败");
+                }
+            })
+        }
+        else {
+            alert("请选择用户");
+        }
+    })
+</script>

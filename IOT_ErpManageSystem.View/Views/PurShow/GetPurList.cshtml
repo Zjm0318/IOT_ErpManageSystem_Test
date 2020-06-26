@@ -1,0 +1,219 @@
+﻿
+@{
+    ViewData["Title"] = "GetPurList";
+}
+
+
+请购单状态 <select id="States">
+    <option value="">请选择</option>
+    <option value="0">待分配</option>
+    <option value="1">审核成功</option>
+    <option value="2">审核失败</option>
+</select>
+创建日期
+<input type="text" id="Time" />
+供应商名称
+<input type="text" id="Gname" />
+请购负责人
+<input type="text" id="Bgname" />
+<br />
+<input type="button" value="搜索" id="cha" class="layui-btn" />
+<input type="button" value="添加" id="add" class="layui-btn layui-btn-normal" />
+
+<table class="layui-table" border="1">
+    <tr>
+        <td>选择</td>
+        <td>发起日期</td>
+        <td>采购单编号</td>
+        <td>采购单状态</td>
+        <td>供应商编号</td>
+        <td>供应商名称</td>
+        <td>请购负责人</td>
+        <td>采购处理人</td>
+        <td>采购审核人</td>
+        <td>财务审核人</td>
+        <td>操作</td>
+    </tr>
+    <tbody id="body">
+    </tbody>
+    <tr>
+        <td><input type="checkbox" id="checkbox" />全选</td>
+        <td><input type="button" id="zhipai" value="指派" class="layui-btn" /></td>
+        <td><input type="button" id="chehui" value="撤回" class="layui-btn" /></td>
+    </tr>
+</table>
+
+<div>
+    <a onclick="Shouye()">首页</a>
+    <a onclick="Up()">上一页</a>
+    <a onclick="Next()">下一页</a>
+    <a onclick="WeiYe()">尾页</a>
+</div>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    var pageindex = 1;
+    var pagesize = 2;
+    var count = 0;
+    var Id = "";
+
+    //初始化
+    $(function () {
+        show(pageindex);
+    })
+
+    //显示
+    function show(pageindex) {
+        $.ajax("http://localhost:52645/api/RequList/GetPurList?state=" + $("#States").val() + "&time=" + $("#Time").val() + "&gname=" + $("#Gname").val() + "&bgname=" + $("#Bgname").val() + "&pageindex=" + pageindex + "&pagesize=" + pagesize, {
+            type: "get",
+            dataType: "json"
+        }).done(function (da) {
+            showlist(da.list);
+            count = da.rowcount;
+        })
+    }
+
+    function showlist(da) {
+        $("#body").empty();  //清空
+
+        $.each(da, function (index,item) {
+            var str = "<tr>"
+                + "<td><input type='radio' value='" + item.id +"' /></td>"
+                + "<td>" + item.createTime.toString("yyyy-MM-dd") + "</td>"
+                + "<td>" + item.cid + "</td>"
+            if (item.isState == "0") {
+                str+= "<td>待分配</td>"
+            }
+            else if (item.isState == "1") {
+                str+= "<td>审核通过</td>"
+            }
+            else {
+                str+= "<td>审核未通过</td>"
+            }
+            str+="<td>" + item.gid + "</td>"
+                + "<td>" + item.gLaiYuan + "</td>"
+                + "<td>" + item.bgName + "</td>"
+                + "<td>" + item.role_Name + "</td>"
+                + "<td>" + item.cgShr + "</td>"
+                + "<td>" + item.cwShr + "</td>"
+                + "<td><input type='button' value='编辑' onclick='edit(\"" + item.cid + "\",\"" + item.id + "\")' class='layui-btn layui-btn-danger' />"
+                + "<input type = 'button' value ='审核通过' class='layui-btn layui-btn-warm' onclick = 'Update1(\"" + item.id + "\")'/>"
+                + "<input type = 'button' value ='审核不通过' class='layui-btn layui-btn-warm' onclick = 'Update2(\"" + item.id + "\")'/>"
+            +"</td > "
+                + "</tr>";
+            $("#body").append(str);
+        })   
+    }
+
+    //首页
+    function Shouye() {
+        pageindex = 1;
+        show(pageindex);
+    }
+    //上一页
+    function Up() {
+        pageindex = pageindex - 1 <= 0 ? 1 : pageindex - 1;
+        show(pageindex);
+    }
+    //下一页
+    function Next() {
+        pageindex = pageindex + 1 > count ? count : pageindex + 1;
+        show(pageindex);
+    }
+    //尾页
+    function WeiYe() {
+        pageindex = count;
+        show(pageindex);
+    }
+
+    //查询
+    $("#cha").click(function () {
+        pageindex = 1;
+        show(pageindex);
+    })
+
+    //全选反选
+    $("#checkbox").click(function () {
+        if ($(this).prop("checked") == true) {
+            $("input[type='radio']").prop("checked", true);
+        }
+        else {
+            $("input[type='radio']").prop("checked", false);
+        }
+    })
+    
+
+    //审核通过
+    function Update1(Id) {
+        $.ajax("http://localhost:52645/api/RequList/UpdPurState1?Id=" + Id, {
+            type: "get",
+            dataType: "text"
+        }).done(function (da) {
+            if (da > 0) {
+                alert("审核成功");
+                window.location.reload();
+            }
+            else {
+                alert("审核失败");
+            }
+        })
+    }
+    
+    //审核未通过
+    function Update2(Id) {
+        $.ajax("http://localhost:52645/api/RequList/UpdPurState2?Id=" + Id, {
+            type: "get",
+            dataType: "text"
+        }).done(function (da) {
+            if (da > 0) {
+                alert("审核成功");
+                window.location.reload();
+            }
+            else {
+                alert("审核失败");
+            }
+        })
+    }
+
+    //指派
+    $("#zhipai").click(function () {
+        Id = $("input[type='radio']:checked").val();
+        if (Id != null) {
+            window.location.href = "/RequShow/GetRoleList?QgId=" + Id;
+        }
+        else {
+            alert("请选择一个");
+        }
+    })
+
+    //撤回
+    $("#chehui").click(function () {
+        Id = $("input[type='radio']:checked").val();
+        if (Id != null) {
+            $.ajax("http://localhost:52645/api/RequList/CheHuiPur?Id=" + Id, {
+                type: "get",
+                dataType: "text"
+            }).done(function (da) {
+                if (da > 0) {
+                    alert("撤回成功");
+                    window.location.reload();
+                }
+                else {
+                    alert("撤回失败");
+                }
+            })
+        }
+        else {
+            alert("请选择一个");
+        }
+    })
+
+    //编辑
+    function edit(CId, Id) {
+        window.location.href = "/PurShow/FanTPur?CId=" + CId + "&Id=" + Id;
+    }
+
+    //添加
+    $("#add").click(function () {
+        window.location.href = "/PurShow/AddPur";
+    })
+</script>

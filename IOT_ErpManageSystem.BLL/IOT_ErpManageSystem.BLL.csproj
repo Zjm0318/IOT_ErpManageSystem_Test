@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\IOT_ErpManageSystem.DAL\IOT_ErpManageSystem.DAL.csproj" />
+    <ProjectReference Include="..\IOT_ErpManageSystem.Models\IOT_ErpManageSystem.Models.csproj" />
+  </ItemGroup>
+
 </Project>

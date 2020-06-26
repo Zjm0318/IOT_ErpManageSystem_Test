@@ -1,0 +1,224 @@
+﻿
+@{
+    ViewData["Title"] = "FanTPur";
+}
+
+<input type="text" value="@ViewBag.CId" id="cid" hidden="hidden" />
+<input type="text" value="@ViewBag.Id" id="id" hidden="hidden" />
+<table class="layui-table">
+    <tr>
+        <td>采购单创建日期</td>
+        <td><input type="text" id="time" disabled="disabled" /></td>
+        <td>对应请购单编号</td>
+        <td><input type="text" id="qid" disabled="disabled" /></td>
+    </tr>
+    <tr>
+        <td>供应商编号</td>
+        <td><input type="text" id="gysid" disabled="disabled" /></td>
+        <td>供应商名称</td>
+        <td><input type="text" id="gname" disabled="disabled" /></td>
+    </tr>
+    <tr>
+        <td>商品是否含税</td>
+        <td>
+            <input type="radio" name="rad" /> 含税
+            <input type="radio" name="rad1" /> 不含税
+        </td>
+        <td>商品税率</td>
+        <td><input type="text" id="shuilv" /></td>
+    </tr>
+    <tr>
+        <td>到货地址</td>
+        <td><input type="text" id="address" /></td>
+    </tr>
+    <tr>
+        <td>编辑人员</td>
+        <td><input type="text" id="bgname" /></td>
+        <td>所在部门</td>
+        <td><input type="text" id="dept" /></td>
+    </tr>
+</table>
+
+<br />
+
+添加商品
+<input type="button" value="添加" id="add" class="layui-btn" />
+<table class="layui-table">
+    <tr>
+        <td>商品编号</td>
+        <td>商品名称</td>
+        <td>规格</td>
+        <td>单位</td>
+        <td>采购数量</td>
+        <td>可用量</td>
+        <td>现存量</td>
+        <td>商品报价</td>
+        <td>商品采购价</td>
+        <td>小计</td>
+        <td>操作</td>
+    </tr>
+    <tbody id="body"></tbody>
+</table>
+
+商品编号
+<select id="goodid"><option value="请选择">请选择</option></select>
+
+<input type="button" value="保存" id="update" class="layui-btn" />
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    //初始化
+    $(function () {
+        show();   //显示反填信息
+        showlist();  //显示商品信息
+        BingXia();   //绑定商品下拉框
+    })
+
+    //显示反填信息
+    function show() {
+        $.ajax("http://localhost:52645/api/RequList/FanTPur?CId=" + $("#cid").val(), {
+            data: "get",
+            dataType: "json"
+        }).done(function (da) {
+            $("#time").val(da.createTime.substring(0, 10))
+            $("#qid").val(da.qid)
+            $("#gysid").val(da.gid)
+            $("#gname").val(da.gLaiYuan)
+            if (da.isShui == 0) {
+                $("input[name='rad1']").prop("checked", true);
+            }
+            else {
+                $("input[name='rad']").prop("checked", true);
+            }
+            $("#shuilv").val(da.shuiLv)
+            $("#address").val(da.address)
+            $("#bgname").val(da.bgName)
+            $("#dept").val(da.bgDept)
+        })
+    }
+
+
+    //显示商品信息
+    function showlist() {
+        $.ajax("http://localhost:52645/api/RequList/GetPurGoods?Id=" + $("#id").val(), {
+            type: "get",
+            dataType: "json"
+        }).done(function (da) {
+            //清空
+            $("#body").empty();
+
+            //循环
+            $.each(da, function (index, item) {
+                var str = "<tr>"
+                    + "<td>" + item.goodsId + "</td>"
+                    + "<td>" + item.goodsName + "</td>"
+                    + "<td>" + item.goodsRule + "</td>"
+                    + "<td>" + item.sku + "</td>"
+                    + "<td>" + item.buyNum + "</td>"
+                    + "<td>" + item.kyNum + "</td>"
+                    + "<td>" + item.goodsStock + "</td>"
+                    + "<td>" + item.goodsPrices + "</td>"
+                    + "<td>" + item.jinHPrice + "</td>"
+                    + "<td>" + (item.goodsPrices * item.buyNum) + "</td>"
+                    + "<td><input type='button' value='删除'  onclick='shan(" + item.rpgid + ")'/></td>"
+                    + "</tr>";
+                $("#body").append(str);
+            })
+        })
+    }
+
+
+
+    //绑定商品下拉框
+    function BingXia() {
+        $.ajax("http://localhost:52645/api/RequList/GetChaGoodsID", {
+            type: "get",
+            dataType: "json"
+        }).done(function (da) {
+            $("#goodid").empty();
+
+            $.each(da, function (index, item) {
+                var str = "<option value=" + item.id + ">" + item.id + "</option>";
+                $("#goodid").append(str);
+            })
+        })
+    }
+
+    //添加商品
+    $("#add").click(function () {
+        var obj = {
+            "QPId": $("#id").val(),
+            "GId": $("#goodid").val()
+        };
+
+        $.ajax("http://localhost:52645/api/RequList/AddRequGoods", {
+            type: "post",
+            data: obj,
+            dataType: "json",
+            contentType: "application/x-www-form-urlencoded",
+            accepts: "application/x-www-form-urlencoded"
+        }).done(function (da) {
+            if (da > 0) {
+                alert("添加成功");
+                window.location.reload();
+            }
+            else {
+                alert("添加失败");
+            }
+        })
+    })
+
+    //删除
+    function shan(Id) {
+        if (confirm("确认要删除吗?")) {
+            $.ajax("http://localhost:52645/api/RequList/DeleteGoods?RpgId=" + Id, {
+                type: "get",
+                dataType: "text",
+            }).done(function (da) {
+                if (da > 0) {
+                    alert("删除成功");
+                    window.location.reload();
+                }
+                else {
+                    alert("删除失败");
+                }
+            })
+        }
+    }
+
+    //修改
+    $("#update").click(function () {
+        var state = 0;
+        if ($("input[name='rad']").prop("checked") == true) {
+            state = 1;
+        }
+        else {
+            state = 0;
+        }
+        var obj = {
+            "ID": $("#cid").val(),
+            "IsShui": state,
+            "ShuiLv": $("#shuilv").val(),
+            "Address": $("#address").val(),
+            "BgName": $("#bgname").val(),
+            "BgDept": $("#dept").val()
+        };
+
+        $.ajax("http://localhost:52645/api/RequList/UpdatePurInfo", {
+            type: "post",
+            data: obj,
+            dataType: "json",
+            contentType: "application/x-www-form-urlencoded",
+            accepts: "application/x-www-form-urlencoded"
+        }).done(function (da) {
+            if (da > 0) {
+                alert("修改成功");
+                window.location.href = "/PurShow/GetPurList";
+            }
+            else {
+                alert("修改失败");
+            }
+        })
+    })
+</script>
+

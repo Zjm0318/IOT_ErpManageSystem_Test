@@ -1,0 +1,125 @@
+﻿
+@{
+    ViewData["Title"] = "AddPur";
+}
+
+<h1>AddPur</h1>
+
+<table class="layui-table">
+    <tr>
+        <td>采购单创建日期</td>
+        <td><input type="text" id="time" /></td>
+        <td>对应请购单编号</td>
+        <td>
+            <select id="qgid">
+                <option value="请选择">请选择</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>供应商编号</td>
+        <td>
+            <select id="gysid">
+                <option value="请选择">请选择</option>
+            </select>
+        </td>
+        <td>供应商名称</td>
+        <td><input type="text" id="gysname" /></td>
+    </tr>
+    <tr>
+        <td>商品是否含税</td>
+        <td>
+            <input type="radio" name="rad" />含税
+            <input type="radio" name="rad" />不含税
+        </td>
+        <td>商品税率</td>
+        <td><input type="text" id="shuilv" /></td>
+    </tr>
+    <tr>
+        <td>到货地址</td>
+        <td><input type="text" id="address" /></td>
+    </tr>
+    <tr>
+        <td>编辑人员</td>
+        <td><input type="text" id="bgname" /></td>
+        <td>所在部门</td>
+        <td><input type="text" id="bgdept" /></td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <input type="button" id="add" value="添加" />
+        </td>
+    </tr>
+</table>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+      //初始化
+    $(function () {
+        selectqgid();
+        selectgysid();
+    })
+    //绑定请购单ID
+    function selectqgid() {
+        $.ajax("http://localhost:52645/api/RequList/selectQgId", {
+            type: "get",
+            dataType: "json"
+        }).done(function (da) {
+            //循环
+            $.each(da, function (index, item) {
+                var str = "<option value='" + item.qgId + "'>" + item.qgId + "</option>";
+                $("#qgid").append(str);
+            })
+        }) 
+    }
+    function selectgysid() {
+        $.ajax("http://localhost:52645/api/RequList/selectGysId", {
+            type: "get",
+        }).done(function (da) {
+            //循环
+            $.each(da, function (index, item) {
+                var str = "<option value='" + item.gysId + "'>" + item.gysId + "</option>";
+                $("#gysid").append(str);
+            })
+        })
+    }
+
+
+    //添加
+    $("#add").click(function () {
+        var state = "";
+     
+        if ($("input[name='rad']").prop("checked") == true) {
+            state = 1;
+        }
+        else {
+            state = 0;
+        }
+        var obj = {
+            "CreateTime": $("#time").val().toString(),
+            "QID": $("#qgid").val().toString(),
+            "GysId": $("#gysid").val().toString(),
+            "IsShui": state.toString(),
+            "ShuiLv": $("#shuilv").val().toString(),
+            "Address": $("#address").val().toString(),
+            "BgName": $("#bgname").val().toString(),
+            "BgDept": $("#bgdept").val().toString(),
+        };
+
+        $.ajax("http://localhost:52645/api/RequList/AddPur", {
+            type: "post",
+            data: { m: obj },
+            dataType: "json",
+            accepts: "application/x-www-form-urlencoded",
+            contentType: "application/x-www-form-urlencoded"
+        }).done(function (da) {
+            if (da > 0) {
+                alert("添加成功");
+                window.location.href = "/PurShow/GetPurList";
+            }
+            else {
+                alert("添加失败");
+            }
+        })
+
+    })
+</script>
