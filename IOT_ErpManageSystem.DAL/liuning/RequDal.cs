@@ -33,7 +33,7 @@ namespace IOT_ErpManageSystem.DAL.liuning
                  new SqlParameter{ParameterName="@shren",SqlDbType=SqlDbType.VarChar,Value=shren,Direction=ParameterDirection.Input },
                  new SqlParameter{ParameterName="@pageindex",SqlDbType=SqlDbType.Int,Value=pageindex,Direction=ParameterDirection.Input },
                  new SqlParameter{ParameterName="@pagesize",SqlDbType=SqlDbType.Int,Value=pagesize,Direction=ParameterDirection.Input },
-                 new SqlParameter{ParameterName="@RowsCount",SqlDbType=SqlDbType.Int,Direction=ParameterDirection.Output },
+                 new SqlParameter{ParameterName="@rowCount",SqlDbType=SqlDbType.Int,Direction=ParameterDirection.Output },
             };
             DataTable tb = _dBHelper.ExecuteProc("RequProc", param, ref rowcount);
             string json = JsonConvert.SerializeObject(tb);
@@ -164,7 +164,7 @@ namespace IOT_ErpManageSystem.DAL.liuning
                    new SqlParameter{ParameterName="@bgname",SqlDbType=SqlDbType.VarChar,Value=bgname,Direction=ParameterDirection.Input },
                     new SqlParameter{ParameterName="@pageindex",SqlDbType=SqlDbType.Int,Value=pageindex,Direction=ParameterDirection.Input },
                      new SqlParameter{ParameterName="@pagesize",SqlDbType=SqlDbType.Int,Value=pagesize,Direction=ParameterDirection.Input },
-                      new SqlParameter{ParameterName="@RowsCount",SqlDbType=SqlDbType.Int,Direction=ParameterDirection.Output },
+                      new SqlParameter{ParameterName="@rowCount",SqlDbType=SqlDbType.Int,Direction=ParameterDirection.Output },
             };
             DataTable tb = _dBHelper.ExecuteProc("PurShowProc", param, ref rowcount);
             string json = JsonConvert.SerializeObject(tb);

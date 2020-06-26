@@ -63,7 +63,7 @@ namespace IOT_ErpManageSystem.DAL.DBHelper
         /// <param name="sqlParameters"></param>
         /// <param name="RowsCount"></param>
         /// <returns></returns>+
-        public DataTable ExecuteProc(string procName, SqlParameter[] sqlParameters, ref int RowsCount)
+        public DataTable ExecuteProc(string procName, SqlParameter[] sqlParameters, ref int rowCount)
         {
             DataTable tb = new DataTable();
             using (SqlConnection con = new SqlConnection(Connection))
@@ -75,7 +75,7 @@ namespace IOT_ErpManageSystem.DAL.DBHelper
                     cmd.Parameters.AddRange(sqlParameters);
                     SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                     adapter.Fill(tb);
-                    RowsCount = int.Parse(cmd.Parameters["@RowsCount"].Value.ToString());
+                    rowCount = int.Parse(cmd.Parameters["@rowCount"].Value.ToString());
                 }
             }
             return tb;
