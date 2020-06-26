@@ -32,6 +32,7 @@ namespace IOT_ErpManageSystem.API
         {
             services.AddControllers();
             services.AddSingleton<IGoodsBLL, GoodsBLL>();
+
             services.AddCors(options =>
             {
                 // Policy 名稱 CorsPolicy 是自訂的，可以自己改
