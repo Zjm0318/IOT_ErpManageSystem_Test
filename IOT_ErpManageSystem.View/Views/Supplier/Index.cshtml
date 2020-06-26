@@ -1,0 +1,192 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="layui-form-item">
+    <div class="layui-inline">
+        <label class="layui-form-label">供应商编号</label>
+        <div class="layui-input-inline">
+            <input type="text" id="BianHao" placeholder="请输入编号" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-inline">
+        <label class="layui-form-label">建档日期</label>
+        <div class="layui-input-inline">
+            <input type="date" id="CreateDate" placeholder="请输入建档日期" class="layui-input" />
+        </div>
+    </div>
+
+    <div class="layui-inline">
+        <label class="layui-form-label">供应商来源</label>
+        <div class="layui-input-inline">
+            <input type="text" id="LaiYuan" placeholder="请输入供应商来源" class="layui-input" />
+        </div>
+    </div>
+
+    <div class="layui-inline">
+        <label class="layui-form-label">负责人</label>
+        <div class="layui-input-inline">
+            <input type="text" id="FuZeRen" placeholder="请输入负责人" class="layui-input" />
+        </div>
+    </div>
+
+    <div class="layui-inline">
+        <label class="layui-form-label">单位名称</label>
+        <div class="layui-input-inline">
+            <input type="text" id="DanWeiName" placeholder="请输入单位名称" class="layui-input" />
+        </div>
+    </div>
+
+    <div class="layui-inline">
+        <label class="layui-form-label">品牌</label>
+        <div class="layui-input-inline">
+            <input type="text" id="PinPai" placeholder="请输入品牌" class="layui-input" />
+        </div>
+    </div>
+
+    <div class="layui-inline">
+        <label class="layui-form-label">经营范围</label>
+        <div class="layui-input-inline">
+            <input type="text" id="JingYinFanWei" placeholder="请输入经营范围" class="layui-input" />
+        </div>
+    </div>
+</div>
+
+<input type="button" id="Cha" value="搜索" style="background-color:forestgreen" class="layui-btn" />
+<input type="button" id="Add" value="添加" style="background-color:cornflowerblue" class="layui-btn layui-btn-normal" />
+
+<table class="layui-table">
+    <colgroup>
+        <col width="150">
+        <col width="200">
+        <col>
+    </colgroup>
+    <thead>
+        <tr style="background-color:gainsboro">
+            <th>供应商编号</th>
+            <th>供应商来源</th>
+            <th>单位名称</th>
+            <th>品牌</th>
+            <th>经营范围</th>
+            <th>负责引进人</th>
+            <th>建档日期</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+</table>
+
+<div>
+    <a id="First" class="layui-form-label">首页</a>
+    <a id="Per" class="layui-form-label">上一页</a>
+    <a id="Next" class="layui-form-label">下一页</a>
+    <a id="Last" class="layui-form-label">尾页</a>
+</div>
+
+<script>
+    var PageIndex = 1;
+    var PageSize = 3;
+    var count = 0;
+
+    //页面初始化
+    $(function () {
+        Show(PageIndex); //显示
+    })
+
+    //显示
+    function Show(PageIndex) {
+        var obj = {
+            "PageIndex": PageIndex,
+            "PageSize": PageSize,
+            "YJfzr": $("#FuZeRen").val(),
+            "GID": $("#BianHao").val(),
+            "GLaiYuan": $("#LaiYuan").val(),
+            "DwName": $("#DanWeiName").val(),
+            "PinPai": $("#PinPai").val(),
+            "JYRange": $("#JingYinFanWei").val(),
+            "CreateDate": $("#CreateDate").val()
+        };
+        //显示
+        $.ajax({
+            url: "http://localhost:52645/api/Supplier/GetSuppliers",
+            type: "post",
+            dataType: "json",
+            data: obj,
+            success: function (d) {
+                count = d.rowCount;
+                //清空
+                $("#tbody").empty();
+                //循环
+                $(d.list).each(function (index, item) {
+                    var str = '<tr>' +
+                        '<td>' + item.gid + '</td>' +
+                        '<td>' + item.gLaiYuan + '</td>' +
+                        '<td>' + item.dwName + '</td>' +
+                        '<td>' + item.pinPai + '</td>' +
+                        '<td>' + item.jyRange + '</td>' +
+                        '<td>' + item.yJfzr + '</td>' +
+                        '<td>' + item.createDate.split('T')[0] + '</td>' +
+                        '<td><input type="button" class="layui-btn layui-btn-primary" onclick="Edit(\'' + item.gysId + '\')" value="编辑" /></td>' +
+                        '</tr >';
+                    $("#tbody").append(str);
+                })
+            }
+        })
+    }
+
+    //搜索
+    $("#Cha").click(function () {
+        PageIndex = 1;
+        Show(PageIndex);
+    })
+
+    //首页
+    $("#First").click(function () {
+        PageIndex = 1;
+        Show(PageIndex);
+    })
+    //上一页
+    $("#Per").click(function () {
+        if (PageIndex <= 1) {
+            alert("已经第一页了");
+            return;
+        }
+        else {
+            PageIndex = PageIndex - 1;
+            Show(PageIndex);
+        }
+
+    })
+    //下一页
+    $("#Next").click(function () {
+        if (PageIndex >= count) {
+            alert("已经最后一页了");
+            return
+        }
+        else {
+            PageIndex = PageIndex + 1;
+            Show(PageIndex);
+        }
+
+    })
+    //尾页
+    $("#Last").click(function () {
+        PageIndex = count;
+        Show(PageIndex);
+    })
+
+    //添加
+    $("#Add").click(function () {
+        window.location.href = "Add";
+    })
+
+    //编辑
+    function Edit(id) {
+        window.location.href = "Edit?id=" + id;
+    }
+
+</script>
+
+

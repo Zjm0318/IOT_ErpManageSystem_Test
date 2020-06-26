@@ -10,9 +10,9 @@ namespace IOT_ErpManageSystem.Models
 		 public Guid  ID { get; set; }
 		 public DateTime  CreateTime { get; set; }
 		 public DateTime  TuiHuoTime { get; set; }
-		 public Guid  GID { get; set; }
-		 public string  THAddress { get; set; }
-		 public string  THLxr { get; set; }
-		 public string  TCangKu { get; set; }
+		 public Guid GysID { get; set; }
+		 public string  THFqr { get; set; }
+		 public Guid  TCangKu { get; set; }
+		public string States { get; set; }
 	 }
 }

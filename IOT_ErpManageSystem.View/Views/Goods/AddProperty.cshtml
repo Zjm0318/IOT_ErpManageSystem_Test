@@ -1,0 +1,182 @@
+﻿
+@{
+    ViewData["Title"] = "AddProperty";
+}
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+<link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+<link href="~/layuiadmin/style/admin.css" rel="stylesheet" />
+
+<h1>AddProperty</h1>
+<table class="layui-table">
+    <tr><td><h3><label style="color:red">*</label>商品名称</h3></td></tr>
+    <tr>
+        <td>
+            <select id="name" onchange="showsc()" class="layui-select" style="width:150px">
+                <option value="">选择属性类别</option>
+                
+            </select>
+        </td>
+    </tr>
+</table>
+
+<div style="width:100%;height:300px">
+    <h4><label style="color:red">*</label>商品规格</h4><hr />
+    <div id="size">
+        <label>尺码：</label>&nbsp;&nbsp;&nbsp;&nbsp;
+    </div>
+    <div id="color">
+        <label>颜色：</label>&nbsp;&nbsp;&nbsp;&nbsp;
+    </div>
+    <div class="layui-input-inline">
+        <input id="colors" type="text" placeholder="请输入颜色" class="layui-input search_input">
+    </div>
+    <a class="layui-btn layui-btn-normal newsAdd_btn" onclick="addcolor();"><i class="layui-icon layui-icon-add-1"></i> 增加</a>
+</div>
+<a class="layui-btn layui-btn-normal newsAdd_btn" onclick="addproperty();"><i class="layui-icon layui-icon-add-1"></i> 增加</a>
+
+<div style="padding: 15px; background-color: #F2F2F2;">
+    <table class="layui-table">
+        <tr>
+            <th>尺码</th>
+            <th>颜色</th>
+            <th>销售价格</th>
+            <th>商品库存</th>
+            <th>库存预警值</th>
+            <th>SKU编号</th>
+            <th>操作</th>
+        </tr>
+        <tbody id="tb">
+        </tbody>
+    </table>
+</div>
+
+<script>
+
+    //绑定商品名称
+    $.ajax("http://localhost:52645/api/Goods/ShowName",
+        {
+            type: "get",
+            dataType: "json"
+        }).done(function (data) {
+            $.each(data, function (index, item) {
+                var option = '<option value=\"' + item.id + '\">' + item.goodsName + '</option>';
+                $("#name").append(option);
+            })
+        })
+
+    //绑定尺码
+    $.ajax("http://localhost:52645/api/Goods/ShowSize",
+        {
+            type: "get",
+            dataType: "json"
+        }).done(function (data) {
+            $.each(data, function (index, item) {
+
+                var size =
+                    "<input id='rasize' type='radio' name='size' value=\'"+item.sId+"\' /><label>" + item.size + "</label>&nbsp;&nbsp;&nbsp;&nbsp;";
+                $("#size").append(size);
+            })
+        })
+
+    //绑定颜色
+    $.ajax("http://localhost:52645/api/Goods/ShowColors",
+        {
+            type: "get",
+            dataType: "json"
+        }).done(function (data) {
+            $.each(data, function (index, item) {
+                var color =
+                    "<input id='racolor' type='radio' name='color' value=\'" + item.cId + "\' /><label>" + item.color + "</label>&nbsp;&nbsp;<a onclick='del(\"" + item.cId + "\")'>删除</a>&nbsp;&nbsp;&nbsp;&nbsp;";
+                $("#color").append(color);
+            })
+        })
+
+    //添加属性
+    function addproperty() {
+
+        var obj =
+        {
+            "GoodsId": $("#name").val().toString(),
+            "CId": $("input[name='color']:checked").val().toString(),
+            "SId": $("input[name='size']:checked").val().toString()
+        };
+
+        $.ajax("http://localhost:52645/api/Goods/AddProperty",
+            {
+                type: "post",
+                data: obj,
+                dataType: "json",
+                contentType: "application/x-www-form-urlencoded"
+            }).done(function (code) {
+                if (code > 0) {
+                    alert("添加成功!");
+                    location.href = "Index";
+                }
+                else {
+                    alert("添加失败!");
+                }
+            })
+    }
+
+    //删除颜色
+    function del(CId) {
+        if (confirm("确定删除吗?")) {
+            $.ajax("http://localhost:52645/api/Goods/DelColors",
+                {
+                    type: "get",
+                    data: CId
+                }).done(function (code) {
+                    if (code > 0) {
+                        alert("删除成功!");
+                        location.reload();
+                    }
+                    else {
+                        alert("删除失败!");
+                    }
+                })
+        }      
+    }
+
+    //添加颜色
+    function addcolor() {
+        $.ajax("http://localhost:52645/api/Goods/AddColors",
+            {
+                type: "post",
+                data: { "Color": $("#colors").val().toString() },
+                dataType: "json",
+                contentType: "application/x-www-form-urlencoded"
+            }).done(function (code) {
+                if (code > 0) {
+                    alert("添加成功!");
+                    location.reload();
+                }
+                else {
+                    alert("添加失败!");
+                }
+            })
+    }
+
+    //显示商品颜色+尺码
+    function showsc() {
+        var Id = $("#name").val();
+
+        $.ajax("http://localhost:52645/api/Goods/ShowGoodsSC?Id=" + Id,
+            {
+                type: "get",
+            }).done(function (data) {
+                $.each(data, function (index,item) {
+                    var list = "<tr>" +
+                        "<td>" + item.size + "</td>" +
+                        "<td>" + item.color + "</td>" +
+                        "<td>" + item.goodsPrice + "</td>" +
+                        "<td>" + item.goodsStock + "</td>" +
+                        "<td>" + item.stockYJ + "</td>" +
+                        "<td>" + item.sku + "</td>" +
+                        '<td><input id="Button1" type="button" value="删除" class="layui - btn layui - icon - delete" /></td>' +
+                        "</tr>";
+                    $("#tb").append(list);
+                })
+            })
+    }
+</script>
