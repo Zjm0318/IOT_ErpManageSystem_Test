@@ -7,10 +7,7 @@ using IOT_ErpManageSystem.DAL.IDBHelp;
 using IOT_ErpManageSystem.BLL.Supplier;
 using IOT_ErpManageSystem.BLL.TuiHuo;
 using IOT_ErpManageSystem.DAL.DBHelper;
-using IOT_ErpManageSystem.DAL.IDBHelp;
 using IOT_ErpManageSystem.BLL.liuning;
-using IOT_ErpManageSystem.DAL.DBHelper;
-using IOT_ErpManageSystem.DAL.IDBHelp;
 using IOT_ErpManageSystem.DAL.liuning;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -62,7 +59,7 @@ namespace IOT_ErpManageSystem.API
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseCors("cors");
+            app.UseCors("ZXL");
             app.UseRouting();
 
             app.UseAuthorization();
