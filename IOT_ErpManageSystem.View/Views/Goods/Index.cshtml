@@ -19,17 +19,17 @@
                 </a>
             </div>
             <div class="layui-inline">
-                <a class="layui-btn layui-btn-danger batchDel" onclick="getDatas();"><i class="layui-icon layui-icon-delete"></i> 批量删除</a>
+                <a class="layui-btn layui-btn-danger batchDel" onclick="delDatas();"><i class="layui-icon layui-icon-delete"></i> 批量删除</a>
             </div>
             <div class="layui-inline">
                 <div class="layui-input-inline">
-                    <input id="goodsId" type="text" placeholder="请输入关键字" class="layui-input search_input">
+                    <input id="goodsId" type="text" placeholder="请输入商品编号" class="layui-input search_input">
                 </div>
                 <div class="layui-input-inline">
-                    <input id="goodsName" type="text" placeholder="请输入关键字" class="layui-input search_input">
+                    <input id="goodsName" type="text" placeholder="请输入商品名称" class="layui-input search_input">
                 </div>
                 <div class="layui-input-inline">
-                    <input id="goodsBrand" type="text" placeholder="请输入关键字" class="layui-input search_input">
+                    <input id="goodsBrand" type="text" placeholder="请输入商品品牌" class="layui-input search_input">
                 </div>
                 <a class="layui-btn search_btn" onclick="searchData();"><i class="layui-icon layui-icon-search"></i> 查询</a>
             </div>
@@ -56,12 +56,20 @@
     </table>
 </div>
 <div class="page-item">
-    <a id="first">首页</a>
-    <a id="up">上一页</a>
-    <a id="next">下一页</a>
-    <a id="end">尾页</a>
+    <button type="button" id="first" class="layui-btn layui-btn-sm layui-btn-primary">
+        <i class="layui-icon">&#xe65a;</i>
+    </button>
+    <button type="button" id="up" class="layui-btn layui-btn-sm layui-btn-primary">
+        <i class="layui-icon">&#xe603;</i>
+    </button>
+    <button type="button" id="next" class="layui-btn layui-btn-sm layui-btn-primary">
+        <i class="layui-icon">&#xe602;</i>
+    </button>
+    <button type="button" id="end" class="layui-btn layui-btn-sm layui-btn-primary">
+        <i class="layui-icon">&#xe65b;</i>
+    </button>
 </div>
-<img src="file:///D:\学习文件夹\实训\实训一\项目\IOT_ErpManageSystem.API\wwwroot\Img\1.jpg" />
+
 <script>
     var pageIndex = 1;
     var pageSize = 3;
@@ -73,7 +81,7 @@
         Fenye();
     });
 
-    
+
     //商品显示
     function Show(pageIndex) {
         var obj = {
@@ -101,21 +109,21 @@
         $.each(data, function (index, item) {
             var id = item.id.toString();
             var list = "<tr>" +
-                '<td><input id="Checkbox1" class="check" type="checkbox" /></td>' +
+                '<td><input id="Checkbox1" class="check" value="' + item.id + '" type="checkbox" /></td>' +
                 "<td>" + item.goodsId + "</td>" +
                 "<td>" + item.goodsName + "</td>" +
-                "<td><img src='http://localhost:52649" + item.goodsImg + "' /></td>" +
+                "<td><img src=" + item.goodsImg + " /></td>" +
                 "<td>￥" + item.goodsPrices + "</td>" +
                 "<td>" + item.goodsBrand + "</td>" +
                 "<td>" + item.color + "/" + item.size + "</td>" +
                 "<td>剩余：" + item.goodsStock + "</td>";
             if (item.goodsState == 0) {
                 list += '<td><input id="Button1" type="button" class="layui-btn layui-btn-normal" value="上架中" /></td>';
-                list += '<td><input id="Button1" type="button" class="layui-btn layui-btn-warm" value="编辑" /><input id="Button1" type="button" value="下架" onclick=down(\'' + id + '\') class="layui-btn layui-btn-danger" /></td>';
+                list += '<td><input id="Button1" type="button" class="layui-btn layui-btn-warm" onclick=del(\'' + id + '\') value="删除" /><input id="Button1" type="button" value="下架" onclick=down(\'' + id + '\') class="layui-btn layui-btn-danger" /></td>';
             }
             else {
                 list += '<td><input id="Button1" type="button" value="下架" class="layui-btn layui-btn-danger" /></td>';
-                list += '<td><input id="Button1" type="button" class="layui-btn layui-btn-warm" value="编辑" /><input id="Button1" type="button" value="下架" class="layui-btn layui-btn-disabled" onclick=down(\'' + id + '\') disabled="disabled" /></td>';
+                list += '<td><input id="Button1" type="button" class="layui-btn layui-btn-warm" onclick=del(\'' + id + '\') value="删除" /><input id="Button1" type="button" value="下架" class="layui-btn layui-btn-disabled" onclick=down(\'' + id + '\') disabled="disabled" /></td>';
             }
             list += "</tr>";
             $("#tb").append(list);
@@ -161,7 +169,7 @@
 
     //查询
     function searchData() {
-        Show(pageIndex);
+        Show(pageIndex = 1);
     }
 
     //下架
@@ -183,6 +191,25 @@
         }
     }
 
+    //删除
+    function del(id) {
+        if (confirm("确定删除吗?")) {
+            $.ajax("http://localhost:52645/api/Goods/DelGoodsInfo",
+                {
+                    type: "get",
+                    data: { Id: id }
+                }).done(function (code) {
+                    if (code > 0) {
+                        alert("删除成功!");
+                        location.reload();
+                    }
+                    else {
+                        alert("删除失败!");
+                    }
+                })
+        }
+    }
+
     //全选
     function Page() {
         $("#Checkall").click(function () {
@@ -194,4 +221,40 @@
             }
         });
     };
+
+    //批量删除
+    function delDatas() {
+        var ids = "";
+
+        if (ids == "") {
+            alert("请选择要删除的信息!");
+        }
+        else {
+            $(".check").each(function (index, item) {
+                if ($(item).prop("checked") == true) {
+                    ids = ids + $(item).val() + ",";
+                }
+            })
+            ids = ids.substring(0, ids.length - 1);
+
+            if (confirm("确定删除吗?")) {
+                $.ajax("http://localhost:52645/api/Goods/DelGoodsInfo",
+                    {
+                        type: "get",
+                        data: { Id: ids }
+                    }).done(function (code) {
+                        if (code > 0) {
+                            alert("删除成功!");
+                            $(".check:checked").each(function (index, i) {
+                                $(i).parent().parent().remove();
+                            })
+                        }
+                        else {
+                            alert("删除失败!");
+                        }
+                    })
+            }
+        }
+    }
+
 </script>

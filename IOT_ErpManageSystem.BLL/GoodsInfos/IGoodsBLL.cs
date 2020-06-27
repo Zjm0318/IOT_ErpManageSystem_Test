@@ -18,6 +18,9 @@ namespace IOT_ErpManageSystem.BLL.GoodsInfo
         //修改状态
         int UpdateState(string Id);
 
+        //删除信息
+        int DelGoodsInfo(string Id);
+
         #endregion
 
         #region 商品添加接口

@@ -49,6 +49,12 @@ namespace IOT_ErpManageSystem.API.Controllers.GoodsInfo
             return goodsBLL.UpdateState(Id);
         }
 
+        //删除商品信息
+        [HttpGet]
+        public int DelGoodsInfo(string Id)
+        {
+            return goodsBLL.DelGoodsInfo(Id);
+        }
         #endregion
 
         #region 添加商品
