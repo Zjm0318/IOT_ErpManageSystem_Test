@@ -36,7 +36,6 @@
     <tbody id="body">
     </tbody>
     <tr>
-        <td><input type="checkbox" id="checkbox" />全选</td>
         <td><input type="button" id="zhipai" value="指派" class="layui-btn" /></td>
         <td><input type="button" id="chehui" value="撤回" class="layui-btn" /></td>
     </tr>
@@ -84,8 +83,8 @@
         //循环
         $.each(da, function (index, item) {
             var str = "<tr>"
-                + "<td><input type='radio' value='"+item.qgId+"' /></td>"
-                + "<td>" + item.createDate.toString("yyyy-MM-dd") + "</td>"
+                + "<td><input type='radio' value='"+item.qgId+"' name='rad'  /></td>"
+                + "<td>" + item.createDate.substring(0,10) + "</td>"
                 + "<td>" + item.qId + "</td>"
             if (item.states == "0") {
                 str += "<td> 未审核</td>"
@@ -163,25 +162,25 @@
         })
     }
 
-    //全选反选
-    $("#checkbox").click(function () {
-        if ($(this).prop("checked") == true) {
-            $("input[type='radio']").prop("checked", true);
-        }
-        else {
-            $("input[type='radio']").prop("checked", false);
-        }
-    })
+    ////全选反选
+    //$("#checkbox").click(function () {
+    //    if ($(this).prop("checked") == true) {
+    //        $("input[type='radio']").prop("checked", true);
+    //    }
+    //    else {
+    //        $("input[type='radio']").prop("checked", false);
+    //    }
+    //})
 
 
     //指派
     $("#zhipai").click(function () {
-        QgId = $("input[type='radio']:checked").val();
-        if (QgId == null) {
-            alert("请选择要指派的请购单");
+        QgId = $("input[type='radio']:checked").val();   
+        if (QgId != null) {
+            window.location.href = "/RequShow/GetRoleList?QgId=" + QgId;
         }
         else {
-            window.location.href = "/RequShow/GetRoleList?QgId=" + QgId;
+            alert("请选择要指派的请购单");
         }  
     })
 

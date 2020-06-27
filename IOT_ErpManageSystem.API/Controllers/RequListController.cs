@@ -133,6 +133,7 @@ namespace IOT_ErpManageSystem.API.Controllers
                 list = list,
                 rowcount=code
             };
+          
 
             return model;
         }
@@ -212,6 +213,7 @@ namespace IOT_ErpManageSystem.API.Controllers
         public List<Models.GoodsInfo> GetChaGoodsID()
         {
             List<Models.GoodsInfo> list = _IRequBLL.GetGoodsId();
+           
             return list;
         }
         //添加请购单,采购单与商品的中间表数据

@@ -148,6 +148,7 @@ namespace IOT_ErpManageSystem.BLL.liuning
         public int AddRequGoods(string QgId, string GId)
         {
             return _IRequDal.AddRequGoods(QgId,GId);
+           
         }
 
         //根据ID删除相关的商品信息

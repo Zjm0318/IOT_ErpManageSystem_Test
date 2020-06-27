@@ -37,7 +37,6 @@
     <tbody id="body">
     </tbody>
     <tr>
-        <td><input type="checkbox" id="checkbox" />全选</td>
         <td><input type="button" id="zhipai" value="指派" class="layui-btn" /></td>
         <td><input type="button" id="chehui" value="撤回" class="layui-btn" /></td>
     </tr>
@@ -77,8 +76,8 @@
 
         $.each(da, function (index,item) {
             var str = "<tr>"
-                + "<td><input type='radio' value='" + item.id +"' /></td>"
-                + "<td>" + item.createTime.toString("yyyy-MM-dd") + "</td>"
+                + "<td><input type='radio' value='" + item.id +"' name='rad' /></td>"
+                + "<td>" + item.createTime.substring(0, 10) + "</td>"
                 + "<td>" + item.cid + "</td>"
             if (item.isState == "0") {
                 str+= "<td>待分配</td>"
@@ -131,15 +130,7 @@
         show(pageindex);
     })
 
-    //全选反选
-    $("#checkbox").click(function () {
-        if ($(this).prop("checked") == true) {
-            $("input[type='radio']").prop("checked", true);
-        }
-        else {
-            $("input[type='radio']").prop("checked", false);
-        }
-    })
+   
     
 
     //审核通过
