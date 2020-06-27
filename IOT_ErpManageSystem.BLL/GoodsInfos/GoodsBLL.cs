@@ -52,6 +52,18 @@ namespace IOT_ErpManageSystem.BLL.GoodsInfo
         }
         #endregion
 
+        #region 删除商品信息
+        public int DelGoodsInfo(string Id)
+        {
+            string procName = "DelGoodsInfo";
+            SqlParameter[] param = new SqlParameter[]
+            {
+                new SqlParameter{ ParameterName="@Id", DbType= DbType.String, Direction= ParameterDirection.Input,Value=Id }
+            };
+            return dBHelper.ExecuteNonQueryProc(procName, param);
+        }
+        #endregion
+
         #endregion
 
         #region 商品添加模块
@@ -230,7 +242,7 @@ namespace IOT_ErpManageSystem.BLL.GoodsInfo
                 new SqlParameter{ ParameterName="@JinHPrice", DbType= DbType.Decimal, Direction= ParameterDirection.Input,Value=m.JinHPrice }
             };
             return dBHelper.ExecuteNonQueryProc(procName, param);
-        }
+        }      
         #endregion
 
         #endregion

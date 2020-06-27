@@ -20,11 +20,12 @@ namespace IOT_ErpManageSystem.BLL.TuiHuo
         //显示退货单
         public List<TuiHuo> GetTuiHuos(TuiHuoModel m,ref int rowCount)
         {
+            string date = m.CreateDate;
             //存储过程名称
             string proc = "TH_TuiHuo";
             SqlParameter[] parameters = new SqlParameter[] {
                 new SqlParameter{ ParameterName="@State",Value=m.States,DbType=DbType.String,Direction=ParameterDirection.Input },
-                new SqlParameter{ ParameterName="@CreateTime",Value=m.CreateDate,DbType=DbType.DateTime,Direction=ParameterDirection.Input },
+                new SqlParameter{ ParameterName="@CreateTime",Value=date,DbType=DbType.String,Direction=ParameterDirection.Input },
                 new SqlParameter{ ParameterName="@GysName",Value=m.DwName,DbType=DbType.String,Direction=ParameterDirection.Input },
                 new SqlParameter{ ParameterName="@CangKu",Value=m.StorageName,DbType=DbType.String,Direction=ParameterDirection.Input },
                 new SqlParameter{ ParameterName="@PageIndex",Value=m.PageIndex,DbType=DbType.Int32,Direction=ParameterDirection.Input },
