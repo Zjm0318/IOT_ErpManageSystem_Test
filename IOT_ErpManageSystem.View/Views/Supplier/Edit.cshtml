@@ -5,101 +5,96 @@
 
 <input type="hidden" value="@ViewBag.id" id="id" />
 <input type="hidden" id="lid" />
-<h2>发起信息</h2>
-<table class="table">
-    <tr>
-        <td><span style="color:red">*</span>引进负责人</td>
-        <td>
-            <input type="text" id="Name" />
-        </td>
-    </tr>
-    <tr>
-        <td>供应商编号</td>
-        <td>
-            <input type="text" id="BianHao" />
-        </td>
-    </tr>
-    <tr>
-        <td><span style="color:red">*</span>供应商来源</td>
-        <td>
-            <input type="text" id="LaiYuan" />
-        </td>
-    </tr>
-</table>
-<h2>公司信息</h2>
-<table class="table">
-    <tr>
-        <td><span style="color:red">*</span>单位名称</td>
-        <td>
-            <input type="text" id="DanWei" />
-        </td>
-        <td>供方简称</td>
-        <td>
-            <input type="text" id="JianCheng" />
-        </td>
-    </tr>
-    <tr>
-        <td><span style="color:red">*</span>品牌</td>
-        <td>
-            <input type="text" id="PinPai" />
-        </td>
-        <td><span style="color:red">*</span>经营范围</td>
-        <td>
-            <input type="text" id="FanWei" />
-        </td>
-    </tr>
-</table>
-<h2>联系信息</h2>
-<table class="table">
-    <tr>
-        <td><span style="color:red">*</span>联系人</td>
-        <td>
-            <input type="text" id="LianXiRen" />
-        </td>
-        <td>职业</td>
-        <td>
-            <input type="text" id="ZhiYe" />
-        </td>
-        <td><span style="color:red">*</span>手机</td>
-        <td>
-            <input type="text" id="Phone" />
-        </td>
-    </tr>
-    <tr>
-        <td>固定电话</td>
-        <td>
-            <input type="text" id="DianHua" />
-        </td>
-        <td>传真</td>
-        <td>
-            <input type="text" id="ChuanZhen" />
-        </td>
-        <td>邮件</td>
-        <td>
-            <input type="text" id="Email" />
-        </td>
-    </tr>
-    <tr>
-        <td>QQ</td>
-        <td>
-            <input type="text" id="QQ" />
-        </td>
-        <td>微信</td>
-        <td>
-            <input type="text" id="WeiXin" />
-        </td>
-        <td><span style="color:red">*</span>地址</td>
-        <td>
-            <input type="text" id="DiZhi" />
-        </td>
-    </tr>
-    <tr>
-        <td>网址</td>
-        <td>
-            <input type="text" id="Url" />
-        </td>
-    </tr>
-</table>
+
+<div class="layui-form-item">
+    <h2>发起信息</h2>
+    <div class="layui-inline">
+        <label class="layui-form-label"><span style="color:red">*</span>引进负责人</label>
+        <div class="layui-input-inline">
+            <input type="text" id="Name" required placeholder="请输入引进负责人" class="layui-input" />
+        </div>
+        <label class="layui-form-label">供应商编号</label>
+        <div class="layui-input-inline">
+            <input type="text" id="BianHao" placeholder="请输入供应商编号" class="layui-input" />
+        </div>
+        <label class="layui-form-label"><span style="color:red">*</span>供应商来源</label>
+        <div class="layui-input-inline">
+            <input type="text" id="LaiYuan" required placeholder="请输入供应商来源" class="layui-input" />
+        </div>
+    </div>
+    <h2>公司信息</h2>
+    <div class="layui-inline">
+        <label class="layui-form-label"><span style="color:red">*</span>单位名称</label>
+        <div class="layui-input-inline">
+            <input type="text" id="DanWei" required placeholder="请输入单位名称" class="layui-input" />
+        </div>
+        <label class="layui-form-label">供方简称</label>
+        <div class="layui-input-inline">
+            <input type="text" id="JianCheng" placeholder="请输入单位名称" class="layui-input" />
+        </div>
+        <label class="layui-form-label"><span style="color:red">*</span>品牌</label>
+        <div class="layui-input-inline">
+            <input type="text" id="PinPai" required placeholder="请输入品牌" class="layui-input" />
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label"><span style="color:red">*</span>经营范围</label>
+            <div class="layui-input-inline">
+                <input type="text" id="FanWei" required placeholder="请输入经营范围" class="layui-input" />
+            </div>
+        </div>
+    </div>
+    <h2>联系信息</h2>
+    <div class="layui-inline">
+        <div class="layui-inline">
+            <label class="layui-form-label"><span style="color:red">*</span>联系人</label>
+            <div class="layui-input-inline">
+                <input type="text" id="LianXiRen" required placeholder="请输入联系人" class="layui-input" />
+            </div>
+            <label class="layui-form-label">职业</label>
+            <div class="layui-input-inline">
+                <input type="text" id="ZhiYe" placeholder="请输入职业" class="layui-input" />
+            </div>
+            <label class="layui-form-label"><span style="color:red">*</span>手机</label>
+            <div class="layui-input-inline">
+                <input type="text" id="Phone" required placeholder="请输入手机" class="layui-input" />
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">固定电话</label>
+            <div class="layui-input-inline">
+                <input type="text" id="DianHua" placeholder="请输入固定电话" class="layui-input" />
+            </div>
+            <label class="layui-form-label">传真</label>
+            <div class="layui-input-inline">
+                <input type="text" id="ChuanZhen" placeholder="请输入传真" class="layui-input" />
+            </div>
+            <label class="layui-form-label">邮件</label>
+            <div class="layui-input-inline">
+                <input type="text" id="Email" placeholder="请输入邮件" class="layui-input" />
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">QQ</label>
+            <div class="layui-input-inline">
+                <input type="text" id="QQ" placeholder="请输入QQ" class="layui-input" />
+            </div>
+            <label class="layui-form-label">微信</label>
+            <div class="layui-input-inline">
+                <input type="text" id="WeiXin" placeholder="请输入微信" class="layui-input" />
+            </div>
+            <label class="layui-form-label"><span style="color:red">*</span>地址</label>
+            <div class="layui-input-inline">
+                <input type="text" id="DiZhi" required placeholder="请输入地址" class="layui-input" />
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">网址</label>
+            <div class="layui-input-inline">
+                <input type="text" id="Url" placeholder="请输入网址" class="layui-input" />
+            </div>
+        </div>
+    </div>
+</div>
 <input type="button" id="Back" value="返回" style="background-color:gray" class="layui-btn layui-btn-normal" />
 <input type="button" id="Save" value="修改" style="background-color:cornflowerblue" class="layui-btn layui-btn-normal" />
 
