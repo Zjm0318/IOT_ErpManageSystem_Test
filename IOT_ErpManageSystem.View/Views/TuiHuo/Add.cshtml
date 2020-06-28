@@ -35,7 +35,7 @@
 
 <div>
     <h2>商品添加</h2>
-    <input type="button" value="添加商品" style="width:100px;float:right;" onClick="Javascript:window.open('/TuiHuo/AddGoods','','width=560,height=379;margin:auto')" class="layui-btn" />
+    <input type="button" value="添加商品" style="width:100px;float:right;" onClick="AddGoods()" class="layui-btn" />
 </div>
 
 <table class="layui-table">
@@ -184,4 +184,78 @@
             })
         }
     }
+
+    //弹出层添加商品
+    function AddGoods() {
+        ShowAdd();
+    }
+
+    function ShowAdd() {
+        layui.use('layer', function () {
+            var layer = layui.layer;
+
+            //页面层
+            layer.open({
+                type: 1,
+                title: '添加商品',
+                area: ['500px', '300px'],
+                content: '<div style="width:500px;height:300px;margin:auto" >' +
+                    '<div class="layui-form-item"><div class="layui-inline">' +
+                    '<label class="layui-form-label">商品</label>' +
+                    '<div class="layui-input-inline">' +
+                    '<select id="GoodsName" required>' +
+                    '<option value="">请选择</option>' +
+                    '</select>' +
+                    '</div></div></div>' +
+                    '<input type="button" onclick="Save()" value="保存" style="background-color:cornflowerblue" class="layui-btn layui-btn-normal" /></div> ',
+            });
+        });
+        //显示商品
+        Goods();
+
+        //保存
+        function Save() {
+            Save();
+        }
+    }
+
+    //绑定商品下拉框
+    function Goods() {
+        $.ajax("http://localhost:52645/api/TuiHuo/GetGoods", {
+            type: "get",
+            dataType: "json",
+            success: function (d) {
+                //循环
+                $(d).each(function (index, item) {
+                    var str = '<option value="' + item.priceId + '">' + item.goodsName + '</option>';
+                    $("#GoodsName").append(str);
+                })
+            }
+        })
+    }
+
+    //添加商品
+    function Save() {
+        var id = $("#GoodsName").val();
+        $.ajax({
+            url: "http://localhost:52645/api/TuiHuo/AddGoods",
+            type: "post",
+            dataType: "text",
+            data: { id, id },
+            accepts: "application/x-www-form-urlencoded",
+            contentType: "application/x-www-form-urlencoded",
+            success: function (d) {
+                //判断
+                if (d > 0) {
+                    alert("添加成功!");
+                    window.location.reload(); //刷新父窗口中的网页
+                }
+                else {
+                    alert("添加失败!");
+                }
+            }
+        })
+    }
+
+    
 </script>
