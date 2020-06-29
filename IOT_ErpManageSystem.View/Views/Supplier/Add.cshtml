@@ -150,6 +150,10 @@
         if (obj1.Phone == '') {
             return alert("手机不能为空!");
         }
+        var re = /^1[34578]\d{9}$/;
+        if (!re.test(obj1.Phone)) {
+            return alert("请输入正确的手机号");
+        }
         //地址
         if (obj1.Addresss == '') {
             return alert("地址不能为空!");
