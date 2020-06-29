@@ -28,7 +28,7 @@ namespace IOT_ErpManageSystem.DAL.liuning
         {
             SqlParameter[] param = new SqlParameter[] {
                  new SqlParameter{ParameterName="@state",SqlDbType=SqlDbType.VarChar,Value=state,Direction=ParameterDirection.Input },
-                 new SqlParameter{ParameterName="@createtime",SqlDbType=SqlDbType.VarChar,Value=time,Direction=ParameterDirection.Input },
+                 new SqlParameter{ParameterName="@createtime",SqlDbType=SqlDbType.DateTime,Value=time,Direction=ParameterDirection.Input },
                  new SqlParameter{ParameterName="@qgren",SqlDbType=SqlDbType.VarChar,Value=qgren,Direction=ParameterDirection.Input },
                  new SqlParameter{ParameterName="@shren",SqlDbType=SqlDbType.VarChar,Value=shren,Direction=ParameterDirection.Input },
                  new SqlParameter{ParameterName="@pageindex",SqlDbType=SqlDbType.Int,Value=pageindex,Direction=ParameterDirection.Input },
@@ -159,7 +159,7 @@ namespace IOT_ErpManageSystem.DAL.liuning
         {
             SqlParameter[] param = new SqlParameter[] {
                 new SqlParameter{ParameterName="@state",SqlDbType=SqlDbType.VarChar,Value=state,Direction=ParameterDirection.Input },
-                 new SqlParameter{ParameterName="@time",SqlDbType=SqlDbType.VarChar,Value=time,Direction=ParameterDirection.Input },
+                 new SqlParameter{ParameterName="@time",SqlDbType=SqlDbType.DateTime,Value=time,Direction=ParameterDirection.Input },
                   new SqlParameter{ParameterName="@Gname",SqlDbType=SqlDbType.VarChar,Value=gname,Direction=ParameterDirection.Input },
                    new SqlParameter{ParameterName="@bgname",SqlDbType=SqlDbType.VarChar,Value=bgname,Direction=ParameterDirection.Input },
                     new SqlParameter{ParameterName="@pageindex",SqlDbType=SqlDbType.Int,Value=pageindex,Direction=ParameterDirection.Input },
@@ -228,7 +228,7 @@ namespace IOT_ErpManageSystem.DAL.liuning
         #endregion
 
         #region  查询请购单ID
-        public List<RequisitionOrder> selectQgIdProc()
+        public List<RequisitionOrder> SelectQgIdProc()
         {
             DataTable tb = _dBHelper.ExecuteProc("selectQgIdProc", null);
             string json = JsonConvert.SerializeObject(tb);
@@ -238,7 +238,7 @@ namespace IOT_ErpManageSystem.DAL.liuning
         #endregion
 
         #region  查询供应商ID
-        public List<SupplierInfo> selectGysIdProc()
+        public List<SupplierInfo> SelectGysIdProc()
         {
             DataTable tb = _dBHelper.ExecuteProc("selectGysIdProc", null);
             string json = JsonConvert.SerializeObject(tb);

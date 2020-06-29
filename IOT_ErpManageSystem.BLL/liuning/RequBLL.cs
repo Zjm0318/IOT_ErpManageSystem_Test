@@ -116,15 +116,15 @@ namespace IOT_ErpManageSystem.BLL.liuning
         }
 
         //查询请购单ID
-        public List<RequisitionOrder> selectQgIdProc()
+        public List<RequisitionOrder> SelectQgIdProc()
         {
-            return _IRequDal.selectQgIdProc();
+            return _IRequDal.SelectQgIdProc();
         }
 
         //查询供应商ID
-        public List<SupplierInfo> selectGysIdProc()
+        public List<SupplierInfo> SelectGysIdProc()
         {
-            return _IRequDal.selectGysIdProc();
+            return _IRequDal.SelectGysIdProc();
         }
 
         //添加采购单信息

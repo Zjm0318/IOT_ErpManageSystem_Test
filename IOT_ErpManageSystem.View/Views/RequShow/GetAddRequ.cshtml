@@ -7,10 +7,6 @@
 
 <table class="layui-table">
     <tr>
-        <td>请购创建日期</td>
-        <td><input type="text" id="time" /></td>
-    </tr>
-    <tr>
         <td>到货地址</td>
         <td><input type="text" id="address" /></td>
     </tr>
@@ -39,6 +35,19 @@
             "QgName": $("#qgname").val().toString(),
             "DeptName": $("#dept").val().toString(),
         };
+
+        if (obj.DhAddress == "") {
+            alert("请输入地址");
+            return;
+        }
+        if (obj.QgName == "") {
+            alert("请输入请购人姓名");
+            return;
+        }
+        if (obj.DeptName == "") {
+            alert("请输入部门名称");
+            return;
+        }
 
         $.ajax("http://localhost:52645/api/RequList/AddRequInfo", {
             type: "post",
