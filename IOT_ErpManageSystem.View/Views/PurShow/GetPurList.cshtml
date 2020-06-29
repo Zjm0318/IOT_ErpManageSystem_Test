@@ -74,31 +74,58 @@
     function showlist(da) {
         $("#body").empty();  //清空
 
-        $.each(da, function (index,item) {
-            var str = "<tr>"
-                + "<td><input type='radio' value='" + item.id +"' name='rad' /></td>"
-                + "<td>" + item.createTime.substring(0, 10) + "</td>"
-                + "<td>" + item.cid + "</td>"
+        $.each(da, function (index, item) {
+            var str = "";
             if (item.isState == "0") {
-                str+= "<td>待分配</td>"
+                str = "<tr>"
+                    + "<td><input type='radio' value='" + item.id + "' name='rad' /></td>"
+                    + "<td>" + item.createTime.substring(0, 10) + "</td>"
+                    + "<td>" + item.cid + "</td>"
+                    + "<td>待分配</td>"
+                    + "<td>" + item.gid + "</td>"
+                    + "<td>" + item.gLaiYuan + "</td>"
+                    + "<td>" + item.bgName + "</td>"
+                    + "<td>" + item.role_Name + "</td>"
+                    + "<td>" + item.cgShr + "</td>"
+                    + "<td>" + item.cwShr + "</td>"
+                    + "<td><input type='button' value='编辑' onclick='edit(\"" + item.cid + "\",\"" + item.id + "\")' class='layui-btn layui-btn-danger' />"
+                    + "<input type = 'button' value ='审核通过' class='layui-btn layui-btn-warm' onclick = 'Update1(\"" + item.id + "\")'/>"
+                    + "<input type = 'button' value ='审核不通过' class='layui-btn layui-btn-warm' onclick = 'Update2(\"" + item.id + "\")'/>"
+                    + "</td > "
+                    + "</tr>";
             }
             else if (item.isState == "1") {
-                str+= "<td>审核通过</td>"
+                str = "<tr>"
+                    + "<td><input type='radio' value='" + item.id + "' name='rad' /></td>"
+                    + "<td>" + item.createTime.substring(0, 10) + "</td>"
+                    + "<td>" + item.cid + "</td>"
+                    + "<td>审核通过</td>"
+                    + "<td>" + item.gid + "</td>"
+                    + "<td>" + item.gLaiYuan + "</td>"
+                    + "<td>" + item.bgName + "</td>"
+                    + "<td>" + item.role_Name + "</td>"
+                    + "<td>" + item.cgShr + "</td>"
+                    + "<td>" + item.cwShr + "</td>"
+                    + "<td><input type='button' value='编辑' onclick='edit(\"" + item.cid + "\",\"" + item.id + "\")' class='layui-btn layui-btn-danger' />"
+                    + "</td > "
+                    + "</tr>";
             }
             else {
-                str+= "<td>审核未通过</td>"
+                str = "<tr>"
+                    + "<td><input type='radio' value='" + item.id + "' name='rad' /></td>"
+                    + "<td>" + item.createTime.substring(0, 10) + "</td>"
+                    + "<td>" + item.cid + "</td>"
+                    + "<td>审核未通过</td>"
+                    + "<td>" + item.gid + "</td>"
+                    + "<td>" + item.gLaiYuan + "</td>"
+                    + "<td>" + item.bgName + "</td>"
+                    + "<td>" + item.role_Name + "</td>"
+                    + "<td>" + item.cgShr + "</td>"
+                    + "<td>" + item.cwShr + "</td>"
+                    + "<td><input type='button' value='编辑' onclick='edit(\"" + item.cid + "\",\"" + item.id + "\")' class='layui-btn layui-btn-danger' />"
+                    + "</td > "
+                    + "</tr>";
             }
-            str+="<td>" + item.gid + "</td>"
-                + "<td>" + item.gLaiYuan + "</td>"
-                + "<td>" + item.bgName + "</td>"
-                + "<td>" + item.role_Name + "</td>"
-                + "<td>" + item.cgShr + "</td>"
-                + "<td>" + item.cwShr + "</td>"
-                + "<td><input type='button' value='编辑' onclick='edit(\"" + item.cid + "\",\"" + item.id + "\")' class='layui-btn layui-btn-danger' />"
-                + "<input type = 'button' value ='审核通过' class='layui-btn layui-btn-warm' onclick = 'Update1(\"" + item.id + "\")'/>"
-                + "<input type = 'button' value ='审核不通过' class='layui-btn layui-btn-warm' onclick = 'Update2(\"" + item.id + "\")'/>"
-            +"</td > "
-                + "</tr>";
             $("#body").append(str);
         })   
     }

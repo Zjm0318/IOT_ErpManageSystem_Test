@@ -82,27 +82,49 @@
         
         //循环
         $.each(da, function (index, item) {
-            var str = "<tr>"
-                + "<td><input type='radio' value='"+item.qgId+"' name='rad'  /></td>"
-                + "<td>" + item.createDate.substring(0,10) + "</td>"
-                + "<td>" + item.qId + "</td>"
+            var str = "";
             if (item.states == "0") {
-                str += "<td> 未审核</td>"
+                str = "<tr>"
+                    + "<td><input type='radio' value='" + item.qgId + "' name='rad'  /></td>"
+                    + "<td>" + item.createDate.substring(0, 10) + "</td>"
+                    + "<td>" + item.qId + "</td>"
+                    + "<td> 未审核</td>"
+                    + "<td>" + item.qgName + "</td>"
+                    + "<td>" + item.role_Name + "</td>"
+                    + "<td>" + item.qgShr + "</td>"
+                    + "<td><input type='button' value='编辑' onclick='edit(\"" + item.qId + "\",\"" + item.qgId + "\")' class='layui-btn layui-btn-danger' />"
+                    + "<input type = 'button' value ='审核通过' class='layui-btn layui-btn-warm' onclick = 'Update1(\"" + item.qgId + "\")'/>"
+                    + "<input type = 'button' value ='审核不通过' class='layui-btn layui-btn-warm' onclick = 'Update2(\"" + item.qgId + "\")'/>"
+                    + "</td> "
+                    + "</tr>";
             }
             else if (item.states == "1") {
-                str += "<td>审核通过</td>"
+                str = "<tr>"
+                    + "<td><input type='radio' value='" + item.qgId + "' name='rad'  /></td>"
+                    + "<td>" + item.createDate.substring(0, 10) + "</td>"
+                    + "<td>" + item.qId + "</td>"
+                    + "<td> 审核通过</td>"
+                    + "<td>" + item.qgName + "</td>"
+                    + "<td>" + item.role_Name + "</td>"
+                    + "<td>" + item.qgShr + "</td>"
+                    + "<td><input type='button' value='编辑' onclick='edit(\"" + item.qId + "\",\"" + item.qgId + "\")' class='layui-btn layui-btn-danger' />"
+                    + "</td> "
+                    + "</tr>";
             }
             else {
-                str += "<td>审核未通过</td>"
+                str = "<tr>"
+                    + "<td><input type='radio' value='" + item.qgId + "' name='rad'  /></td>"
+                    + "<td>" + item.createDate.substring(0, 10) + "</td>"
+                    + "<td>" + item.qId + "</td>"
+                    + "<td> 审核未通过</td>"
+                    + "<td>" + item.qgName + "</td>"
+                    + "<td>" + item.role_Name + "</td>"
+                    + "<td>" + item.qgShr + "</td>"
+                    + "<td><input type='button' value='编辑' onclick='edit(\"" + item.qId + "\",\"" + item.qgId + "\")' class='layui-btn layui-btn-danger' />"
+                    + "</td> "
+                    + "</tr>";
             }
-            str+= "<td>" + item.qgName + "</td>"
-                + "<td>" + item.role_Name + "</td>"
-                + "<td>" + item.qgShr + "</td>"
-                + "<td><input type='button' value='编辑' onclick='edit(\"" + item.qId + "\",\"" + item.qgId+"\")' class='layui-btn layui-btn-danger' />"
-            +"<input type = 'button' value ='审核通过' class='layui-btn layui-btn-warm' onclick = 'Update1(\"" + item.qgId + "\")'/>"
-           + "<input type = 'button' value ='审核不通过' class='layui-btn layui-btn-warm' onclick = 'Update2(\"" + item.qgId + "\")'/>"
-           +"</td> "
-            +"</tr>";
+            
             $("#body").append(str);  //向尾部添加
         })
     }
