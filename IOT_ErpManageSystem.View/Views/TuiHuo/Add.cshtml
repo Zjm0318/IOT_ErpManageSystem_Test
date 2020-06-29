@@ -62,6 +62,8 @@
 <input type="button" id="Save" value="保存" style="background-color:cornflowerblue" class="layui-btn layui-btn-normal" />
 
 <script>
+    var s = 0;
+
     //页面初始化
     $(function () {
         CangKu();
@@ -122,6 +124,7 @@
                                 '</tr> ';
 
                     $("#tbody").append(str);
+                    s++;
                 })
             }
         })
@@ -140,25 +143,43 @@
             "THFqr": $("#FaQiRen").val(),
             "TCangKu": $("#CangKu").val(),
         };
-        //添加
-        $.ajax({
-            url: "http://localhost:52645/api/TuiHuo/AddTuiHuo",
-            type: "post",
-            dataType: "text",
-            data: { m: obj },
-            accepts: "application/x-www-form-urlencoded",
-            contentType: "application/x-www-form-urlencoded",
-            success: function (d) {
-                //判断
-                if (d > 0) {
-                    alert("添加成功!");
-                    window.location.href = "Index";
+        //判断
+        if (obj.TuiHuoTime == '') {
+            return alert("退货日期不能为空!");
+        }
+        if (obj.GysID == '') {
+            return alert("请选择供应商");
+        }
+        if (obj.THFqr == '') {
+            return alert("退货发起人不能为空!");
+        }
+        if (obj.TCangKu == '') {
+            return alert("请选择退货仓库");
+        }
+        if (s > 0) {
+            //添加
+            $.ajax({
+                url: "http://localhost:52645/api/TuiHuo/AddTuiHuo",
+                type: "post",
+                dataType: "text",
+                data: { m: obj },
+                accepts: "application/x-www-form-urlencoded",
+                contentType: "application/x-www-form-urlencoded",
+                success: function (d) {
+                    //判断
+                    if (d > 0) {
+                        alert("添加成功!");
+                        window.location.href = "Index";
+                    }
+                    else {
+                        alert("添加失败!");
+                    }
                 }
-                else {
-                    alert("添加失败!");
-                }
-            }
-        })
+            })
+        }
+        else {
+            alert("请先添加退货商品");
+        }
     })
 
     //删除

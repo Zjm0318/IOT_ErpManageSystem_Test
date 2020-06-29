@@ -122,6 +122,38 @@
             "Addresss": $("#DiZhi").val().toString(),
             "Url": $("#Url").val().toString()
         };
+        //判断 负责人
+        if (obj.YJfzr == '') {
+            return alert("引进负责人不能为空!");
+        }
+        //供应商来源
+        if (obj.GLaiYuan == '') {
+            return alert("供应商来源不能为空!");
+        }
+        //单位名称
+        if (obj.DwName == '') {
+            return alert("单位名称不能为空!");
+        }
+        //品牌
+        if (obj.PinPai == '') {
+            return alert("品牌不能为空!");
+        }
+        //经营范围
+        if (obj.JYRange == '') {
+            return alert("经营范围不能为空!");
+        }
+        //联系人
+        if (obj1.LxrName == '') {
+            return alert("联系人不能为空!");
+        }
+        //手机
+        if (obj1.Phone == '') {
+            return alert("手机不能为空!");
+        }
+        //地址
+        if (obj1.Addresss == '') {
+            return alert("地址不能为空!");
+        }
         //添加
         $.ajax({
             url: "http://localhost:52645/api/Supplier/AddSup",
@@ -143,7 +175,7 @@
         })
     })
 
-    //取消
+    //返回
     $("#Back").click(function () {
         window.location.href = "Index";
     })
