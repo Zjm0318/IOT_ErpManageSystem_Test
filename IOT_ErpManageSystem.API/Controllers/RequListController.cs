@@ -96,6 +96,7 @@ namespace IOT_ErpManageSystem.API.Controllers
         [HttpPost]
         public int AddRequInfo([FromForm]RequisitionInfo m)
         {
+            m.CreateDate = DateTime.Now;
             int flag = _IRequBLL.AddRequ(m);
             return flag;
         }
@@ -179,16 +180,16 @@ namespace IOT_ErpManageSystem.API.Controllers
 
         //查询请购单ID
         [HttpGet]
-        public List<RequisitionOrder> selectQgId()
+        public List<RequisitionOrder> SelectQgId()
         {
-            List<RequisitionOrder> list = _IRequBLL.selectQgIdProc();
+            List<RequisitionOrder> list = _IRequBLL.SelectQgIdProc();
             return list;
         }
         //查询供应商ID
         [HttpGet]
-        public List<SupplierInfo> selectGysId()
+        public List<SupplierInfo> SelectGysId()
         {
-            List<SupplierInfo> list = _IRequBLL.selectGysIdProc();
+            List<SupplierInfo> list = _IRequBLL.SelectGysIdProc();
             return list;
         }
         //添加采购单信息

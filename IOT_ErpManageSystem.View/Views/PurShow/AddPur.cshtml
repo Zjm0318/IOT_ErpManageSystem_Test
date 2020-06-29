@@ -7,8 +7,6 @@
 
 <table class="layui-table">
     <tr>
-        <td>采购单创建日期</td>
-        <td><input type="text" id="time" /></td>
         <td>对应请购单编号</td>
         <td>
             <select id="qgid">
@@ -23,13 +21,11 @@
                 <option value="请选择">请选择</option>
             </select>
         </td>
-        <td>供应商名称</td>
-        <td><input type="text" id="gysname" /></td>
     </tr>
     <tr>
         <td>商品是否含税</td>
         <td>
-            <input type="radio" name="rad" />含税
+            <input type="radio" name="rad"  checked="checked"/>含税
             <input type="radio" name="rad" />不含税
         </td>
         <td>商品税率</td>
@@ -71,6 +67,7 @@
             })
         }) 
     }
+    //绑定供应商ID
     function selectgysid() {
         $.ajax("http://localhost:52645/api/RequList/selectGysId", {
             type: "get",
@@ -104,6 +101,35 @@
             "BgName": $("#bgname").val().toString(),
             "BgDept": $("#bgdept").val().toString(),
         };
+
+        if (obj.CreateTime == "") {
+            alert("请输入时间");
+            return;
+        }
+        if (obj.QID == "请选择") {
+            alert("请选择请购单");
+            return;
+        }
+        if (obj.GysId == "请选择") {
+            alert("请选择供应商");
+            return;
+        }
+        if (obj.ShuiLv == "") {
+            alert("请输入税率");
+            return;
+        }
+        if (obj.Address == "") {
+            alert("请输入地址");
+            return;
+        }
+        if (obj.BgName == "") {
+            alert("请输入请购人名称");
+            return;
+        }
+        if (obj.BgDept == "") {
+            alert("请输入部门名称");
+            return;
+        }
 
         $.ajax("http://localhost:52645/api/RequList/AddPur", {
             type: "post",

@@ -43,7 +43,7 @@ namespace IOT_ErpManageSystem.DAL.liuning
 
         #region 采购单
         //采购单显示
-        List<PurChaseOrder> GetPurList(string state,string time,string gname,string bgname,int pageindex,int pagesize, ref int rowcount);
+        List<PurChaseOrder> GetPurList(string state, string time,string gname,string bgname,int pageindex,int pagesize, ref int rowcount);
 
         //审核通过
         int UpdPurState1(string Id);
@@ -57,9 +57,9 @@ namespace IOT_ErpManageSystem.DAL.liuning
         //反填采购信息
         List<PurChaseInfo> FanTPur(string CId);
         //查询请购单ID
-        List<RequisitionOrder> selectQgIdProc();
+        List<RequisitionOrder> SelectQgIdProc();
         //查询供应商ID
-        List<SupplierInfo> selectGysIdProc();
+        List<SupplierInfo> SelectGysIdProc();
         //添加采购单信息
         int AddPur(PurChaseInfo m);
         //显示请购单商品信息
