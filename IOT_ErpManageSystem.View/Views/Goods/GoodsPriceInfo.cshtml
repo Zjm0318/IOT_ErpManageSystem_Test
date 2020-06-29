@@ -6,6 +6,7 @@
 <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
 <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
 <link href="~/layuiadmin/style/admin.css" rel="stylesheet" />
+
 <h1>GoodsPriceInfo</h1>
 <style>
 
@@ -42,13 +43,17 @@
     }
 </style>
 
-
 <div class="layui-inline">
     <div class="layui-input-inline">
-        <input id="goodsId" type="text" placeholder="请输入关键字" class="layui-input search_input">
+        <input id="goodsId" type="text" placeholder="请输入商品编号" class="layui-input search_input">
     </div>
     <a class="layui-btn search_btn" onclick="searchData();"><i class="layui-icon layui-icon-search"></i> 查询</a>
-    <div class="alert open" style="width:80px" onclick="mizhu.open(300, 400, '商品价格本', '/Goods/AddPrice');">增加</div>
+    <div class="layui-inline">
+        <a class="layui-btn layui-btn-normal newsAdd_btn" onclick="add()">
+            <i class="layui-icon layui-icon-add-1"></i>
+            添加价格本
+        </a>
+    </div>
 </div>
 
 <div style="padding: 15px; background-color: #F2F2F2;">
@@ -69,11 +74,20 @@
         </tbody>
     </table>
 </div>
+
 <div class="page-item">
-    <a id="first">首页</a>
-    <a id="up">上一页</a>
-    <a id="next">下一页</a>
-    <a id="end">尾页</a>
+    <button type="button" id="first" class="layui-btn layui-btn-sm layui-btn-primary">
+        <i class="layui-icon">&#xe65a;</i>
+    </button>
+    <button type="button" id="up" class="layui-btn layui-btn-sm layui-btn-primary">
+        <i class="layui-icon">&#xe603;</i>
+    </button>
+    <button type="button" id="next" class="layui-btn layui-btn-sm layui-btn-primary">
+        <i class="layui-icon">&#xe602;</i>
+    </button>
+    <button type="button" id="end" class="layui-btn layui-btn-sm layui-btn-primary">
+        <i class="layui-icon">&#xe65b;</i>
+    </button>
 </div>
 
 <script>
@@ -85,6 +99,7 @@
         Show(pageIndex);
         Page();
         Fenye();
+        goods();
     });
 
     //显示信息
@@ -95,10 +110,8 @@
             "goodsId": $("#goodsId").val().toString()
         };
 
-        var Type = {};
-        Type.URL = "http://localhost:52645/api/Goods/ShowGoodsPrice"
 
-        $.ajax(Type.URL,
+        $.ajax("http://localhost:52645/api/Goods/ShowGoodsPrice",
             {
                 type: "post",
                 data: obj,
@@ -112,7 +125,7 @@
 
     function ShowInfo(data) {
         $("#tb").empty();
-        $.each(data, function (index,item) {
+        $.each(data, function (index, item) {
             var list = "<tr>" +
                 '<td><input id="Checkbox1" class="check" type="checkbox" /></td>' +
                 "<td>" + item.goodsId + "</td>" +
@@ -123,9 +136,175 @@
                 "<td>" + item.sku + "</td>" +
                 "<td>" + item.goodsPrices + "</td>" +
                 "<td>" + item.jinHPrice + "</td>" +
+                '<td><input id="Button1" type="button" class="layui-btn layui-btn-warm" onclick=upd(\'' + item.priceId + '\') value="编辑" />'+
                 "</tr>";
             $("#tb").append(list);
         })
+    }
+
+    var priceId = "";
+    //编辑按钮
+    function upd(priceId) {
+        layui.use('layer', function () {
+            var layer = layui.layer;
+            goods();
+
+            layer.open({
+                title: '修改价格'
+                , content: list()
+            });
+
+            //反填信息
+            $.ajax("http://localhost:52645/api/Goods/SelectPrice?priceId=" + priceId,
+                {
+                    type: "get"
+                }).done(function (data) {
+                    $("#name").val(data.id);
+                    $("#jinhprice").val(data.jinHPrice);
+                    priceId = data.priceId;
+                });
+
+            //添加商品价格本
+            $("#btn_add").click(function () {
+                var obj =
+                {
+                    "PriceId": priceId,
+                    "Id": $("#name").val().toString(),
+                    "JinHPrice": $("#jinhprice").val().toString()
+                };
+
+                //非空判断
+                if (obj.PriceId == "" || obj.PriceId == null || obj.PriceId == undefined) {
+                    alert("不能为空！");
+                    return;
+                }
+                if (obj.Id == "" || obj.Id == null || obj.Id == undefined) {
+                    alert("不能为空！");
+                    return;
+                }
+                if (obj.JinHPrice == "" || obj.JinHPrice == null || obj.JinHPrice == undefined) {
+                    alert("不能为空！");
+                    return;
+                }
+                else if (isNaN(obj.JinHPrice)) {
+                    alert("请填写正确的数值!");
+                    return;
+                }
+
+                $.ajax("http://localhost:52645/api/Goods/UpdatePrice",
+                    {
+                        type: "post",
+                        data: obj,
+                        dataType: "json",
+                        contentType: "application/x-www-form-urlencoded"
+                    }).done(function (code) {
+                        if (code > 0) {
+                            alert("修改成功!");
+                            location.href = "GoodsPriceInfo";
+                        }
+                        else {
+                            alert("修改失败!");
+                        }
+                    })
+            })
+        });     
+    }
+
+
+
+    //价格本布局
+    function list() {
+        var list = '<table class="layui-table">' +
+            '<tr><td><h5><label style="color:red">*</label>商品名称</h5></td></tr>' +
+            '<tr>' +
+            '<td>商品名称</td>' +
+            '<td>' +
+            '<select id="name" class="layui-select" style="width:150px">' +
+            '<option value="">选择商品</option>' +
+
+            '</select>' +
+            '</td>' +
+            '</tr>' +
+            '<tr>' +
+            '<td>进货价格</td>' +
+            '<td><input id="jinhprice" type="text" placeholder="请输入关键字" class="layui-input search_input"></td>' +
+            '</tr>' +
+            '<tr>' +
+            '<td><input id="btn_add" type="button" value="保存" class="btn layui-btn-primary" /></td>' +
+            '</tr>' +
+            '</table>';
+        return list;
+    }
+
+    //添加价格本
+    function add() {
+        layui.use('layer', function () {
+            var layer = layui.layer;
+
+            layer.open({
+                title: '添加价格本',
+                area: ['800px', '500px']
+                , content: list()
+            });
+            goods();
+
+            //添加商品价格本
+            $("#btn_add").click(function () {
+                var obj =
+                {
+                    "Id": $("#name").val().toString(),
+                    "JinHPrice": $("#jinhprice").val().toString()
+                };
+
+                if (obj.Id == "" || obj.Id == null || obj.Id == undefined) {
+                    alert("不能为空！");
+                    return;
+                }
+                if (obj.JinHPrice == "" || obj.JinHPrice == null || obj.JinHPrice == undefined) {
+                    alert("不能为空！");
+                    return;
+                }
+                else if (isNaN(obj.JinHPrice)) {
+                    alert("请填写正确的数值!");
+                    return;
+                }
+
+                $.ajax("http://localhost:52645/api/Goods/AddPrice",
+                    {
+                        type: "post",
+                        data: obj,
+                        dataType: "json",
+                        contentType: "application/x-www-form-urlencoded"
+                    }).done(function (code) {
+                        if (code > 0) {
+                            alert("保存成功!");
+                            location.href = "GoodsPriceInfo";
+                        }
+                        else {
+                            alert("保存失败!");
+                        }
+                    })
+            })
+
+            //取消添加
+            $("#btn_back").click(function () {
+                history.back();
+            })
+        });  
+    }
+
+    //绑定商品名称
+    function goods() {
+        $.ajax("http://localhost:52645/api/Goods/ShowName",
+            {
+                type: "get",
+                dataType: "json"
+            }).done(function (data) {
+                $.each(data, function (index, item) {
+                    var option = '<option value=\"' + item.id + '\">' + item.goodsName + '</option>';
+                    $("#name").append(option);
+                })
+            })
     }
 
     //全选
@@ -140,12 +319,12 @@
         });
     };
 
-    //查询
+    //查询按钮
     function searchData() {
-        Show(pageIndex=1);
+        Show(pageIndex = 1);
     }
 
-    //分页
+    //分页按钮
     function Fenye() {
         //首页
         $("#first").click(function () {
@@ -181,4 +360,5 @@
             Show(pageIndex);
         })
     }
+
 </script>

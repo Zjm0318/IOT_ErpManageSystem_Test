@@ -33,13 +33,15 @@ namespace IOT_ErpManageSystem.API.Controllers.GoodsInfo
         #region 显示商品信息
 
         [HttpPost]
-        public ShowInfo ShowGoodsInfo([FromForm]Page m)
+        public async Task<ShowInfo> ShowGoodsInfo([FromForm]Page m)
         {
             int total=0;
             ShowInfo slist = new ShowInfo();
             slist.list= goodsBLL.ShowGoodsInfo(m, ref total);
             slist.count = (total / m.pageSize) + (total % m.pageSize > 0 ? 1 : 0);
-            return slist;
+
+            ShowInfo info = await Task.Run(() => { return slist; });
+            return info;
         }
 
         //修改商品状态
@@ -109,23 +111,26 @@ namespace IOT_ErpManageSystem.API.Controllers.GoodsInfo
 
         //显示商品名称
         [HttpGet]
-        public List<Models.GoodsInfo> ShowName()
+        public async Task<List<Models.GoodsInfo>> ShowName()
         {
-            return goodsBLL.ShowName();
+            List<Models.GoodsInfo> list = await Task.Run(() => { return goodsBLL.ShowName(); });
+            return list;
         }
 
         //显示尺码
         [HttpGet]
-        public List<Sizes> ShowSize()
+        public async Task<List<Sizes>> ShowSize()
         {
-            return goodsBLL.ShowSize();
+            List<Sizes> slist = await Task.Run(() => { return goodsBLL.ShowSize(); });
+            return slist;
         }
 
         //显示颜色
         [HttpGet]
-        public List<Colors> ShowColors()
+        public async Task<List<Colors>> ShowColors()
         {
-            return goodsBLL.ShowColor();
+            List<Colors> clist = await Task.Run(() => { return goodsBLL.ShowColor(); });
+            return clist;            
         }
 
         //添加属性
@@ -151,11 +156,18 @@ namespace IOT_ErpManageSystem.API.Controllers.GoodsInfo
 
         //显示商品尺码+颜色
         [HttpGet]
-        public List<Models.GoodsInfo> ShowGoodsSC(string Id)
+        public async Task<List<Models.GoodsInfo>> ShowGoodsSC(string Id)
         {
-            return goodsBLL.ShowGoodsSC(Id);
+            List<Models.GoodsInfo> list = await Task.Run(() => { return goodsBLL.ShowGoodsSC(Id); });
+            return list;          
         }
 
+        //删除商品属性信息
+        [HttpGet]
+        public int DelPreperty(string PId)
+        {
+            return goodsBLL.DelPreperty(PId);
+        }
         #endregion
 
         #endregion
@@ -164,13 +176,15 @@ namespace IOT_ErpManageSystem.API.Controllers.GoodsInfo
 
         //显示价格本信息
         [HttpPost]
-        public ShowInfo ShowGoodsPrice([FromForm]PagePrice m)
+        public async Task<ShowInfo> ShowGoodsPrice([FromForm]PagePrice m)
         {
             int total = 0;
             ShowInfo slist = new ShowInfo();
             slist.plist = goodsBLL.ShowGoodsPrice(m, ref total);
             slist.count = (total / m.pageSize) + (total % m.pageSize > 0 ? 1 : 0);
-            return slist;
+
+            ShowInfo info = await Task.Run(() => { return slist; });
+            return info;
         }
 
         //添加商品价格本
@@ -180,6 +194,19 @@ namespace IOT_ErpManageSystem.API.Controllers.GoodsInfo
             return goodsBLL.AddPrice(m);
         }
 
+        //根据条件查询价格信息
+        [HttpGet]
+        public GoodsPrice SelectPrice(string priceId)
+        {
+            return goodsBLL.SelectPrice(priceId);
+        }
+
+        //修改价格本
+        [HttpPost]
+        public int UpdatePrice([FromForm]GoodsPrice m)
+        {
+            return goodsBLL.UpdatePrice(m);
+        }
         #endregion
     }
 }

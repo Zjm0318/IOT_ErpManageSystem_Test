@@ -60,6 +60,9 @@ namespace IOT_ErpManageSystem.BLL.GoodsInfo
         //显示商品尺码+颜色
         List<Models.GoodsInfo> ShowGoodsSC(string Id);
 
+        //删除属性信息
+        int DelPreperty(string PId);
+
         #endregion
 
         #endregion
@@ -70,6 +73,12 @@ namespace IOT_ErpManageSystem.BLL.GoodsInfo
 
         //添加商品价格本
         int AddPrice(GoodsPrice m);
+
+        //根据条件查询价格信息
+        GoodsPrice SelectPrice(string priceId);
+
+        //修改价格本
+        int UpdatePrice(GoodsPrice m);
 
         #endregion
     }

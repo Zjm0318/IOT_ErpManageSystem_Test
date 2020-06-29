@@ -209,6 +209,18 @@ namespace IOT_ErpManageSystem.BLL.GoodsInfo
 
         #endregion
 
+        #region 删除商品属性信息
+        public int DelPreperty(string PId)
+        {
+            string procName = "DelProperty";
+            SqlParameter[] param = new SqlParameter[]
+            {
+                new SqlParameter{ ParameterName="@PId", DbType= DbType.String, Direction= ParameterDirection.Input,Value=PId },
+            };
+            return dBHelper.ExecuteNonQueryProc(procName, param);
+        }
+        #endregion
+
         #endregion
 
         #endregion
@@ -242,7 +254,37 @@ namespace IOT_ErpManageSystem.BLL.GoodsInfo
                 new SqlParameter{ ParameterName="@JinHPrice", DbType= DbType.Decimal, Direction= ParameterDirection.Input,Value=m.JinHPrice }
             };
             return dBHelper.ExecuteNonQueryProc(procName, param);
-        }      
+        }
+
+        #endregion
+
+        #region 根据条件查询价格信息
+        public GoodsPrice SelectPrice(string priceId)
+        {
+            string procName = "SelectPrice";
+            SqlParameter[] param = new SqlParameter[]
+            {
+                new SqlParameter{ ParameterName="@PriceId", DbType= DbType.String, Direction= ParameterDirection.Input,Value=priceId }
+            };
+            DataTable table = dBHelper.ExecuteProc(procName, param);
+            string json = JsonConvert.SerializeObject(table);
+            return JsonConvert.DeserializeObject<List<GoodsPrice>>(json).FirstOrDefault();
+        }
+        #endregion
+
+        #region 修改价格本
+
+        public int UpdatePrice(GoodsPrice m)
+        {
+            string procName = "UpdatePrice";
+            SqlParameter[] param = new SqlParameter[]
+           {
+                new SqlParameter{ ParameterName="@PriceId", DbType= DbType.Guid, Direction= ParameterDirection.Input,Value=m.PriceId },
+                new SqlParameter{ ParameterName="@Id", DbType= DbType.Guid, Direction= ParameterDirection.Input,Value=m.Id },
+                new SqlParameter{ ParameterName="@JinHPrice", DbType= DbType.Decimal, Direction= ParameterDirection.Input,Value=m.JinHPrice }
+           };
+            return dBHelper.ExecuteNonQueryProc(procName, param);
+        }
         #endregion
 
         #endregion
