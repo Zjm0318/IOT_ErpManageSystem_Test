@@ -55,9 +55,9 @@ namespace IOT_ErpManageSystem.BLL.liuning
         //反填采购信息
         List<PurChaseInfo> FanTPur(string CId);
         //查询请购单ID
-        List<RequisitionOrder> selectQgIdProc();
+        List<RequisitionOrder> SelectQgIdProc();
         //查询供应商ID
-        List<SupplierInfo> selectGysIdProc();
+        List<SupplierInfo> SelectGysIdProc();
         //添加采购单信息
         int AddPur(PurChaseInfo m);
         //显示请购单商品信息

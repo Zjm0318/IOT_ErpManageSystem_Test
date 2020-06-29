@@ -167,6 +167,20 @@
             "DeptName": $("#dept").val()
         };
 
+
+        if (obj.DhAddress == "") {
+            alert("请输入地址");
+            return;
+        }
+        if (obj.QgName == "") {
+            alert("请输入请购人姓名");
+            return;
+        }
+        if (obj.DeptName == "") {
+            alert("请输入部门名称");
+            return;
+        }
+
         $.ajax("http://localhost:52645/api/RequList/UpdateRequ", {
             type: "post",
             data: obj,

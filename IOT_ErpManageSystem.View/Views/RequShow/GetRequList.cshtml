@@ -13,7 +13,7 @@
     <option value="2">审核失败</option>
 </select>
 创建日期
-<input type="text" id="time" />
+<input type="date" id="time" />
 请购人
 <input type="text" id="qgren" />
 审核人
@@ -162,17 +162,6 @@
         })
     }
 
-    ////全选反选
-    //$("#checkbox").click(function () {
-    //    if ($(this).prop("checked") == true) {
-    //        $("input[type='radio']").prop("checked", true);
-    //    }
-    //    else {
-    //        $("input[type='radio']").prop("checked", false);
-    //    }
-    //})
-
-
     //指派
     $("#zhipai").click(function () {
         QgId = $("input[type='radio']:checked").val();   
@@ -204,7 +193,7 @@
             })
         }
         else {
-            alert("请选择要指派的请购单");
+            alert("请选择要删除的请购单");
         }
     })   
 

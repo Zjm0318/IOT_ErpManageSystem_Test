@@ -21,8 +21,8 @@
     <tr>
         <td>商品是否含税</td>
         <td>
-            <input type="radio" name="rad" /> 含税
-            <input type="radio" name="rad1" /> 不含税
+            <input type="radio" name="rad" id="h1" /> 含税
+            <input type="radio" name="rad" id="h2" /> 不含税
         </td>
         <td>商品税率</td>
         <td><input type="text" id="shuilv" /></td>
@@ -84,12 +84,16 @@
             $("#qid").val(da.qid)
             $("#gysid").val(da.gid)
             $("#gname").val(da.gLaiYuan)
+
+            if (da.isShui == 1) {
+                $("#h1").prop("checked", true);
+            }
             if (da.isShui == 0) {
-                $("input[name='rad1']").prop("checked", true);
+                $("#h2").prop("checked", true);
             }
-            else {
-                $("input[name='rad']").prop("checked", true);
-            }
+
+            
+
             $("#shuilv").val(da.shuiLv)
             $("#address").val(da.address)
             $("#bgname").val(da.bgName)
@@ -203,6 +207,23 @@
             "BgName": $("#bgname").val(),
             "BgDept": $("#dept").val()
         };
+
+        if (obj.ShuiLv == "") {
+            alert("请输入税率");
+            return;
+        }
+        if (obj.Address == "") {
+            alert("请输入地址");
+            return;
+        }
+        if (obj.BgName == "") {
+            alert("请输入请购人名称");
+            return;
+        }
+        if (obj.BgDept == "") {
+            alert("请输入部门名称");
+            return;
+        }
 
         $.ajax("http://localhost:52645/api/RequList/UpdatePurInfo", {
             type: "post",
