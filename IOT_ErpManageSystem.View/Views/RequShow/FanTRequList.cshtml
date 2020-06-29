@@ -49,7 +49,7 @@
 <select id="goodid"><option value="请选择">请选择</option></select><br />
 
 <input type="button" value="保存" id="update" class="layui-btn" />
-
+<input type="button" value="返回" id="back" class="layui-btn layui-btn-normal" />
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script>
     //初始化
@@ -196,5 +196,10 @@
                 alert("修改失败");
             }
         })
+    })
+
+    //返回
+    $("#back").click(function () {
+        window.location.href = "/RequShow/GetRequList";
     })
 </script>

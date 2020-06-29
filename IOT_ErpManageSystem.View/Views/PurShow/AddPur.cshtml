@@ -43,7 +43,8 @@
     </tr>
     <tr>
         <td colspan="2">
-            <input type="button" id="add" value="添加" />
+            <input type="button" id="add" value="添加"class="layui-btn" />
+            <input type="button" id="back" value="返回"  class="layui-btn layui-btn-normal"/>
         </td>
     </tr>
 </table>
@@ -147,5 +148,10 @@
             }
         })
 
+    })
+
+    //返回
+    $("#back").click(function () {
+        window.location.href = "/PurShow/GetPurList";
     })
 </script>
