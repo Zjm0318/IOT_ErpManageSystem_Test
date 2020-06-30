@@ -16,5 +16,6 @@ namespace IOT_ErpManageSystem.Models
 		 public string  Role_Tel { get; set; }
 		 public int  Role_State { get; set; }
 		 public DateTime  Role_Create { get; set; }
-	 }
+		public string Job_Name { get; set; }
+	}
 }

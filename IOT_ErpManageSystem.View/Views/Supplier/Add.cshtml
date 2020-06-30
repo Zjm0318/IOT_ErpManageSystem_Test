@@ -1,0 +1,194 @@
+﻿
+@{
+    ViewData["Title"] = "Add";
+}
+
+
+<div class="layui-form-item">
+    <h2>发起信息</h2>
+    <div class="layui-inline">
+        <label class="layui-form-label"><span style="color:red">*</span>引进负责人</label>
+        <div class="layui-input-inline">
+            <input type="text" id="Name" required placeholder="请输入引进负责人" class="layui-input" />
+        </div>
+        <label class="layui-form-label">供应商编号</label>
+        <div class="layui-input-inline">
+            <input type="text" id="BianHao" placeholder="请输入供应商编号" class="layui-input" />
+        </div>
+        <label class="layui-form-label"><span style="color:red">*</span>供应商来源</label>
+        <div class="layui-input-inline">
+            <input type="text" id="LaiYuan" required placeholder="请输入供应商来源" class="layui-input" />
+        </div>
+    </div>
+    <h2>公司信息</h2>
+    <div class="layui-inline">
+        <label class="layui-form-label"><span style="color:red">*</span>单位名称</label>
+        <div class="layui-input-inline">
+            <input type="text" id="DanWei" required placeholder="请输入单位名称" class="layui-input" />
+        </div>
+        <label class="layui-form-label">供方简称</label>
+        <div class="layui-input-inline">
+            <input type="text" id="JianCheng" placeholder="请输入单位名称" class="layui-input" />
+        </div>
+        <label class="layui-form-label"><span style="color:red">*</span>品牌</label>
+        <div class="layui-input-inline">
+            <input type="text" id="PinPai" required placeholder="请输入品牌" class="layui-input" />
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label"><span style="color:red">*</span>经营范围</label>
+            <div class="layui-input-inline">
+                <input type="text" id="FanWei" required placeholder="请输入经营范围" class="layui-input" />
+            </div>
+        </div>
+    </div>
+    <h2>联系信息</h2>
+    <div class="layui-inline">
+        <div class="layui-inline">
+            <label class="layui-form-label"><span style="color:red">*</span>联系人</label>
+            <div class="layui-input-inline">
+                <input type="text" id="LianXiRen" required placeholder="请输入联系人" class="layui-input" />
+            </div>
+            <label class="layui-form-label">职业</label>
+            <div class="layui-input-inline">
+                <input type="text" id="ZhiYe" placeholder="请输入职业" class="layui-input" />
+            </div>
+            <label class="layui-form-label"><span style="color:red">*</span>手机</label>
+            <div class="layui-input-inline">
+                <input type="text" id="Phone" required placeholder="请输入手机" class="layui-input" />
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">固定电话</label>
+            <div class="layui-input-inline">
+                <input type="text" id="DianHua" placeholder="请输入固定电话" class="layui-input" />
+            </div>
+            <label class="layui-form-label">传真</label>
+            <div class="layui-input-inline">
+                <input type="text" id="ChuanZhen" placeholder="请输入传真" class="layui-input" />
+            </div>
+            <label class="layui-form-label">邮件</label>
+            <div class="layui-input-inline">
+                <input type="text" id="Email" placeholder="请输入邮件" class="layui-input" />
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">QQ</label>
+            <div class="layui-input-inline">
+                <input type="text" id="QQ" placeholder="请输入QQ" class="layui-input" />
+            </div>
+            <label class="layui-form-label">微信</label>
+            <div class="layui-input-inline">
+                <input type="text" id="WeiXin" placeholder="请输入微信" class="layui-input" />
+            </div>
+            <label class="layui-form-label"><span style="color:red">*</span>地址</label>
+            <div class="layui-input-inline">
+                <input type="text" id="DiZhi" required placeholder="请输入地址" class="layui-input" />
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">网址</label>
+            <div class="layui-input-inline">
+                <input type="text" id="Url" placeholder="请输入网址" class="layui-input" />
+            </div>
+        </div>
+    </div>
+</div>
+<input type="button" id="Back" value="返回" style="background-color:gray" class="layui-btn layui-btn-normal" />
+<input type="button" id="Save" value="保存" style="background-color:cornflowerblue" class="layui-btn layui-btn-normal" />
+
+<script>
+    //保存
+    $("#Save").click(function () {
+        //获取供应商数据
+        var obj = {
+            "GID": $("#BianHao").val().toString(),
+            "GLaiYuan": $("#LaiYuan").val().toString(),
+            "YJfzr": $("#Name").val().toString(),
+            "DwName": $("#DanWei").val().toString(),
+            "PinPai": $("#PinPai").val().toString(),
+            "JYRange": $("#FanWei").val().toString(),
+            "GDesc": $("#JianCheng").val().toString()
+        };
+        //获取联系人数据
+        var obj1 = {
+            "LxrName": $("#LianXiRen").val().toString(),
+            "LJob": $("#ZhiYe").val().toString(),
+            "Phone": $("#Phone").val().toString(),
+            "Email": $("#Email").val().toString(),
+            "GDphone": $("#DianHua").val().toString(),
+            "ChuanZhen": $("#ChuanZhen").val().toString(),
+            "QQ": $("#QQ").val().toString(),
+            "WeiXin": $("#WeiXin").val().toString(),
+            "Addresss": $("#DiZhi").val().toString(),
+            "Url": $("#Url").val().toString()
+        };
+        //判断 负责人
+        if (obj.YJfzr == '') {
+            return alert("引进负责人不能为空!");
+        }
+        //供应商来源
+        if (obj.GLaiYuan == '') {
+            return alert("供应商来源不能为空!");
+        }
+        //单位名称
+        if (obj.DwName == '') {
+            return alert("单位名称不能为空!");
+        }
+        //品牌
+        if (obj.PinPai == '') {
+            return alert("品牌不能为空!");
+        }
+        //经营范围
+        if (obj.JYRange == '') {
+            return alert("经营范围不能为空!");
+        }
+        //联系人
+        if (obj1.LxrName == '') {
+            return alert("联系人不能为空!");
+        }
+        //手机
+        if (obj1.Phone == '') {
+            return alert("手机不能为空!");
+        }
+        var re = /^1[34578]\d{9}$/;
+        if (!re.test(obj1.Phone)) {
+            return alert("请输入正确的手机号");
+        }
+        //固定电话
+        if (obj1.GDphone!="") {
+            var gd = /^(\d{3,4}-)\d{7,8}$/;
+            if (!gd.test(obj1.GDphone)) {
+                return alert("请输入正确的固定电话");
+            }
+        }
+        //地址
+        if (obj1.Addresss == '') {
+            return alert("地址不能为空!");
+        }
+        //添加
+        $.ajax({
+            url: "http://localhost:52645/api/Supplier/AddSup",
+            type: "post",
+            dataType: "text",
+            data: { supplier: obj, contacts: obj1 },
+            accepts: "application/x-www-form-urlencoded",
+            contentType: "application/x-www-form-urlencoded",
+            success: function (d) {
+                //判断
+                if (d > 0) {
+                    alert("添加成功!");
+                    window.location.href = "Index";
+                }
+                else {
+                    alert("添加失败!");
+                }
+            }
+        })
+    })
+
+    //返回
+    $("#Back").click(function () {
+        window.location.href = "Index";
+    })
+</script>
+
