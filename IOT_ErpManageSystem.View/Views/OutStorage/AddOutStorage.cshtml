@@ -1,0 +1,160 @@
+﻿
+@{
+    ViewData["Title"] = "AddOutStorage";
+}
+<style>
+    .goods {
+        width: 1340px;
+        border: solid 1px;
+        margin-top: 30px;
+        border-color: lightgray;
+        margin-left: 20px
+    }
+
+        .goods tr td {
+            border: solid 1px;
+            text-align: center;
+            height: 35px;
+            border-color: lightgray
+        }
+        .tou{
+            background-color:lightgray
+        }
+</style>
+<h2 style="margin-left:20px;margin-top:30px">基本信息</h2>
+<div>
+    <div>
+        <label style="float:left;font-size:17px;margin-top:10px;margin-right:25px"><span style="color:red;margin-right:5px;margin-top:20px;margin-left:15px">*</span>出库日期</label>
+        <div style="float:left;margin-right:50px">
+            <input style="width:200px" type="text" value="@ViewBag.Time" id="Date" class="layui-input" />
+        </div>
+        <label style="float:left;font-size:17px;margin-top:10px;margin-right:25px"><span style="color:red;margin-right:5px;margin-top:20px">*</span>订单编号</label>
+        <div style="float:left">
+            <input type="text" style="width:200px" id="Order" required placeholder="请输入订单编号" class="layui-input" />
+        </div>
+    </div><br /><br /><br /><br />
+    <div style="margin-left:15px">
+        <label style="float:left;font-size:17px;margin-top:10px;margin-right:25px"><span style="color:red;margin-right:5px;margin-top:20px">*</span>收货地址</label>
+        <div style="margin-right:50px">
+            <input style="width:555px" type="text" id="Address" required placeholder="请输入收货地址" class="layui-input" />
+        </div>
+    </div><br /><br />
+    <div>
+        <label style="float:left;font-size:17px;margin-top:10px;margin-right:25px"><span style="color:red;margin-right:5px;margin-top:20px;margin-left:15px">*</span>配送方式</label>
+        <div style="float:left;margin-right:50px">
+            <select id="disPath" style="width:200px;height:35px;margin-top:5px;font-size:15px">
+                <option value="">配送方式</option>
+            </select>
+        </div>
+        <label style="float:left;font-size:17px;margin-top:10px;margin-right:25px"><span style="color:red;margin-right:5px;margin-top:20px">*</span>出库仓库</label>
+        <div style="float:left">
+            <select id="OutStorage" style="width:200px;height:35px;margin-top:5px;font-size:15px">
+                <option value="">出货仓库</option>
+            </select>
+        </div>
+    </div><br /><br /><br /><br />
+    <div>
+        <label style="float:left;font-size:17px;margin-top:10px;margin-right:42px"><span style="color:red;margin-right:5px;margin-top:20px;margin-left:15px">*</span>收货人</label>
+        <div style="float:left;margin-right:50px">
+            <input style="width:200px" type="text" id="shouHuoMan" class="layui-input" placeholder="请输入收货人" />
+        </div>
+        <label style="float:left;font-size:17px;margin-top:10px;margin-right:25px"><span style="color:red;margin-right:5px;margin-top:20px">*</span>联系方式</label>
+        <div style="float:left">
+            <input type="text" style="width:200px" id="LinkPath" required placeholder="请输入联系方式" class="layui-input" />
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<br />
+<br />
+<br />
+<h2 style="margin-left:20px" hidden="hidden">添加商品</h2>
+<input type="hidden" value="添加商品" style="width:90px;float:right;margin-right:130px;text-align:center" onClick="Javascript:window.open('/TuiHuo/AddGoods','','width=560,height=379;margin:auto')" class="layui-btn" />
+<br />
+<br />
+<table class="goods" hidden="hidden">
+    <tr class="tou">
+        <td>订单编号</td>
+        <td>打包员</td>
+        <td>商品编号</td>
+        <td>商品名称</td>
+        <td>规格</td>
+        <td>单位</td>
+        <td>出库数量</td>
+        <td>库存量</td>
+        <td>库存预警值</td>
+        <td>操作</td>
+    </tr>
+</table>
+<div style="margin-left:20px;margin-top:30px">
+    <input type="button" id="Back" value="返回" onclick="window.location='/OutStorage/Index'" style="background-color:gray" class="layui-btn layui-btn-normal" />
+    <input type="button" id="Save" value="保存" style="background-color:cornflowerblue" class="layui-btn layui-btn-normal" />
+</div>
+<script>
+    $(function () {
+        GetDisList();
+        GetStorageList();
+    })
+    //绑定配送方式
+    function GetDisList() {
+        $.ajax({
+            url: "http://localhost:52645/api/OStorageManage/GetTbDisList",
+            type: "get",
+        }).done(function (data) {
+            console.log(data);
+            $.each(data, function (index, item) {
+                var option = "<option value='" + item.id + "'>" + item.dispatching + "</option>";
+                $("#disPath").append(option);
+            })
+        })
+    }
+    //绑定仓库
+    function GetStorageList() {
+        $.ajax({
+            url: "http://localhost:52645/api/OStorageManage/GetStorageList",
+            type: "get",
+        }).done(function (data) {
+            console.log(data);
+            $.each(data, function (index, item) {
+                var option = "<option value='" + item.id + "'>" + item.storageName + "</option>";
+                $("#OutStorage").append(option);
+            })
+        })
+    }
+
+    //保存的点击事件
+    $("#Save").click(function () {
+        var OutTime = $("#Date").val();
+        var OrderNo = $("#Order").val();
+        var DisPath = $("#disPath").val();
+        var shouHuoMan = $("#shouHuoMan").val();
+        var SHPhone = $("#LinkPath").val();
+        var Address = $("#Address").val();
+        var OutStorage = $("#OutStorage").val();
+        var obj = {
+            "OutTime": OutTime,
+            "OrderNo": OrderNo,
+            "DispatchingId": DisPath,
+            "Consignee": shouHuoMan,
+            "CPhoneNum": SHPhone,
+            "DispatchingArea": Address,
+            "OutStorageId": OutStorage
+        };
+        $.ajax({
+            url: "http://localhost:52645/api/OStorageManage/AddOutStorage",
+            type: "post",
+            data: obj,
+            accepts: "application/x-www-form-urlencoded",
+            contentType: "application/x-www-form-urlencoded"
+        }).done(function (data) {
+            if (data > 0) {
+                alert("添加成功!");
+                window.location = "/OutStorage/Index";
+            }
+            else {
+                alert("添加失败!");
+            }
+        })
+    })
+</script>

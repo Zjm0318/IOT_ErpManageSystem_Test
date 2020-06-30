@@ -72,7 +72,6 @@
                         <dl class="layui-nav-child">
                             <dd><a lay-href="set/user/info.html">基本资料</a></dd>
                             <dd><a lay-href="set/user/password.html">修改密码</a></dd>
-                            <hr>
                             <dd layadmin-event="logout" style="text-align: center;"><a>退出</a></dd>
                         </dl>
                     </li>
@@ -156,12 +155,12 @@
                             </a>
 
                             <dl class="layui-nav-child">
-                                <dd><a lay-href="senior/echarts/line.html">入库管理</a></dd>
-                                <dd><a lay-href="senior/echarts/bar.html">出库管理</a></dd>
-                                <dd><a lay-href="senior/echarts/map.html">仓库结构</a></dd>
+                                <dd><a lay-href="/InStorage">入库管理</a></dd>
+                                <dd><a lay-href="/OutStorage">出库管理</a></dd>
+                                <dd><a lay-href="/StorageStruct">仓库结构</a></dd>
                             </dl>
                         </li>
-                        <li data-name="user" class="layui-nav-item">
+                        <li data-name="user" class="layui-nav-item" onclick="Dian(0)">
                             <a href="javascript:;" lay-tips="用户" lay-direction="2">
                                 <i class="layui-icon layui-icon-user"></i>
                                 <cite>权限管理</cite>
@@ -221,11 +220,15 @@
             base: '../layuiadmin/' //静态资源所在路径
         }).extend({
             index: 'lib/index', //主入口模块
-             courseTask: 'task/courseTask'
+            courseTask: 'task/courseTask'
         }).use('index');
     </script>
 </body>
 </html>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    
+</script>
 
 
 

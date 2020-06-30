@@ -9,6 +9,7 @@ namespace IOT_ErpManageSystem.Models
 	 {
 		 public Guid  Id { get; set; }
 		 public string  SeatNo { get; set; }
-		 public Guid  ShelfId { get; set; }
-	 }
+		 public string  ShelfId { get; set; }
+		public string StorageId { get; set; }
+	}
 }
