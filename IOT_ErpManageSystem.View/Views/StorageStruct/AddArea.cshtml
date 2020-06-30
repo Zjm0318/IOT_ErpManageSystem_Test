@@ -36,7 +36,6 @@
             url: "http://localhost:52645/api/StorageStructure/GetStorList",
             type: "get",
         }).done(function (data) {
-            console.log(data);
             $.each(data, function (index,item) {
                 var option = "<option value='" + item.id + "'>" + item.storageName + "</option>";
                 $("#storage").append(option);
@@ -56,7 +55,6 @@
             accepts: "application/x-www-from-urlencoded",
             data: obj
         }).done(function (data) {
-            console.log(data);
             if (data > 0) {
                 alert("添加成功!");
                 window.location = "/StorageStruct/Index";

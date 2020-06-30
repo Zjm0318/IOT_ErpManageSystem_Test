@@ -42,7 +42,6 @@
             url: "http://localhost:52645/api/StorageStructure/GetStorList",
             type: "get",
         }).done(function (data) {
-            console.log(data);
             $.each(data, function (index, item) {
                 var option = "<option value='" + item.id + "'>" + item.storageName + "</option>";
                 $("#storage").append(option);
@@ -55,7 +54,6 @@
             url: "http://localhost:52645/api/StorageStructure/GetAreaList",
             type: "get",
         }).done(function (data) {
-            console.log(data);
             $.each(data, function (index, item) {
                 var option = "<option value='" + item.id + "'>" + item.area + "</option>";
                 $("#area").append(option);
@@ -78,7 +76,6 @@
             accepts: "application/x-www-from-urlencoded",
             data: obj
         }).done(function (data) {
-            console.log(data);
             if (data > 0) {
                 alert("添加成功!");
             }
