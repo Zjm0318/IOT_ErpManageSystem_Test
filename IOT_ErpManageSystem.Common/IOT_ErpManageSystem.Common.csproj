@@ -13,4 +13,10 @@
     <ProjectReference Include="..\IOT_ErpManageSystem.DAL\IOT_ErpManageSystem.DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\..\专业\物.专四\第4个月资料\引用(1)\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

@@ -11,8 +11,6 @@ using IOT_ErpManageSystem.BLL.liuning;
 using IOT_ErpManageSystem.DAL.liuning;
 using IOT_ErpManageSystem.BLL.ISManage;
 using IOT_ErpManageSystem.BLL.SManage;
-using IOT_ErpManageSystem.DAL.DBHelper;
-using IOT_ErpManageSystem.DAL.IDBHelp;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
