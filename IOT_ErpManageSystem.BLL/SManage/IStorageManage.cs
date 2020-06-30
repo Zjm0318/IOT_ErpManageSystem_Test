@@ -47,7 +47,7 @@ namespace IOT_ErpManageSystem.BLL.SManage
                 new SqlParameter{ParameterName="@pageIndex",DbType= DbType.Int32,Direction= ParameterDirection.Input,Value=pageIndex},
                 new SqlParameter{ParameterName="@pageSize",DbType= DbType.Int32,Direction= ParameterDirection.Input,Value=pageSize},
                 new SqlParameter{ParameterName="@whereStr",DbType= DbType.String,Direction= ParameterDirection.Input,Value=where},
-                new SqlParameter{ParameterName="@RowCount",DbType= DbType.Int32,Direction= ParameterDirection.Output},
+                new SqlParameter{ParameterName="@rowCount",DbType= DbType.Int32,Direction= ParameterDirection.Output},
             };
             DataTable tb = _dbhelp.ExecuteProc(procName, sqlParameters, ref rowCount);
             return JsonConvert.DeserializeObject<List<tb_InStorage>>(JsonConvert.SerializeObject(tb));

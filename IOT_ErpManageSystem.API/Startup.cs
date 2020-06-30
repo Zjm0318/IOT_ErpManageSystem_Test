@@ -40,6 +40,9 @@ namespace IOT_ErpManageSystem.API
             services.AddSingleton<ITuiHuoBLL, TuiHuoBLL>();
             services.AddSingleton<IRequDal, RequDal>();
             services.AddSingleton<IRequBLL, RequBLL>();
+            services.AddSingleton<IIStorageManage, IStorageManage>();
+            services.AddSingleton<IOStorageManage, OStorageManage>();
+            services.AddSingleton<IStorageStructure, StorageStructure>();
             services.AddCors(options =>
             {
                 // Policy 名稱 CorsPolicy 是自訂的，可以自己改

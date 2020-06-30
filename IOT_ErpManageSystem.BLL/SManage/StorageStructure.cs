@@ -76,7 +76,7 @@ namespace IOT_ErpManageSystem.BLL.SManage
             SqlParameter[] sqlParameters = new SqlParameter[] {
                 new SqlParameter{ParameterName="@pageIndex",DbType= DbType.Int32,Direction= ParameterDirection.Input,Value=pageIndex },
                 new SqlParameter{ParameterName="@pageSize",DbType= DbType.Int32,Direction= ParameterDirection.Input,Value=pageSize },
-                new SqlParameter{ParameterName="@RowCount",DbType= DbType.Int32,Direction= ParameterDirection.Output }
+                new SqlParameter{ParameterName="@rowCount",DbType= DbType.Int32,Direction= ParameterDirection.Output }
             };
             DataTable tb = _helper.ExecuteProc(procName, sqlParameters, ref RowCount);
             return JsonConvert.DeserializeObject<List<tb_Storage>>(JsonConvert.SerializeObject(tb));
