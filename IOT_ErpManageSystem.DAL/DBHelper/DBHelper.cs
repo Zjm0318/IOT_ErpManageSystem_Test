@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text;
-
+using Newtonsoft.Json;
 namespace IOT_ErpManageSystem.DAL.DBHelper
 {
     public class DBHelper : IDBHelper
