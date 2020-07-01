@@ -6,7 +6,7 @@ using IOT_ErpManageSystem.DAL;
 using IOT_ErpManageSystem.Models;
 namespace IOT_ErpManageSystem.BLL
 {
-   public interface RoleInterface: IDBHelper
+   public interface RoleInterface
     {
         //显示角色数据
         List<RBAC_Role> GetRole(int PageIndex,int PageSize,string RoleZhang,string RoleName,string RoleJob,int RoleState,ref int RowsCount);

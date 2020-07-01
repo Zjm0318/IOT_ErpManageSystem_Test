@@ -124,32 +124,6 @@ namespace IOT_ErpManageSystem.BLL
             DataTable tb = _idbhelper.ExecuteProc(proName, parametr);
             return JsonConvert.DeserializeObject<List<RBAC_Role>>(JsonConvert.SerializeObject(tb)).FirstOrDefault();
         }
-
-
-        public DataTable Do_Proc(string name, SqlParameter[] paras)
-        {
-            throw new NotImplementedException();
-        }
-        public int ExecuteNonQueryProc(string procName, SqlParameter[] sqlParameters)
-        {
-            throw new NotImplementedException();
-        }
-        public DataTable ExecuteProc(string procName, SqlParameter[] sqlParameters)
-        {
-            throw new NotImplementedException();
-        }
-        public DataTable ExecuteProc(string procName, SqlParameter[] sqlParameters, ref int RowsCount)
-        {
-            throw new NotImplementedException();
-        }
-        public List<T> GetList<T>(string name, SqlParameter[] paras)
-        {
-            throw new NotImplementedException();
-        }
-        public List<T> GetList<T>(string name)
-        {
-            throw new NotImplementedException();
-        }
     }
 
 }
