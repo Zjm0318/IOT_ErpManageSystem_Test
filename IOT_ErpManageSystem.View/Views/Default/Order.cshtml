@@ -3,18 +3,19 @@
     ViewData["Title"] = "Order";
 }
 
-<h4>订单报表</h4>
+
 <style>
     .div1 {
         width: 1300px;
         height: 170px;
         border: 1px solid
+        
     }
 
     .div2 {
         margin-top: 20px;
         width: 1300px;
-        height: 900px;
+        height: 500px;
         border: 1px solid
     }
 
@@ -45,60 +46,70 @@
     }
 
     #fi {
+        height:280px;
         border-top: 1px solid;
     }
+    #he{
+        padding-top:20px;
+        margin:0 auto;
+        width:1146px;
+        height:300px;
+    }
 </style>
+<div id="he">
+    <h4>订单报表</h4>
+    <div class="div1">
+        <div id="o">
+            筛选查询
+        </div>
+        <div id="t">
+            订单号：
+            <input type="text" id="dh" placeholder="订单号码" style="width:230px;height:40px" />
+            用户账号：
+            <input type="text" id="zh" placeholder="用户账号" style="width:230px;height:40px" />
+            提交时间：
+            <input type="date" id="time" placeholder="提交时间" style="width:180px;height:40px" /><br />
+        </div>
+        <div id="th">
+            订单状态：
+            <select id="stype" style="width:200px;height:40px">
+                <option value="">全部</option>
+            </select>
+            订单来源：
+            <select id="lai" style="width:200px;height:40px">
+                <option value="">全部</option>
+            </select>
+            <input type="button" id="cha" value="搜索" style="background-color:#17978b;width:100px;height:35px" />
+            <input type="button" id="btnDeleteList" value="批量删除" class="btn-danger" />
+        </div>
+    </div>
+    <div class="div2">
+        <div id="f">
+            数据列表
+        </div>
+        <div id="fi">
+            <table class="table">
+                <tr class="active">
+                    <td><input type="checkbox" id="check" />选择</td>
+                    <td>订单编号</td>
+                    <td>提交时间</td>
+                    <td>用户账号</td>
+                    <td>订单金额</td>
+                    <td>支付方式</td>
+                    <td>订单来源</td>
+                    <td>订单状态</td>
+                    <td>操作</td>
+                </tr>
+                <tbody id="tb"></tbody>
+            </table>
+            <a href="#" style="margin-right:10px" onclick="First()">首页</a>
+            <a href="#" style="margin-right:10px" onclick="Pre()">上一页</a>
+            <a href="#" style="margin-right:10px" onclick="Next()">下一页</a>
+            <a href="#" style="margin-right:10px" onclick="Last()">尾页</a>
+        </div>
+    </div>
+</div>
 
-<div class="div1">
-    <div id="o">
-        筛选查询
-    </div>
-    <div id="t">
-        订单号：
-        <input type="text" id="dh" placeholder="订单号码" style="width:230px;height:40px" />
-        用户账号：
-        <input type="text" id="zh" placeholder="用户账号" style="width:230px;height:40px" />
-        提交时间：
-        <input type="date" id="time" placeholder="提交时间" style="width:180px;height:40px" /><br />
-    </div>
-    <div id="th">
-        订单状态：
-        <select id="stype" style="width:200px;height:40px">
-            <option value="">全部</option>
-        </select>
-        订单来源：
-        <select id="lai" style="width:200px;height:40px">
-            <option value="">全部</option>
-        </select>
-        <input type="button" id="cha" value="搜索" style="background-color:#17978b;width:100px;height:35px" />
-        <input type="button" id="btnDeleteList" value="批量删除" class="btn-danger" />
-    </div>
-</div>
-<div class="div2">
-    <div id="f">
-        数据列表
-    </div>
-    <div id="fi">
-        <table class="table">
-            <tr class="active">
-                <td><input type="checkbox" id="check" />选择</td>
-                <td>订单编号</td>
-                <td>提交时间</td>
-                <td>用户账号</td>
-                <td>订单金额</td>
-                <td>支付方式</td>
-                <td>订单来源</td>
-                <td>订单状态</td>
-                <td>操作</td>
-            </tr>
-            <tbody id="tb"></tbody>
-        </table>
-        <a href="#" style="margin-right:10px" onclick="First()">首页</a>
-        <a href="#" style="margin-right:10px" onclick="Pre()">上一页</a>
-        <a href="#" style="margin-right:10px" onclick="Next()">下一页</a>
-        <a href="#" style="margin-right:10px" onclick="Last()">尾页</a>
-    </div>
-</div>
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script>
     //页码
