@@ -1,0 +1,196 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h1>员工管理</h1>
+    </div>
+    <div class="layui-card-body">
+        <blockquote class="layui-elem-quote role_search" style="height:50px">
+
+            <div class="layui-inline">
+                <div class="layui-input-inline">
+                    员工账号: <input id="Role_Zhang" type="text" value="" placeholder="请输入员工账号" style="width:200px;height:25px">
+                    员工姓名: <input id="Role_Name" type="text" value="" placeholder="请输入员工姓名" style="width:200px;height:25px">
+                    员工职位:
+                    <select style="width:200px;height:30px" id="RoleJob">
+                        <option value="">请选择员工职位</option>
+                    </select>
+                    员工状态:
+                    <select style="width:200px;height:30px" id=" RoleState">
+                        <option value="">请选择员工状态</option>
+                        <option value="0">离职</option>
+                        <option value="1">在职</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline" style="padding:15px">
+                <a class="layui-btn search_btn" onclick="searchData()"><i class="layui-icon layui-icon-search"></i>搜索</a>
+            </div>
+            
+            <div class="layui-inline" style="padding:15px">
+                <a class="layui-btn search_btn" onclick="AddData()">添加</a>
+            </div>
+        </blockquote>
+    </div>
+
+</div>
+
+
+<div style="padding:10px;background-color: #F2F2F2">
+    <table class="layui-table"  style="text-align:center">
+        <tr>
+            <td>选择</td>
+            <td>员工编号</td>
+            <td>员工姓名</td>
+            <td>员工账户</td>
+            <td>所在部门</td>
+            <td>员工职位</td>
+            <td>手机号</td>
+            <td>员工状态</td>
+            <td>添加时间</td>
+            <td>操作</td>
+        </tr>
+        <tbody id="tb">
+        </tbody>
+    </table>
+</div>
+<div style="float:right;margin-right:100px">
+    <button type="button" class="layui-btn layui-btn-sm" onclick="First()">首页</button>
+    <button type="button" class="layui-btn layui-btn-sm" onclick="Pre()">上一页</button>
+    <button type="button" class="layui-btn layui-btn-sm" onclick="Next()">下一页</button>
+    <button type="button" class="layui-btn layui-btn-sm" onclick="Last()">尾页</button>
+</div>
+
+<script>
+    var PageIndex = 1;
+    var PageSize = 6;
+    var Count = 0;
+    var State = 2;
+
+    $(function () {
+
+        show(PageIndex);
+        Role_Job();
+    })
+
+    //显示数据
+    function show(PageIndex) {
+        var obj = {
+            "PageIndex": PageIndex,
+            "PageSize": PageSize,
+            "Role_Account": $("#Role_Zhang").val(),
+            "Role_Name": $("#Role_Name").val(),
+            "Job_Name": $("#RoleJob").val(),
+            "Role_State": State,
+        };
+    
+        $.ajax({
+            url: "http://localhost:52645/api/RBAC_Role/GetRole",
+            type: "post",
+            data: obj,
+            accepts: "application/x-www-form-urlencoded",
+            contentType: "application/x-www-form-urlencoded",
+        }).done(function (data) {
+            Count = data.count;
+            $("#tb").empty();
+            $.each(data.list, function (index, item) {
+                var str = '<tr>' +
+                    '<td><input type="checkbox"/></td>' +
+                    '<td>' + item.role_Code + '</td>' +
+                    '<td>' + item.role_Name + '</td>' +
+                    '<td>' + item.role_Account + '</td>' +
+                    '<td>' + item.dep_Name + '</td>' +
+                    '<td>' + item.job_Name + '</td>' +
+                    '<td>' + item.role_Tel + '</td> ';
+                if (item.role_State == 1) {
+                    str += '<td><button type="button" class="layui-btn layui-btn-normal layui-btn-sm">' + (item.role_State == 1 ? "在职" : "离职") + '</button></td>';
+                }
+                else {
+                    str += '<td><button type="button" class="layui-btn layui-btn-danger layui-btn-sm"> ' + (item.role_State == 1 ? "在职" : "离职") + '</button></td>';
+                }
+                str += '<td>' + item.createDate + '</td>' + '<td><button type="button"  class="layui-btn layui-btn-warm layui-btn-sm" onclick="RoleUpdate(\'' + item.id + '\')" >编辑</button></td>' + '</tr >';
+                $("#tb").append(str);
+            })
+        })
+    }
+
+    //职位绑定
+    function Role_Job() {
+        $.ajax({
+            url: "http://localhost:52645/api/RBAC_Role/GetAJob",
+            type: "get",
+        }).done(function (data) {
+            $.each(data, function (Index, item) {
+                var option = '<option value=' + item.job_ID + '>' + item.job_Name + '</option>';
+                $("#RoleJob").append(option);
+            })
+
+        })
+    }
+    //查询条件
+    function searchData() {
+        State = $("#RoleState").val();
+        if (State == "") {
+
+            State = 2;
+        }
+        PageIndex = 1;
+        show(PageIndex);
+    }
+    //首页
+    function First() {
+        PageIndex = 1;
+        show(PageIndex);
+    }
+
+    //上一页
+    function Pre() {
+        if (PageIndex <= 1) {
+            PageIndex = 1;
+        }
+        else {
+            PageIndex = PageIndex - 1;
+
+        }
+        show(PageIndex);
+    }
+
+    //下一页
+    function Next() {
+        if (PageIndex >= Count) {
+            PageIndex = Count;
+        }
+        else {
+            PageIndex = PageIndex + 1;
+
+        }
+        show(PageIndex);
+    }
+
+    //尾页
+    function Last() {
+        PageIndex = Count;
+        show(PageIndex);
+    }
+
+    //编辑跳转
+    function RoleUpdate(Id) {
+        window.location.href = "/RBAC_Role/Edit?Id=" + Id;
+    }
+
+    //添加跳转
+    function AddData() {
+        window.location.href = "/RBAC_Role/Add";
+    }
+</script>
+
+
+
+
+
+
+

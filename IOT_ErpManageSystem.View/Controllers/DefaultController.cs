@@ -12,5 +12,7 @@ namespace IOT_ErpManageSystem.View.Controllers
         {
             return View();
         }
+
+      
     }
 }

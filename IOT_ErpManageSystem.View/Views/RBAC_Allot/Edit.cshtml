@@ -1,0 +1,191 @@
+﻿
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>权限分配</h1>
+<form class="layui-form">
+    <div class="layui-inline">
+        <label class="layui-form-label">权限组编号</label>
+        <div class="layui-input-inline">
+            <input type="hidden" id="eid" value="@ViewBag.Id" />
+            <input type="tel" placeholder="请输入编号" id="RoleCode" name="phone" style="width:300px" lay-verify="required|phone" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">权限组名称</label>
+        <div class="layui-input-inline" style="width:300px">
+            <select name="city" lay-filter="test" lay-verify="required" id="RoleName">
+                <option value="">请选择等级</option>
+
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">权限组等级</label>
+        <div class="layui-input-inline" style="width:300px">
+            <select name="city" lay-filter="test" lay-verify="required" id="RoleTop">
+                <option value="">请选择等级</option>
+                <option value="Ⅰ">Ⅰ</option>
+                <option value="Ⅱ">Ⅱ</option>
+                <option value="Ⅲ">Ⅲ</option>
+                <option value="Ⅳ">Ⅳ</option>
+            </select>
+        </div>
+    </div>
+
+
+</form>
+<div class="layui-form-item">
+    <label class="layui-form-label">分配权限</label>
+    <input type="checkbox" id="AllGo" title="全选" />全选
+    <div class="layui-input-block" id="GetAllot">
+
+
+    </div>
+</div>
+<div style="margin-left:220px">
+    <button type="button" class="layui-btn" onclick="Role_Add()">保存</button>
+
+</div>
+<script>
+    $(function () {
+        Allt_Dep();
+        show();
+        GetQuan();
+       
+    })
+
+    //部门绑定
+    function Allt_Dep() {
+        $.ajax({
+            url: "http://localhost:52645/api/RBAC_Allot/GetDep",
+            type: "get",
+        }).done(function (data) {
+            $("#RoleName").empty();
+            $.each(data, function (Index, item) {
+                var option = '<option value=' + item.dep_ID + '>' + item.dep_Name + '</option>';
+                $("#RoleName").append(option);
+            })   
+            layui.use('form', function () {
+                var form = layui.form;
+                form.render();
+            });
+        })
+    }
+           
+
+    //权限分配
+    function GetQuan() {
+
+        $.ajax({
+            url:"http://localhost:52645/api/RBAC_Allot/GetQuan?Uid=0",
+            type:"get",
+            dataType:"json",
+            async:false,
+        }).done(function (data){
+            $("#GetAllot").empty();
+            $.each(data, function (Index, item) {
+
+                var str = '<div class="cklist-item" ><input class="Fu" lay-skin="primary"  type="checkbox" value="' + item.quan_Name + '" />' + item.quan_Name + '</div>';
+
+                $("#GetAllot").append(str);
+
+            })
+          
+        })
+    }
+
+    //反填
+    function show() {
+        var Eid = $("#eid").val();
+        $.ajax({
+            url: "http://localhost:52645/api/RBAC_Allot/FanRole?Id=" + Eid,
+            type: "get"
+        }).done(function (data) {
+            
+            $("#RoleCode").val(data.allot_Code);
+            $("#RoleName").val(data.allot_Name);              
+            $("#RoleTop").val(data.allot_Grade);
+
+            var xuan = data.allot_BaoId.split('/');
+
+            $("#GetAllot").find("[type=checkbox]").each(function (index, item) {
+                var jieshou = $(item).val();
+                $.each(xuan, function (i, t) {
+                    if (t == jieshou){
+                        $(item).prop("checked", true);
+                        return;
+                    }
+
+                })
+            })
+        })
+    }
+
+    //全选、反选
+    $("#AllGo").click(function () {
+        if ($(this).prop("checked") == true) {
+            $(".Fu").prop("checked", true);
+
+        }
+        else {
+            $(".Fu").prop("checked", false);
+        }
+    })
+
+    //添加修改后的信息
+    function Role_Add() {
+        //非空判断
+        if ($("#RoleCode").val() == '') {
+            alert("编号不能为空！");
+            return;
+        }
+        if ($("#RoleName").val() == '') {
+            alert("部门不能为空！");
+            return;
+        }
+        if ($("#RoleTop").val() == '') {
+            alert("等级不能为空");
+        }
+        var ids = "";
+        $(".Fu").each(function (index, item) {
+            if ($(item).prop("checked") == true) {
+                ids = ids + $(item).val() + "/";
+            }
+
+        })
+        ids = ids.substring(0, ids.length - 1);
+        var obj = {
+            "ID": $("#eid").val(),
+            "Allot_Code": $("#RoleCode").val(),
+            "Allot_Name": $("#RoleName").val(),
+            "Allot_Grade": $("#RoleTop").val(),
+            "Allot_BaoId": ids,
+        };
+        $.ajax({
+            url: "http://localhost:52645/api/RBAC_Allot/Update_Role",
+            type: "post",
+            data: obj,
+            dataType: "text",
+            accepts: "application/x-www-form-urlencoded",
+            contentType: "application/x-www-form-urlencoded",
+        }).done(function (data) {
+
+            if (data > 0) {
+                alert("编辑成功");
+                window.location.href = "/RBAC_Allot/Index";
+            }
+             
+        })
+
+    }
+
+      
+
+    layui.use(['form'], function () {
+        var form = layui.form;
+
+        form.render();
+    });
+</script>
