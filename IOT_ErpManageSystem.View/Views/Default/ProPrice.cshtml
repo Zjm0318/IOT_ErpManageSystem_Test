@@ -2,32 +2,43 @@
 @{
     ViewData["Title"] = "ProPrice";
 }
-
-<h4>商品价格本</h4>
-<input type="text" id="bh" placeholder="请输入商品编号" /><input type="button" value="搜索" id="sousuo" style="background-color:forestgreen" />
-<input type="button" value="添加" id="add" style="background-color:dodgerblue" />
-<input type="button" id="btnDeleteList" value="批量删除" class="btn-danger" />
-<div class="box" style="width:1049px;height:350px;border:1px solid">
-    <table class="table">
-        <tr class="active">
-            <td><input type="checkbox" id="check" />选择</td>
-            <td>商品编号</td>
-            <td>商品名称</td>
-            <td>品牌</td>
-            <td>分类</td>
-            <td>规格</td>
-            <td>单位</td>
-            <td>出售价格</td>
-            <td>进货价格</td>
-            <td>操作</td>
-        </tr>
-        <tbody id="tb"></tbody>
-    </table>
-    <a href="#" style="margin-right:10px" onclick="First()">首页</a>
-    <a href="#" style="margin-right:10px" onclick="Pre()">上一页</a>
-    <a href="#" style="margin-right:10px" onclick="Next()">下一页</a>
-    <a href="#" style="margin-right:10px" onclick="Last()">尾页</a>
+<style>
+    #he {
+        padding-top: 20px;
+        margin: 0 auto;
+        width: 1146px;
+        height: 300px;
+    }
+</style>
+<div id="he">
+    <h4>商品价格本</h4>
+    <input type="text" id="bh" placeholder="请输入商品编号" /><input type="button" value="搜索" id="sousuo" style="background-color:forestgreen" />
+    <input type="button" value="添加" id="add" style="background-color:dodgerblue" />
+    <input type="button" id="btnDeleteList" value="批量删除" class="btn-danger" />
+    <div class="box" style="width:1049px;height:350px;border:1px solid">
+        <table class="table">
+            <tr class="active">
+                <td><input type="checkbox" id="check" />选择</td>
+                <td>商品编号</td>
+                <td>商品名称</td>
+                <td>品牌</td>
+                <td>分类</td>
+                <td>规格</td>
+                <td>单位</td>
+                <td>出售价格</td>
+                <td>进货价格</td>
+                <td>操作</td>
+            </tr>
+            <tbody id="tb"></tbody>
+        </table>
+        <a href="#" style="margin-right:10px" onclick="First()">首页</a>
+        <a href="#" style="margin-right:10px" onclick="Pre()">上一页</a>
+        <a href="#" style="margin-right:10px" onclick="Next()">下一页</a>
+        <a href="#" style="margin-right:10px" onclick="Last()">尾页</a>
+    </div>
 </div>
+
+
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script>
     $("#add").click(function () {

@@ -105,10 +105,10 @@
                 return;
             }
             //正则表达式
-            var reg = /(^[a-z]+$)/;
+            var reg = /(^[A-Za-z]+$)/;
             if (!reg.test(jQuery('#userName').val())) {
                 jQuery('#userName').focus();
-                alert("请输入正确格式的用户名！");
+                alert("请输入正确格式的用户名,只能是英文！");
                 return;
             }
             var opj = {
@@ -177,6 +177,7 @@
         }
         if ($("#newPwd").val() != $("#quePwd").val()) {
             alert("两次密码不一致，请您重新输入！");
+            return;
         }
         if (jQuery('#newPwd').val() == "") {
             jQuery('#newPwd').focus();
