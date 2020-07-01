@@ -72,5 +72,11 @@ namespace IOT_ErpManageSystem.API.Controllers
             List<RBAC_Dep> dlist = _allotinterface.GetDep();
             return dlist;
         }
+
+        //[HttpGet]
+        //public List<RBAC_Quan> ShowQuanInfo(int Uid)
+        //{
+        //    return _allotinterface.ShowQuanInfo(Uid);
+        //}
     }
 }

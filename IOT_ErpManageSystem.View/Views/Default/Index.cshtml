@@ -3,6 +3,12 @@
     Layout = null;
 }
 <!DOCTYPE html>
+<style>
+    .aa {
+        display: none
+    }
+</style>
+
 <html>
 <head>
     <meta charset="utf-8">
@@ -73,7 +79,7 @@
                         <dl class="layui-nav-child">
                             <dd><a lay-href="set/user/info.html">基本资料</a></dd>
                             <dd><a lay-href="set/user/password.html">修改密码</a></dd>
-                            
+
                             <dd layadmin-event="logout" style="text-align: center;"><a>退出</a></dd>
                         </dl>
                     </li>
@@ -90,92 +96,31 @@
             <!-- 侧边菜单 -->
             <div class="layui-side layui-side-menu">
                 <div class="layui-side-scroll">
-                    <div class="layui-logo" lay-href="home/console.html">
+                    <div class="layui-logo" lay-href="">
                         <span>ERP</span>
                     </div>
+                    <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="lay-system-side-menu" lay-filter="layadmin-system-side-menu">
+                        @{
+                            IOT_ErpManageSystem.BLL.RBAC_Allot.RBAC_Allot bll = new IOT_ErpManageSystem.BLL.RBAC_Allot.RBAC_Allot();
+                            var menu = bll.ShowQuanInfo();
 
-                    <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
+                        }
                         <li data-name="home" class="layui-nav-item layui-nav-itemed">
-                            <a href="javascript:;" lay-tips="权限管理" lay-direction="2">
-                                <i class="layui-icon layui-icon-home"></i>
-                                <cite>基础信息</cite>
-                            </a>
-                            <dl class="layui-nav-child">
-                                <dd data-name="console" class="layui-this">
-                                    <a lay-href="/Default/L">系统首页</a>
-                                </dd>
-                                <dd data-name="console">
-                                    <a lay-href="/Default/Personage">个人信息</a>
-                                </dd>
-                            </dl>
-                        </li>
-                        <li data-name="component" class="layui-nav-item">
-                            <a href="javascript:;" lay-tips="组件" lay-direction="2">
-                                <i class="layui-icon layui-icon-component"></i>
-                                <cite>商品管理</cite>
-                            </a>
-                            <dl class="layui-nav-child">
-                                <dd data-name="grid">
-                                    <a lay-href="/Goods/Index">商品列表</a>
-                                </dd>
-                                <dd data-name="button">
-                                    <a lay-href="/Goods/Add">添加商品</a>
-                                </dd>
-                                <dd data-name="form">
-                                    <a lay-href="/Goods/GoodsPriceInfo">商品价格本</a>
-                                </dd>
-                            </dl>
-                        </li>
-                        <li data-name="template" class="layui-nav-item">
-                            <a href="javascript:;" lay-tips="页面" lay-direction="2">
-                                <i class="layui-icon layui-icon-template"></i>
-                                <cite>数据报表</cite>
-                            </a>
-                            <dl class="layui-nav-child">
-                                <dd><a lay-href="/Default/Order">订单报表</a></dd>
-                            </dl>
-                            <dl class="layui-nav-child">
-                                <dd><a lay-href="/Default/ProPrice">商品价格本</a></dd>
-                            </dl>
-                        </li>
-                        <li data-name="app" class="layui-nav-item">
-                            <a href="javascript:;" lay-tips="应用" lay-direction="2">
-                                <i class="layui-icon layui-icon-app"></i>
-                                <cite>采购管理</cite>
-                            </a>
-                            <dl class="layui-nav-child">
-                                <dd data-name="list"><a lay-href="/Supplier/Index">供应商管理</a></dd>
-                                <dd data-name="tags"><a lay-href="/RequShow/GetRequList">请购单管理</a></dd>
-                                <dd data-name="comment"><a lay-href="/PurShow/GetPurList">采购单管理</a></dd>
-                                <dd data-name="coment"><a lay-href="/TuiHuo/Index">退货单管理</a></dd>
-                            </dl>
-                        </li>
-                        <li data-name="senior" class="layui-nav-item">
-                            <a href="javascript:;" lay-tips="高级" lay-direction="2">
-                                <i class="layui-icon layui-icon-senior"></i>
-                                <cite>仓库管理</cite>
-                            </a>
-
-                            <dl class="layui-nav-child">
-                                <dd><a lay-href="/InStorage/Index">入库管理</a></dd>
-                                <dd><a lay-href="/OutStorage/Index">出库管理</a></dd>
-                                <dd><a lay-href="/StorageStruct/Index">仓库结构</a></dd>
-                            </dl>
-                        </li>
-                        <li data-name="user" class="layui-nav-item" onclick="Dian(0)">
-                            <a href="javascript:;" lay-tips="用户" lay-direction="2">
-                                <i class="layui-icon layui-icon-user"></i>
-                                <cite>权限管理</cite>
-                            </a>
-                            <dl class="layui-nav-child">
-                                <dd>
-
-                                    <a lay-href="/RBAC_Role/Index">员工管理</a>
-                                </dd>
-                                <dd>
-                                    <a lay-href="/RBAC_Allot/Index">权限分配</a>
-                                </dd>
-                            </dl>
+                            @foreach (var item in menu.Where(m=>m.Uid==0))
+                            {
+                                <a href="javascript:;" onclick="go(this)" lay-tips="权限管理" lay-direction="2">
+                                    <i class="layui-icon layui-icon-home"></i>
+                                    <cite>@item.Quan_Name</cite>
+                                </a>
+                                <dl class="layui-nav-child">
+                                    <dd data-name="console" class="layui-this">
+                                        @foreach (var i in menu.Where(m => m.Uid == item.ID))
+                                        {
+                                        <a lay-href="@i.Quan_Url">@i.Quan_Name</a>
+                                        }
+                                    </dd>                                  
+                                </dl>
+                            }
                         </li>
                     </ul>
                 </div>
@@ -230,7 +175,10 @@
 </html>
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script>
-    
+   
+    function go(obj) {
+        $(obj).next().toggleClass("aa");
+    }
 </script>
 
 
