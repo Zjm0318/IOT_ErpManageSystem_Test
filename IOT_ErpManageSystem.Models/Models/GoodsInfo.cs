@@ -24,5 +24,6 @@ namespace IOT_ErpManageSystem.Models
         public string SKU { get; set; }
         public string Color { get; set; }
         public string Size { get; set; }
+        public decimal JinHPrice { get; set; }
     }
 }
