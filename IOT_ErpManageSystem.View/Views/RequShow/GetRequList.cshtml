@@ -1,0 +1,232 @@
+﻿
+@{
+    ViewData["Title"] = "GetRequList";
+}
+
+<link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+<link href="~/layuiadmin/style/admin.css" rel="stylesheet" />
+
+请购单状态 <select id="states">
+    <option value="">请选择</option>
+    <option value="0">待分配</option>
+    <option value="1">审核成功</option>
+    <option value="2">审核失败</option>
+</select>
+创建日期
+<input type="date" id="time" />
+请购人
+<input type="text" id="qgren" />
+审核人
+<input type="text" id="shren" />
+<br />
+<input type="button" value="搜索" id="cha" class="layui-btn" />
+<input type="button" value="添加" id="add" class="layui-btn layui-btn-normal" />
+
+<table class="layui-table" border="1">
+    <tr>
+        <td>选择</td>
+        <td>发起日期</td>
+        <td>请购单编号</td>
+        <td>采购单状态</td>
+        <td>请购发起人</td>
+        <td>请购负责人</td>
+        <td>请购审核人</td>
+        <td>操作</td>
+    </tr>
+    <tbody id="body">
+    </tbody>
+    <tr>
+        <td><input type="button" id="zhipai" value="指派" class="layui-btn" /></td>
+        <td><input type="button" id="chehui" value="撤回" class="layui-btn" /></td>
+    </tr>
+</table>
+
+<div>
+    <a onclick="Shouye()">首页</a>
+    <a onclick="Up()">上一页</a>
+    <a onclick="Next()">下一页</a>
+    <a onclick="WeiYe()">尾页</a>
+</div>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<script>
+    var pageindex = 1;
+    var pagesize = 2;
+    var count = 0;
+    var QgId = "";
+
+    $(function () {
+        show(pageindex);
+    })
+
+    //查询
+    $("#cha").click(function () {
+        pageindex = 1;
+        show(pageindex);
+    })
+
+    // 显示
+    function show(pageindex) {
+        $.ajax("http://localhost:52645/api/RequList/GetRequList?state=" + $("#states").val() + "&time=" + $("#time").val() + "&qgren=" + $("#qgren").val() + "&shren=" + $("#shren").val() + "&pageindex=" + pageindex + "&pagesize=" + pagesize, {
+            type: "get",
+            dataType: "json",
+        }).done(function (da) {
+            showlist(da.list);
+            count = da.rowcount;
+        })
+    }
+
+    //显示
+    function showlist(da) {
+        $("#body").empty();  //清空
+        
+        //循环
+        $.each(da, function (index, item) {
+            var str = "";
+            if (item.states == "0") {
+                str = "<tr>"
+                    + "<td><input type='radio' value='" + item.qgId + "' name='rad'  /></td>"
+                    + "<td>" + item.createDate.substring(0, 10) + "</td>"
+                    + "<td>" + item.qId + "</td>"
+                    + "<td> 未审核</td>"
+                    + "<td>" + item.qgName + "</td>"
+                    + "<td>" + item.role_Name + "</td>"
+                    + "<td>" + item.qgShr + "</td>"
+                    + "<td><input type='button' value='编辑' onclick='edit(\"" + item.qId + "\",\"" + item.qgId + "\")' class='layui-btn layui-btn-danger' />"
+                    + "<input type = 'button' value ='审核通过' class='layui-btn layui-btn-warm' onclick = 'Update1(\"" + item.qgId + "\")'/>"
+                    + "<input type = 'button' value ='审核不通过' class='layui-btn layui-btn-warm' onclick = 'Update2(\"" + item.qgId + "\")'/>"
+                    + "</td> "
+                    + "</tr>";
+            }
+            else if (item.states == "1") {
+                str = "<tr>"
+                    + "<td><input type='radio' value='" + item.qgId + "' name='rad'  /></td>"
+                    + "<td>" + item.createDate.substring(0, 10) + "</td>"
+                    + "<td>" + item.qId + "</td>"
+                    + "<td> 审核通过</td>"
+                    + "<td>" + item.qgName + "</td>"
+                    + "<td>" + item.role_Name + "</td>"
+                    + "<td>" + item.qgShr + "</td>"
+                    + "<td><input type='button' value='编辑' onclick='edit(\"" + item.qId + "\",\"" + item.qgId + "\")' class='layui-btn layui-btn-danger' />"
+                    + "</td> "
+                    + "</tr>";
+            }
+            else {
+                str = "<tr>"
+                    + "<td><input type='radio' value='" + item.qgId + "' name='rad'  /></td>"
+                    + "<td>" + item.createDate.substring(0, 10) + "</td>"
+                    + "<td>" + item.qId + "</td>"
+                    + "<td> 审核未通过</td>"
+                    + "<td>" + item.qgName + "</td>"
+                    + "<td>" + item.role_Name + "</td>"
+                    + "<td>" + item.qgShr + "</td>"
+                    + "<td><input type='button' value='编辑' onclick='edit(\"" + item.qId + "\",\"" + item.qgId + "\")' class='layui-btn layui-btn-danger' />"
+                    + "</td> "
+                    + "</tr>";
+            }
+            
+            $("#body").append(str);  //向尾部添加
+        })
+    }
+
+  
+
+    //首页
+    function Shouye() {
+        pageindex = 1;
+        show(pageindex);
+    }
+    //上一页
+    function Up() {
+        pageindex = pageindex - 1 <= 0 ? 1 : pageindex - 1;
+        show(pageindex);
+    }
+    //下一页
+    function Next() {
+        pageindex = pageindex + 1 > count ? count : pageindex + 1;
+        show(pageindex);
+    }
+    //尾页
+    function WeiYe() {
+        pageindex = count;
+        show(pageindex);
+    }
+
+    //修改状态  审核通过
+    function Update1(id) {
+        $.ajax("http://localhost:52645/api/RequList/UpdateState?Id=" + id,{
+            type: "get",
+            dataType: "text",
+        }).done(function (da) {
+            if (da > 0) {
+                alert("修改成功");
+                window.location.reload();
+            }
+            else {
+                alert("修改失败")
+            }
+        })
+    }
+     
+    //修改状态  审核未通过
+    function Update2(id) {
+        $.ajax("http://localhost:52645/api/RequList/UpdateState2?Id=" + id, {
+            type: "get",
+            dataType: "text",
+        }).done(function (da) {
+            if (da > 0) {
+                alert("修改成功");
+                window.location.reload();
+            }
+            else {
+                alert("修改失败")
+            }
+        })
+    }
+
+    //指派
+    $("#zhipai").click(function () {
+        QgId = $("input[type='radio']:checked").val();   
+        if (QgId != null) {
+            window.location.href = "/RequShow/GetRoleList?QgId=" + QgId;
+        }
+        else {
+            alert("请选择要指派的请购单");
+        }  
+    })
+
+
+    //撤回
+    $("#chehui").click(function () {
+        QgId = $("input[type='radio']:checked").val();  //获取请购单ID
+        //根据获取的值是否为空来判断单选框是否选中
+        if (QgId != null) {
+            $.ajax("http://localhost:52645/api/RequList/DelRole?QgId=" + QgId, {
+                type: "get",
+                dataType: "text"
+            }).done(function (da) {
+                if (da > 0) {
+                    alert("撤回成功");
+                    window.location.reload();
+                }
+                else {
+                    alert("撤回失败")
+                }
+            })
+        }
+        else {
+            alert("请选择要删除的请购单");
+        }
+    })   
+
+    //添加
+    $("#add").click(function () {
+        window.location.href = "/RequShow/GetAddRequ";
+    })
+
+    //编辑
+    function edit(QId, QgId) {
+        window.location.href = "/RequShow/FanTRequList?QId=" + QId + "&QgId=" + QgId;
+    }
+   
+</script>

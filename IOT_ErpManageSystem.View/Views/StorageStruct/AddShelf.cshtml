@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewData["Title"] = "AddShelf";
+}
+<div style="width:300px;height:200px;margin:0 auto;padding-top:20px">
+    <div class="layui-inline">
+        <label class="layui-form-label">货架名称</label>
+        <div class="layui-input-inline">
+            <input type="text" class="layui-input" id="shelf" placeholder="请输入新增货架名称">
+        </div>
+    </div>
+    <div class="layui-inline" style="float:left">
+        <label class="layui-form-label">所属仓库</label>
+        <div class="layui-col-md6">
+            <select id="storage" name="city" lay-verify="">
+                <option value="0">--仓库--</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-inline" style="float:left">
+        <label class="layui-form-label">所属区域</label>
+        <div class="layui-col-md6">
+            <select id="area" name="city" lay-verify="">
+                <option value="0">--区域--</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-inline">
+        <button style="margin-left:120px;margin-top:30px" class="layui-btn layuiadmin-btn-list" onclick="Save()">保存</button>
+    </div>
+</div>
+<script>
+    $(function () {
+        BindStorage();
+        BindArea();
+    })
+
+
+    //绑定仓库
+    function BindStorage() {
+        $.ajax({
+            url: "http://localhost:52645/api/StorageStructure/GetStorList",
+            type: "get",
+        }).done(function (data) {
+            $.each(data, function (index, item) {
+                var option = "<option value='" + item.id + "'>" + item.storageName + "</option>";
+                $("#storage").append(option);
+            })
+        })
+    }
+    //绑定区域
+    function BindArea() {
+        $.ajax({
+            url: "http://localhost:52645/api/StorageStructure/GetAreaList",
+            type: "get",
+        }).done(function (data) {
+            $.each(data, function (index, item) {
+                var option = "<option value='" + item.id + "'>" + item.area + "</option>";
+                $("#area").append(option);
+            })
+        })
+    }
+
+    function Save() {
+        var shelf = $("#shelf").val();
+        var storage = $("#storage").val();
+        var area = $("#area").val();
+        var obj = {
+            "ShelfName": shelf,
+            "StorageId": storage,
+            "AreaId": area
+        };
+        $.ajax({
+            url: "http://localhost:52645/api/StorageStructure/AddShelf",
+            type: "post",
+            accepts: "application/x-www-from-urlencoded",
+            data: obj
+        }).done(function (data) {
+            if (data > 0) {
+                alert("添加成功!");
+            }
+            else {
+                alert("添加失败!");
+            }
+        })
+    }
+</script>
