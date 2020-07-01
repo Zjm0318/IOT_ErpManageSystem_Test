@@ -44,8 +44,16 @@
             alert("请选择商品名称");
             return;
         }
-        if ($("#price").val() == "" || $("#price").val() == null || $("#price").val() == undefined) {
-            alert("进货价格不能为空");
+        if (jQuery('#price').val() == "") {
+            jQuery('#price').focus();
+            alert("进货价格不能为空！");
+            return;
+        }
+        //正则表达式
+        var reg = /(^\d+$)/;
+        if (!reg.test(jQuery('#price').val())) {
+            jQuery('#price').focus();
+            alert("只能输入数值！");
             return;
         }
         var obj = {
