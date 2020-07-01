@@ -285,6 +285,17 @@ namespace IOT_ErpManageSystem.BLL.GoodsInfo
            };
             return dBHelper.ExecuteNonQueryProc(procName, param);
         }
+
+        #endregion
+
+        #region 判断价格本中是否已有此商品
+        public List<GoodsPrice> PricesInfo()
+        {
+            string procName = "RepareName";
+            DataTable tb = dBHelper.ExecuteProc(procName,null);
+            string json = JsonConvert.SerializeObject(tb);
+            return JsonConvert.DeserializeObject<List<GoodsPrice>>(json).ToList();
+        }
         #endregion
 
         #endregion

@@ -80,6 +80,9 @@ namespace IOT_ErpManageSystem.BLL.GoodsInfo
         //修改价格本
         int UpdatePrice(GoodsPrice m);
 
+        //判断价格本中是否已有此商品
+        List<GoodsPrice> PricesInfo();
+
         #endregion
     }
 }
