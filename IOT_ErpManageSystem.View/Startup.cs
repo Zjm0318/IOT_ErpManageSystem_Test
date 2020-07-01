@@ -46,7 +46,7 @@ namespace IOT_ErpManageSystem.View
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Default}/{action=Index}/{id?}");
+                    pattern: "{controller=Default}/{action=Log}/{id?}");
             });
         }
     }

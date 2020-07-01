@@ -16,6 +16,13 @@ namespace IOT_ErpManageSystem.DAL.IDBHelp
         /// <returns></returns>
         public DataTable ExecuteProc(string procName, SqlParameter[] sqlParameters);
         /// <summary>
+        /// 登录存储过程
+        /// </summary>
+        /// <param name="procName"></param>
+        /// <param name="sqlParameters"></param>
+        /// <returns></returns>
+        public int LoginProc(string procName, SqlParameter[] sqlParameters);
+        /// <summary>
         /// 分页存储过程
         /// </summary>
         /// <param name="procName"></param>

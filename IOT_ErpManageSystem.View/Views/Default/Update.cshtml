@@ -1,0 +1,145 @@
+﻿
+@{
+    ViewData["Title"] = "Update";
+}
+
+<h1>编辑</h1>
+<table>
+    <tr>
+        <td>
+            商品名称<input type="text" id="goodname" />
+            <input type="hidden" id="id" value="@ViewBag.gId" />
+            <input type="hidden" id="pid" value="@ViewBag.pId" />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            商品品牌<input type="text" id="brand" />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            商品分类<select id="type">
+            <option value="">请选择</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            商品规格<input type="text" id="rule" />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            商品单位<input type="text" id="danwei" />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            出售价格<input type="text" id="chuprice" />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            进货价格<input type="text" id="jinprice" />
+        </td>
+    </tr>
+    <tr>
+        <td><input type="button" value="保存" id="add" /></td>
+    </tr>
+</table>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    $(function () {
+        Type();
+    });
+    function Type() {
+        $.ajax({
+            url: "http://localhost:52645/api/Default/Type",
+            type: "get"
+        }).done(function (d) {
+            console.log(d);
+            $.each(d, function (index, item) {
+                var option = "<option value='" + item.tId + "'>" + item.typeName + "</option>";
+                $("#type").append(option);
+            });
+            FanTian();
+        });
+    }
+    function FanTian() {
+        var id = $("#id").val();
+        $.ajax({
+            url: "http://localhost:52645/api/Default/GoodsThree?id=" + id,
+            type: "get"
+        }).done(function (d) {
+            console.log(d);
+            $("#goodname").val(d.goodsName);
+            $("#brand").val(d.goodsBrand);
+            $("#type").val(d.typeId);
+            $("#rule").val(d.goodsRule);
+            $("#danwei").val(d.sku);
+            $("#chuprice").val(d.goodsPrices);
+            $("#jinprice").val(d.jinHPrice);
+        });
+    }
+
+    //保存
+    $("#add").click(function () {
+        if ($("#goodname").val() == "" || $("#goodname").val() == null || $("#goodname").val() == undefined) {
+            alert("商品名称不能为空！");
+            return;
+        }
+        if ($("#brand").val() == "" || $("#brand").val() == null || $("#brand").val() == undefined) {
+            alert("商品品牌不能为空！");
+            return;
+        }
+        if ($("#type").val() == "" || $("#type").val() == null || $("#type").val() == undefined) {
+            alert("商品类型不能为空！");
+            return;
+        }
+        if ($("#rule").val() == "" || $("#rule").val() == null || $("#rule").val() == undefined) {
+            alert("商品规格不能为空！");
+            return;
+        }
+        if ($("#danwei").val() == "" || $("#danwei").val() == null || $("#danwei").val() == undefined) {
+            alert("单位不能为空！");
+            return;
+        }
+        if ($("#chuprice").val() == "" || $("#chuprice").val() == null || $("#chuprice").val() == undefined) {
+            alert("出售价格不能为空！");
+            return;
+        }
+        if ($("#jinprice").val() == "" || $("#jinprice").val() == null || $("#jinprice").val() == undefined) {
+            alert("出售价格不能为空！");
+            return;
+        }
+        var obj = {
+            "Id": $("#id").val(),
+            "GoodsName": $("#goodname").val(),
+            "GoodsBrand": $("#brand").val(),
+            "TypeId": $("#type").val(),
+            "GoodsRule": $("#rule").val(),
+            "SKU": $("#danwei").val(),
+            "GoodsPrices": $("#chuprice").val(),
+            "PId": $("#pid").val(),
+            "JinHPrice": $("#jinprice").val(),
+        }
+        $.ajax({
+            url: "http://localhost:52645/api/Default/UpdateGoods",
+            type: "post",
+            accepts: "application/x-www-form-urlencoded",
+            contentType: "application/x-www-form-urlencoded",
+            data: obj,
+        }).done(function (d) {
+            if (d > 0) {
+                alert("修改成功!");
+                location.href = "/default/ProPrice";
+            }
+            else {
+                alert("修改失败！");
+
+            }
+
+        });
+    });
+</script> 

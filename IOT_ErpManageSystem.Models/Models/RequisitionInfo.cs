@@ -7,10 +7,15 @@ namespace IOT_ErpManageSystem.Models
 {
 	 public class RequisitionInfo
 	 {
-		 public Guid  QId { get; set; }
-		 public DateTime  CreateDate { get; set; }
-		 public string  DhAddress { get; set; }
-		 public string  QgName { get; set; }
-		 public string  DeptName { get; set; }
+		//请购信息ID
+		public Guid  QId { get; set; }
+		//创建日期
+		public DateTime  CreateDate { get; set; }
+		//到货地址
+		public string  DhAddress { get; set; }
+		//请购人员
+		public string  QgName { get; set; }
+		//所在部门
+		public string  DeptName { get; set; }
 	 }
 }

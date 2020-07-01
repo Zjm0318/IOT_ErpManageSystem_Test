@@ -1,0 +1,8 @@
+
+<script src="~/Scripts/sweetalert/sweetalert/sweetalert-dev.js"></script>
+<link href="~/Scripts/sweetalert/sweetalert/sweetalert.css" rel="stylesheet" />
+
+
+    function func() {
+        swal("开始这个完美的弹出框旅程吧！")
+    }

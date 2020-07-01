@@ -1,0 +1,454 @@
+﻿
+@{
+    ViewData["Title"] = "Add";
+}
+
+<h1>Add</h1>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+<link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+<link href="~/layuiadmin/style/admin.css" rel="stylesheet" />
+
+<style>
+
+    .layui-col-space15 > * {
+        padding: 7.5px;
+        width: 100%;
+    }
+
+    .alert {
+        width: 90%;
+        text-align: center;
+        color: #fff;
+        margin: 10px auto;
+        border-radius: 5px;
+        line-height: 30px;
+        cursor: pointer;
+        background: #4ab819;
+    }
+
+    .confirm {
+        background: #196fb8;
+    }
+
+    .open {
+        background: #f88408;
+    }
+
+    .toast {
+        background: #f80851;
+    }
+
+    .later {
+        background: #a9a9a9;
+    }
+</style>
+
+
+
+<div class="layui-tab">
+    <ul class="layui-tab-title">
+        <li class="layui-this">商品信息</li>
+        <li>商品属性</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+            <table class="layui-table" style="width:60%">
+                <tr>
+                    <td>商品编号</td>
+                    <td><input id="goodsId" type="text" placeholder="请输入关键字" class="layui-input search_input"></td>
+                </tr>
+                <tr>
+                    <td>商品分类</td>
+                    <td>
+                        <select id="type" class="layui-select" onchange="two()">
+                            <option value="">选择一级分类</option>
+
+                        </select>
+                        <select id="typetwo" class="layui-select">
+                            <option value="">选择二级分类</option>
+
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>商品名称</td>
+                    <td><input id="goodsname" type="text" placeholder="请输入关键字" class="layui-input search_input"></td>
+                </tr>
+                <tr>
+                    <td>商品图片</td>
+                    <td>
+                        <input id="goodsimg" type="file" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>商品价格</td>
+                    <td><input id="goodsprice" type="text" placeholder="请输入关键字" class="layui-input search_input"></td>
+                </tr>
+                <tr>
+                    <td>商品品牌</td>
+                    <td><input id="goodsbrand" type="text" placeholder="请输入关键字" class="layui-input search_input"></td>
+                </tr>
+                <tr>
+                    <td>商品库存</td>
+                    <td><input id="goodsstock" type="number" placeholder="请输入关键字" class="layui-input search_input"></td>
+                </tr>
+                <tr>
+                    <td>库存预警值</td>
+                    <td><input id="stockyj" type="number" placeholder="请输入关键字" class="layui-input search_input"></td>
+                </tr>
+                <tr>
+                    <td>上架时间</td>
+                    <td><input id="uptime" type="date" placeholder="请输入关键字" class="layui-input search_input"></td>
+                </tr>
+                <tr>
+                    <td>商品规格</td>
+                    <td><input id="goodsrule" type="text" placeholder="请输入关键字" class="layui-input search_input"></td>
+                </tr>
+                <tr>
+                    <td>SKU</td>
+                    <td><input id="sku" type="text" placeholder="请输入关键字" class="layui-input search_input"></td>
+                </tr>
+                <tr>
+                    <td><input id="btn_add" type="button" value="保存" class="btn layui-btn-primary" /></td>
+                </tr>
+            </table>
+        </div>
+        <div class="layui-tab-item">
+            <table class="layui-table">
+                <tr><td><h3><label style="color:red">*</label>商品名称</h3></td></tr>
+                <tr>
+                    <td>
+                        <select id="name" onchange="showsc()" class="layui-select" style="width:150px">
+                            <option value="">选择属性类别</option>
+
+                        </select>
+                    </td>
+                </tr>
+            </table>
+
+            <div style="width:100%;height:300px">
+                <h4><label style="color:red">*</label>商品规格</h4><hr />
+                <div id="size">
+                    <label>尺码：</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+                <div id="color">
+                    <label>颜色：</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+                <div class="layui-input-inline">
+                    <input id="colors" type="text" placeholder="请输入颜色" class="layui-input search_input">
+                </div>
+                <a class="layui-btn layui-btn-normal newsAdd_btn" onclick="addcolor();"><i class="layui-icon layui-icon-add-1"></i> 增加</a>
+            </div>
+            <a class="layui-btn layui-btn-normal newsAdd_btn" onclick="addproperty();"><i class="layui-icon layui-icon-add-1"></i> 增加</a>
+
+            <div style="padding: 15px; background-color: #F2F2F2;">
+                <table class="layui-table">
+                    <tr>
+                        <th>尺码</th>
+                        <th>颜色</th>
+                        <th>销售价格</th>
+                        <th>商品库存</th>
+                        <th>库存预警值</th>
+                        <th>SKU编号</th>
+                        <th>操作</th>
+                    </tr>
+                    <tbody id="tb">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(function () {
+        type();
+        two();
+    });
+
+    layui.use('element', function () {
+        var element = layui.element;
+
+    });
+    /********************************添加商品信息********************************/
+    //添加商品
+    $("#btn_add").click(function () {
+        var form = new FormData();
+        var fileUpload = $("#goodsimg").get(0);
+        var file = fileUpload.files[0];
+        form.append(file.name, file);
+        var obj =
+        {
+            "GoodsId": $("#goodsId").val().toString(),
+            "GoodsName": $("#goodsname").val().toString(),
+            "GoodsImg": $("#goodsimg").val().toString(),
+            "GoodsPrices": $("#goodsprice").val().toString(),
+            "GoodsBrand": $("#goodsbrand").val().toString(),
+            "GoodsStock": $("#goodsstock").val().toString(),
+            "TypeId": $("#typetwo").val().toString(),
+            "StockYJ": $("#stockyj").val().toString(),
+            "UpTime": $("#uptime").val().toString(),
+            "GoodsRule": $("#goodsrule").val().toString(),
+            "SKU": $("#sku").val().toString(),
+            "GoodsState": "0"
+        };
+
+        //非空判断
+        if (obj.GoodsId == "" || obj.GoodsId == null || obj.GoodsId == undefined) {
+            alert("商品编号不能为空!");
+            return;
+        }
+
+        if (obj.GoodsName == "" || obj.GoodsName == null || obj.GoodsName == undefined) {
+            alert("商品名称不能为空!");
+            return;
+        }
+
+        if (obj.GoodsImg == "" || obj.GoodsImg == null || obj.GoodsImg == undefined) {
+            alert("商品图片不能为空!");
+            return;
+        }
+
+        if (obj.GoodsPrices == "" || obj.GoodsPrices == null || obj.GoodsPrices == undefined) {
+            alert("商品价格不能为空!");
+            return;
+        }
+        else if (isNaN(obj.GoodsPrices)) {
+            alert("请填写正确的价格数值!");
+            return;
+        }
+
+        if (obj.GoodsBrand == "" || obj.GoodsBrand == null || obj.GoodsBrand == undefined) {
+            alert("商品品牌不能为空!");
+            return;
+        }
+
+        if (obj.GoodsStock == "" || obj.GoodsStock == null || obj.GoodsStock == undefined) {
+            alert("商品库存不能为空!");
+            return;
+        }
+
+        if (obj.TypeId == "" || obj.TypeId == null || obj.TypeId == undefined) {
+            alert("商品类型不能为空!");
+            return;
+        }
+
+        if (obj.StockYJ == "" || obj.StockYJ == null || obj.StockYJ == undefined) {
+            alert("库存预警不能为空!");
+            return;
+        }      
+
+        if (obj.UpTime == "" || obj.UpTime == null || obj.UpTime == undefined) {
+            alert("上架时间不能为空!");
+            return;
+        }
+
+        if (obj.GoodsRule == "" || obj.GoodsRule == null || obj.GoodsRule == undefined) {
+            alert("商品规格不能为空!");
+            return;
+        }
+
+        if (obj.SKU == "" || obj.SKU == null || obj.SKU == undefined) {
+            alert("商品单位不能为空!");
+            return;
+        }
+
+        $.ajax("http://localhost:52645/api/Goods/AddGoodsInfo?obj=" + JSON.stringify(obj),
+            {
+                type: "post",
+                data: form,
+                dataType: "text",
+                contentType: false,
+                processData: false
+            }).done(function (code) {
+                if (code > 0) {
+                    alert("上架成功!");
+                    location.href = "Index";
+                }
+                else {
+                    alert("上架失败!");
+                }
+            });
+    })
+
+    //绑定一级分类
+    function type() {
+        $.ajax("http://localhost:52645/api/Goods/BindInfo",
+            {
+                type: "get",
+                dataType: "json"
+            }).done(function (data) {
+
+                $.each(data, function (index, item) {
+                    var option = '<option value="' + item.typeId + '">' + item.typeName + '</option>';
+                    $("#type").append(option);
+                })
+            })
+    }
+
+    //绑定二级分类
+    function two() {
+        var TypeId = $("#type").val();
+        $.ajax("http://localhost:52645/api/Goods/BindTwoInfo?TypeId=" + TypeId,
+            {
+                type: "get",
+                dataType: "json"
+            }).done(function (data) {
+                $("#typetwo").empty();
+                $.each(data, function (index, item) {
+                    var option = '<option value=\"' + item.id + '\">' + item.typeName + '</option>';
+                    $("#typetwo").append(option);
+                })
+            })
+    }
+
+    /********************************添加商品属性********************************/
+
+    //绑定商品名称
+    $.ajax("http://localhost:52645/api/Goods/ShowName",
+        {
+            type: "get",
+            dataType: "json"
+        }).done(function (data) {
+            $.each(data, function (index, item) {
+                var option = '<option value=\"' + item.id + '\">' + item.goodsName + '</option>';
+                $("#name").append(option);
+            })
+        })
+
+    //绑定尺码
+    $.ajax("http://localhost:52645/api/Goods/ShowSize",
+        {
+            type: "get",
+            dataType: "json"
+        }).done(function (data) {
+            $.each(data, function (index, item) {
+
+                var size =
+                    "<input id='rasize' type='radio' name='size' value=\'" + item.sId + "\' /><label>" + item.size + "</label>&nbsp;&nbsp;&nbsp;&nbsp;";
+                $("#size").append(size);
+            })
+        })
+
+    //绑定颜色
+    $.ajax("http://localhost:52645/api/Goods/ShowColors",
+        {
+            type: "get",
+            dataType: "json"
+        }).done(function (data) {
+            $.each(data, function (index, item) {
+                var color =
+                    "<input id='racolor' type='radio' name='color' value=\'" + item.cId + "\' /><label>" + item.color + "</label>&nbsp;&nbsp;<a onclick='del(\"" + item.cId + "\")'>删除</a>&nbsp;&nbsp;&nbsp;&nbsp;";
+                $("#color").append(color);
+            })
+        })
+
+    //添加属性
+    function addproperty() {
+
+        var obj =
+        {
+            "GoodsId": $("#name").val().toString(),
+            "CId": $("input[name='color']:checked").val().toString(),
+            "SId": $("input[name='size']:checked").val().toString()
+        };
+
+        $.ajax("http://localhost:52645/api/Goods/AddProperty",
+            {
+                type: "post",
+                data: obj,
+                dataType: "json",
+                contentType: "application/x-www-form-urlencoded"
+            }).done(function (code) {
+                if (code > 0) {
+                    alert("添加成功!");
+                    location.href = "Index";
+                }
+                else {
+                    alert("添加失败!");
+                }
+            })
+    }
+
+    //删除颜色
+    function del(CId) {
+        if (confirm("确定删除吗?")) {
+            $.ajax("http://localhost:52645/api/Goods/DelColors",
+                {
+                    type: "get",
+                    data: CId
+                }).done(function (code) {
+                    if (code > 0) {
+                        alert("删除成功!");
+                        location.reload();
+                    }
+                    else {
+                        alert("删除失败!");
+                    }
+                })
+        }
+    }
+
+    //添加颜色
+    function addcolor() {
+        $.ajax("http://localhost:52645/api/Goods/AddColors",
+            {
+                type: "post",
+                data: { "Color": $("#colors").val().toString() },
+                dataType: "json",
+                contentType: "application/x-www-form-urlencoded"
+            }).done(function (code) {
+                if (code > 0) {
+                    alert("添加成功!");
+                    location.reload();
+                }
+                else {
+                    alert("添加失败!");
+                }
+            })
+    }
+
+    //显示商品颜色+尺码
+    function showsc() {
+        $("#tb").empty();
+        var Id = $("#name").val();
+
+        $.ajax("http://localhost:52645/api/Goods/ShowGoodsSC?Id=" + Id,
+            {
+                type: "get",
+            }).done(function (data) {
+                $.each(data, function (index, item) {
+                    var list = "<tr>" +
+                        "<td>" + item.size + "</td>" +
+                        "<td>" + item.color + "</td>" +
+                        "<td>" + item.goodsPrices + "</td>" +
+                        "<td>" + item.goodsStock + "</td>" +
+                        "<td>" + item.stockYJ + "</td>" +
+                        "<td>" + item.sku + "</td>" +
+                        '<td><input id="Button1" type="button" value="删除" onclick="delPro(\''+item.pId+'\',this)" class="layui-btn layui-btn-danger" /></td>' +
+                        "</tr>";
+                    $("#tb").append(list);
+                })
+            })
+    }
+
+    //删除商品属性信息
+    function delPro(PId,obj) {
+        if (confirm("确定删除吗?")) {
+            $.ajax("http://localhost:52645/api/Goods/DelPreperty?PId=" + PId,
+                {
+                    type: "get",
+                }).done(function (code) {
+                    if (code > 0) {
+                        alert("删除成功!");
+                        $(obj).parent().parent().remove();
+                    }
+                    else {
+                        alert("删除失败!");
+                    }
+                })
+        }
+    }
+</script>

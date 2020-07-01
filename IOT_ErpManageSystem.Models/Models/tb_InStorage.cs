@@ -14,8 +14,11 @@ namespace IOT_ErpManageSystem.Models
 		 public int  InStorageState { get; set; }
 		 public int  InStorageType { get; set; }
 		 public string  SupplierNo { get; set; }
-		 public Guid  InThingStorage { get; set; }
+		 public string  InThingStorage { get; set; }
 		 public string  Consignee { get; set; }
 		 public string  StorageMan { get; set; }
-	 }
+
+		public string GID { get; set; }
+		public string StorageName { get; set; }
+	}
 }
