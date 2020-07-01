@@ -105,10 +105,11 @@
                             var menu = bll.ShowQuanInfo();
 
                         }
-                        <li data-name="home" class="layui-nav-item layui-nav-itemed">
-                            @foreach (var item in menu.Where(m=>m.Uid==0))
-                            {
-                                <a href="javascript:;" onclick="go(this)" lay-tips="权限管理" lay-direction="2">
+
+                        @foreach (var item in menu.Where(m => m.Uid == 0))
+                        {
+                            <li data-name="home" class="layui-nav-item layui-nav-itemed">
+                                <a href="javascript:;" onclick="go(this)" lay-tips="@item.Quan_Name" lay-direction="2">
                                     <i class="layui-icon layui-icon-home"></i>
                                     <cite>@item.Quan_Name</cite>
                                 </a>
@@ -116,12 +117,13 @@
                                     <dd data-name="console" class="layui-this">
                                         @foreach (var i in menu.Where(m => m.Uid == item.ID))
                                         {
-                                        <a lay-href="@i.Quan_Url">@i.Quan_Name</a>
+                                            <a lay-href="@i.Quan_Url">@i.Quan_Name</a>
                                         }
-                                    </dd>                                  
+                                    </dd>
                                 </dl>
-                            }
-                        </li>
+                            </li>
+                        }
+
                     </ul>
                 </div>
             </div>
@@ -175,7 +177,7 @@
 </html>
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script>
-   
+
     function go(obj) {
         $(obj).next().toggleClass("aa");
     }
