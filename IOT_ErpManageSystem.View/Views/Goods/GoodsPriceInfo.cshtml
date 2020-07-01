@@ -277,21 +277,19 @@
                        
                         $.each(data, function (index, item) {
                             if (obj.Id == item.id) {
-                                alert("此商品已有!");
                                 codes = 1
                                 return codes;
                             }
-                            else {
-                                return codes;
-                            }
                         })
+                        if (codes > 0) {
+                            alert("此商品已有!");
+                            return;
+                        }
+                        else {
+                            addp();
+                        }
                     })
-                if (codes > 0) {
-                    return;
-                }
-                else {
-                    addp();
-                }
+                
                 function addp() {
                     $.ajax("http://localhost:52645/api/Goods/AddPrice",
                         {
