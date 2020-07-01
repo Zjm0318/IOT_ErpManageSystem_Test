@@ -12,5 +12,6 @@ namespace IOT_ErpManageSystem.Models
 		 public string  Pwd { get; set; }
 		 public string  IPhone { get; set; }
 		 public string  Photo { get; set; }
+		 public int LoginNum { get; set; }
 	 }
 }

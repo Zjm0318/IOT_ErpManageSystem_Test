@@ -1,4 +1,5 @@
 ﻿using IOT_ErpManageSystem.DAL.IDBHelp;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -9,7 +10,30 @@ namespace IOT_ErpManageSystem.DAL.DBHelper
 {
     public class DBHelper : IDBHelper
     {
-        private string Connection = "Data Source=.;Initial Catalog=MonthTest6;Integrated Security=True";
+        
+        private string Connection = "Data Source=.;Initial Catalog=ERP;Integrated Security=True";
+        /// <summary>
+        /// 登录存储过程
+        /// <param name="procName"></param>
+        /// <param name="sqlParameters"></param>
+        /// <returns></returns>
+        public int LoginProc(string procName, SqlParameter[] sqlParameters)
+        {
+            int code = 0;
+            using (SqlConnection con = new SqlConnection(Connection))
+            {
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand(procName, con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddRange(sqlParameters);
+                    cmd.ExecuteNonQuery();
+                    code = int.Parse(cmd.Parameters["@LoginState"].Value.ToString());
+
+                }
+            }
+            return code;
+        }
         /// <summary>
         /// 执行存储过程，返回受影响行数
         /// </summary>
@@ -72,10 +96,47 @@ namespace IOT_ErpManageSystem.DAL.DBHelper
                     cmd.Parameters.AddRange(sqlParameters);
                     SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                     adapter.Fill(tb);
-                    RowsCount = int.Parse(cmd.Parameters["@RowsCount"].Value.ToString());
+                    RowsCount = int.Parse(cmd.Parameters["@Rowcount"].Value.ToString());
                 }
             }
             return tb;
+        }
+        /// <summary>
+        /// 执行存储过程的方法
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="paras"></param>
+        /// <returns></returns>
+        public DataTable Do_Proc(string name, SqlParameter[] paras)
+        {
+            //创建数据库连接对象，放在using里面是为了当这个链接对象用完之后，会自动销毁，并释放内存
+            using (SqlConnection conn = new SqlConnection(Connection))
+            {
+                SqlCommand cmd = conn.CreateCommand();//使用连接对象的CreateCommand()方法创建命令对象
+                cmd.CommandType = CommandType.StoredProcedure;//指定要执行的是存储过程
+                cmd.CommandText = name;//为命令对象指定要执行的存储过程的名称
+                cmd.Parameters.AddRange(paras);//将参数数组添加到命令对象的参数列表中
+
+                DataTable dt = new DataTable();
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);//使用命令对象创建一个适配器对象
+                sda.Fill(dt);
+
+                return dt;
+            }
+        }
+        /// <summary>
+        /// 利用存储过程的执行方法，得到对应的List泛型集合数据
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="name"></param>
+        /// <param name="paras"></param>
+        /// <returns></returns>
+        public List<T> GetList<T>(string name, SqlParameter[] paras)
+        {
+            DataTable dt = Do_Proc(name, paras);
+            var str = JsonConvert.SerializeObject(dt);
+            List<T> list = JsonConvert.DeserializeObject<List<T>>(str);
+            return list;
         }
     }
 }

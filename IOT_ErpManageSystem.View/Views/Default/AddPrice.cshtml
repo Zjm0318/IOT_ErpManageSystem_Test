@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewData["Title"] = "AddPrice";
+}
+
+<h41>添加商品价格</h41>
+<table>
+    <tr>
+        <td>商品名称
+            <select id="name">
+                <option value="">全部</option>    
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>进货价格<input type="text" id="price" /></td>
+    </tr>
+    <tr>
+        <td>
+            <input type="button" value="保存" id="add" style="background-color:cornflowerblue" />
+        </td>
+    </tr>
+</table>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    $(function () {
+        GoodsName();
+    })
+    function GoodsName() {
+        $.ajax({
+            url: "http://localhost:52645/api/Default/ShowPrice",
+            type: "get",
+        }).done(function (d) {
+            console.log(d);
+            var tr = "";
+            $.each(d, function (index, item) {
+                tr += "<option value='" + item.id + "'>" + item.goodsName + "</option>";
+            });
+            $("#name").append(tr);
+        });
+    }
+    $("#add").click(function () {
+        var obj = {
+            "Id": $("#name").val(),
+            "JinHPrice": $("#price").val(),
+        }
+        $.ajax({
+            url: "http://localhost:52645/api/Default/AddPrice",
+            type: "post",
+            accepts: "application/x-www-form-urlencoded",
+            contentType: "application/x-www-form-urlencoded",
+            data: obj,
+        }).done(function (d) {
+            if (d > 0) {
+                alert("添加成功!");
+                location.href = "/default/ProPrice";
+            }
+            else {
+                alert("添加失败！");
+                
+            }
+            
+        });
+    });
+</script>
