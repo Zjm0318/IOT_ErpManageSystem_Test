@@ -18,6 +18,9 @@ namespace IOT_ErpManageSystem.BLL.InRBAC_Role
         //编辑权限
         int UpdaAllot(RBAC_Allots model);
 
+        //获取所有菜单
+        List<RBAC_Quan> ShowQuanInfo();
+
         RBAC_Allots Quan(string id);
         List<RBAC_Dep> GetDep();
     }
