@@ -1,0 +1,149 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+}
+<style>
+    .box {
+        width: 500px;
+        height: 500px;
+        margin: 0 auto;
+        margin-top: 150px
+    }
+
+    #userName {
+        margin-top: 20px;
+        width: 350px;
+        height: 48px;
+        border-radius: 6px;
+        padding-left: 50px;
+        background-image: url('/img/tou.png');
+        background-size: 40px 40px;
+        background-repeat: no-repeat;
+        padding-top: 1px;
+        margin-left: 25px;
+    }
+
+    #userPwd {
+        margin-top: 20px;
+        width: 350px;
+        height: 48px;
+        border-radius: 6px;
+        padding-left: 50px;
+        background-image: url('/img/mm.png');
+        background-size: 40px 40px;
+        background-repeat: no-repeat;
+        padding-top: 1px;
+        margin-left: 25px;
+    }
+
+    #ctl00_txtcode {
+        margin-top: 20px;
+        width: 198px;
+        height: 48px;
+        border-radius: 6px;
+        padding-left: 50px;
+        background-image: url('/img/yzm.png');
+        background-size: 40px 40px;
+        background-repeat: no-repeat;
+        padding-top: 1px;
+        margin-left: 22px;
+    }
+
+    #btn {
+        margin-top: 20px;
+        width: 350px;
+        height: 50px;
+        border-radius: 6px;
+        margin-left: 22px;
+    }
+    #code {
+        margin-left:15px;
+        border: none;
+        background-color:white;
+
+    }
+</style>
+<div class="box">
+    <img src="~/img/erp.png" /><br />
+    <input type="text" id="userName" placeholder="请输入账号" /><br />
+    <input type="password" id="userPwd" placeholder="请输入密码" /><br />
+    <input type="text" name="number" id="ctl00_txtcode" placeholder="请输入验证码" />
+    <input type="button"  id="code" onclick="createCode()" />
+    <input type="button" id="btn" value="登  录"  onclick="validate()" style="background-color:#17978b;color:white" />
+</div>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    //产生验证码
+    window.onload = function () {
+        createCode();
+    }
+    var code; //在全局定义验证码
+    function createCode() {
+        code = "";
+        var codeLength = 4; //验证码的长度
+        var checkCode = document.getElementById("code");
+        var random = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
+
+            'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'); //随机数
+
+        for (var i = 0; i < codeLength; i++) { //循环操作
+
+            var index = Math.floor(Math.random() * 36); //取得随机数的索引（0~35）
+
+            code += random[index]; //根据索引取得随机数加到code上
+        }
+        checkCode.value = code; //把code值赋给验证码
+    }
+    //校验验证码
+    function validate() {
+        if ($("#userName").val() == "" || $("#userName").val() == null || $("#userName").val() == undefined) {
+            alert("账号不能为空！");
+            return;
+        }
+        if ($("#userPwd").val() == "" || $("#userPwd").val() == null || $("#userPwd").val() == undefined) {
+            alert("密码不能为空！");
+            return;
+        }
+        var inputCode = document.getElementById("ctl00_txtcode").value.toUpperCase(); //获取输入框内验证码并转化为大写
+
+        if (inputCode.length <= 0) { //若输入的验证码长度为0
+
+            alert("请输入验证码！"); //则弹出请输入验证码
+
+        }
+        
+        else if (inputCode != code) { //若输入的验证码与产生的验证码不一致时
+
+            alert("验证码输入错误!"); //则弹出验证码输入错误
+
+            createCode(); //刷新验证码
+
+            document.getElementById("ctl00_txtcode").value = "";//清空文本框
+
+        } else {
+            //输入正确时开始登陆
+            
+            var obj = {
+                "UserName": $("#userName").val(),
+                "Pwd": $("#userPwd").val(),
+            };
+            $.ajax({
+                url: "http://localhost:52645/api/Default/Log",
+                type: "post",
+                accepts: "application/x-www-form-urlencoded",
+                contentType: "application/x-www-form-urlencoded",
+                data: obj
+            }).done(function (d) {
+                if (d != null) {
+                    localStorage["token"] = d;
+                    alert("登录成功！");
+                    location.href = "/Default/Index";
+                }
+                else {
+                    alert("登录失败，您输入的用户名或密码有误！");
+                }
+            });
+        }
+    }
+</script>
+

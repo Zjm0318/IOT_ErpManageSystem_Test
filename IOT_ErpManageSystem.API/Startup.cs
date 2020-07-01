@@ -18,6 +18,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using IOT_ErpManageSystem.DAL.IDall;
+using IOT_ErpManageSystem.DAL.Dall;
+using IOT_ErpManageSystem.BLL.IBLL;
+using IOT_ErpManageSystem.BLL.BLL;
 
 namespace IOT_ErpManageSystem.API
 {
@@ -40,6 +44,8 @@ namespace IOT_ErpManageSystem.API
             services.AddSingleton<ITuiHuoBLL, TuiHuoBLL>();
             services.AddSingleton<IRequDal, RequDal>();
             services.AddSingleton<IRequBLL, RequBLL>();
+            services.AddSingleton<IDal, Dal>();
+            services.AddSingleton<IBLLs, BLLs>();
             services.AddSingleton<IIStorageManage, IStorageManage>();
             services.AddSingleton<IOStorageManage, OStorageManage>();
             services.AddSingleton<IStorageStructure, StorageStructure>();

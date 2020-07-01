@@ -55,7 +55,6 @@
             url: "http://localhost:52645/api/StorageStructure/GetStorageList?pageIndex=" + pageIndex + "&pageSize=" + pageSize,
             type: "get",
         }).done(function (data) {
-            console.log(data);
             $("#tb").empty();
             $.each(data.list, function (index, item) {
                 var tr = "<tr>" +
