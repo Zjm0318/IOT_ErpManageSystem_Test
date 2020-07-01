@@ -40,6 +40,14 @@
         });
     }
     $("#add").click(function () {
+        if ($("#name").val() == "" || $("#name").val() == null || $("#name").val() == undefined) {
+            alert("请选择商品名称");
+            return;
+        }
+        if ($("#price").val() == "" || $("#price").val() == null || $("#price").val() == undefined) {
+            alert("进货价格不能为空");
+            return;
+        }
         var obj = {
             "Id": $("#name").val(),
             "JinHPrice": $("#price").val(),
