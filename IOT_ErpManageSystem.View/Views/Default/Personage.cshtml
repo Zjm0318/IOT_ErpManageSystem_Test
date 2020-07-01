@@ -177,6 +177,7 @@
         }
         if ($("#newPwd").val() != $("#quePwd").val()) {
             alert("两次密码不一致，请您重新输入！");
+            return;
         }
         if (jQuery('#newPwd').val() == "") {
             jQuery('#newPwd').focus();
