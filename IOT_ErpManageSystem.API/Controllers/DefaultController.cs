@@ -13,7 +13,6 @@ using IOT_ErpManageSystem.API.Model;
 
 namespace IOT_ErpManageSystem.API.Controllers
 {
-    [EnableCors("getd")]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class DefaultController : ControllerBase
@@ -163,7 +162,7 @@ namespace IOT_ErpManageSystem.API.Controllers
         public PriceModel GoodsPrice(int pageIndex, int pageSize, string proBh)
         {
             int rowCount = 0;
-            List<GoodsInfo> lit = _bll.GoodsPrice(pageIndex, pageSize,proBh, ref rowCount);
+            List<Models.GoodsInfo> lit = _bll.GoodsPrice(pageIndex, pageSize,proBh, ref rowCount);
             int count = (rowCount / pageSize) + (rowCount % pageSize > 0 ? 1 : 0);
             PriceModel m = new PriceModel();
             m.list = lit;
@@ -175,7 +174,7 @@ namespace IOT_ErpManageSystem.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public List<GoodsInfo> ShowPrice()
+        public List<Models.GoodsInfo> ShowPrice()
         {
             return _bll.ShowPrice();
         }
@@ -190,7 +189,7 @@ namespace IOT_ErpManageSystem.API.Controllers
             return _bll.AddPrice(m);
         }
         [HttpGet]
-        public GoodsInfo GoodsThree(string id)
+        public Models.GoodsInfo GoodsThree(string id)
         {
             return _bll.GoodsThree(id).FirstOrDefault();
         }
@@ -205,9 +204,9 @@ namespace IOT_ErpManageSystem.API.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public int UpdateGoods([FromForm]GoodsInfo model)
+        public int UpdateGoods([FromForm]Models.GoodsInfo model)
         {
-            GoodsInfo m = new GoodsInfo()
+            Models.GoodsInfo m = new Models.GoodsInfo()
             {
                 Id = model.Id,
                 GoodsName = model.GoodsName,

@@ -1,6 +1,7 @@
 ﻿using IOT_ErpManageSystem.BLL.IBLL;
 using IOT_ErpManageSystem.DAL.IDall;
 using IOT_ErpManageSystem.Models;
+using IOT_ErpManageSystem.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -108,7 +109,7 @@ namespace IOT_ErpManageSystem.BLL.BLL
         /// <param name="proBh"></param>
         /// <param name="rowCount"></param>
         /// <returns></returns>
-        public List<GoodsInfo> GoodsPrice(int pageIndex, int pageSize, string proBh, ref int rowCount)
+        public List<Models.GoodsInfo> GoodsPrice(int pageIndex, int pageSize, string proBh, ref int rowCount)
         {
             return _dal.GoodsPrice(pageIndex,pageSize,proBh,ref rowCount);
         }
@@ -116,7 +117,7 @@ namespace IOT_ErpManageSystem.BLL.BLL
         /// 显示添加的商品名称
         /// </summary>
         /// <returns></returns>
-        public List<GoodsInfo> ShowPrice()
+        public List<Models.GoodsInfo> ShowPrice()
         {
             return _dal.ShowPrice();
         }
@@ -143,7 +144,7 @@ namespace IOT_ErpManageSystem.BLL.BLL
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public List<GoodsInfo> GoodsThree(string id)
+        public List<Models.GoodsInfo> GoodsThree(string id)
         {
             return _dal.GoodsThree(id);
         }
@@ -160,7 +161,7 @@ namespace IOT_ErpManageSystem.BLL.BLL
         /// </summary>
         /// <param name="m"></param>
         /// <returns></returns>
-        public int UpGoods(GoodsInfo m)
+        public int UpGoods(Models.GoodsInfo m)
         {
             return _dal.UpGoods(m);
         }

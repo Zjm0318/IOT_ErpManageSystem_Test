@@ -26,19 +26,19 @@ namespace IOT_ErpManageSystem.BLL.IBLL
         //删除
         int Dle(string id);
         //显示商品价格本
-        List<GoodsInfo> GoodsPrice(int pageIndex, int pageSize, string proBh, ref int rowCount);
+        List<Models.GoodsInfo> GoodsPrice(int pageIndex, int pageSize, string proBh, ref int rowCount);
         //添加显示商品信息
-        List<GoodsInfo> ShowPrice();
+        List<Models.GoodsInfo> ShowPrice();
         //添加价格本
         int AddPrice(GoodsPrice model);
         //删除
         int DleGoodsInfo(string id);
         //编辑
-        public List<GoodsInfo> GoodsThree(string id);
+        public List<Models.GoodsInfo> GoodsThree(string id);
         //查询类型
         List<GoodsType> Type();
         //修改商品表
-        int UpGoods(GoodsInfo m);
+        int UpGoods(Models.GoodsInfo m);
 
     }
 }

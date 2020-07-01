@@ -257,7 +257,7 @@ namespace IOT_ErpManageSystem.DAL.Dall
              new SqlParameter{ ParameterName="@GoodsRule",DbType=DbType.String,Direction=ParameterDirection.Input,Value=m.GoodsRule},
              new SqlParameter{ ParameterName="@SKU",DbType=DbType.String,Direction=ParameterDirection.Input,Value=m.SKU},
              new SqlParameter{ ParameterName="@GoodsPrices",DbType=DbType.String,Direction=ParameterDirection.Input,Value=m.GoodsPrices},
-             new SqlParameter{ ParameterName="@PId",DbType=DbType.String,Direction=ParameterDirection.Input,Value=m.PId},
+             new SqlParameter{ ParameterName="@PId",DbType=DbType.String,Direction=ParameterDirection.Input,Value=m.PriceId},
              new SqlParameter{ ParameterName="@JinHPrice",DbType=DbType.String,Direction=ParameterDirection.Input,Value=m.JinHPrice},
             };
             return _db.ExecuteNonQueryProc(proName, parameters);
