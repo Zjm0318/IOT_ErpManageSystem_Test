@@ -24,13 +24,13 @@ namespace IOT_ErpManageSystem.BLL
         {
             string ProName = "pro_Role_Add";
             SqlParameter[] parametr = new SqlParameter[] {
-
+                new SqlParameter{ParameterName="@Role_Bian",Value=model.Role_Code, DbType= DbType.String,Direction= ParameterDirection.Input },
                 new SqlParameter{ParameterName="@RoleName",Value=model.Role_Name, DbType= DbType.String,Direction= ParameterDirection.Input },
                 new SqlParameter{ParameterName="@Role_Code",Value=model.Role_Account,DbType= DbType.String,Direction= ParameterDirection.Input },
                 new SqlParameter{ParameterName="@RoleSex",Value=model.RoleSex,DbType= DbType.String,Direction= ParameterDirection.Input },
                 new SqlParameter{ParameterName="@RoleTel",Value=model.Role_Tel,DbType= DbType.String,Direction= ParameterDirection.Input },
+                new SqlParameter{ParameterName="@Dep_ID",Value=model.Dep_ID,DbType= DbType.String,Direction= ParameterDirection.Input },
                 new SqlParameter{ParameterName="@Job_ID",Value=model.Job_ID,DbType= DbType.String,Direction= ParameterDirection.Input },
-
             };
              return  _idbhelper.ExecuteNonQueryProc(ProName,parametr);
        
@@ -82,13 +82,13 @@ namespace IOT_ErpManageSystem.BLL
            }
             if(RoleState!=2)
             {
-                wherestr += $" and b.Role_State={RoleState}";
+                wherestr += $" and b.Role_State='{RoleState}'";
             }
                SqlParameter[] parametr = new SqlParameter[] {
                 new SqlParameter{ParameterName="@wherestr",DbType= DbType.String,Direction= ParameterDirection.Input,Value=wherestr },
                 new SqlParameter{ParameterName="@pageIndex",DbType= DbType.Int32,Direction= ParameterDirection.Input,Value=PageIndex },
                 new SqlParameter{ParameterName="@PagieSize",DbType= DbType.Int32,Direction= ParameterDirection.Input,Value=PageSize },
-                new SqlParameter{ParameterName="@Rowcount",DbType= DbType.Int32,Direction= ParameterDirection.Output },
+                new SqlParameter{ParameterName="@rowcount",DbType= DbType.Int32,Direction= ParameterDirection.Output },
               };
 
             DataTable tb = _idbhelper.ExecuteProc(proName, parametr,ref RowsCount);
@@ -114,7 +114,7 @@ namespace IOT_ErpManageSystem.BLL
         }
 
         //反填数据
-        public RBAC_Role role(string id)
+        public RBAC_Role Role(string id)
         {
             string proName = "Role_Id";
             SqlParameter[] parametr = new SqlParameter[] {
@@ -126,30 +126,6 @@ namespace IOT_ErpManageSystem.BLL
         }
 
 
-        public DataTable Do_Proc(string name, SqlParameter[] paras)
-        {
-            throw new NotImplementedException();
-        }
-        public int ExecuteNonQueryProc(string procName, SqlParameter[] sqlParameters)
-        {
-            throw new NotImplementedException();
-        }
-        public DataTable ExecuteProc(string procName, SqlParameter[] sqlParameters)
-        {
-            throw new NotImplementedException();
-        }
-        public DataTable ExecuteProc(string procName, SqlParameter[] sqlParameters, ref int RowsCount)
-        {
-            throw new NotImplementedException();
-        }
-        public List<T> GetList<T>(string name, SqlParameter[] paras)
-        {
-            throw new NotImplementedException();
-        }
-        public List<T> GetList<T>(string name)
-        {
-            throw new NotImplementedException();
         }
     }
 
-}

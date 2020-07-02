@@ -48,7 +48,7 @@ namespace IOT_ErpManageSystem.BLL.RBAC_Allot
                 new SqlParameter{ParameterName="@wherestr",DbType= DbType.String,Direction= ParameterDirection.Input,Value=wherestr },
                 new SqlParameter{ParameterName="@pageIndex",DbType= DbType.Int32,Direction= ParameterDirection.Input,Value=PageIndex },
                 new SqlParameter{ParameterName="@PagieSize",DbType= DbType.Int32,Direction= ParameterDirection.Input,Value=PageSize },
-                new SqlParameter{ParameterName="@Rowcount",DbType= DbType.Int32,Direction= ParameterDirection.Output },
+                new SqlParameter{ParameterName="@rowcount",DbType= DbType.Int32,Direction= ParameterDirection.Output },
               };
 
             DataTable tb = _idbhelper.ExecuteProc(proName, parametr, ref RowsCount);
@@ -104,27 +104,5 @@ namespace IOT_ErpManageSystem.BLL.RBAC_Allot
             return _idbhelper.ExecuteNonQueryProc(ProName, parametr);
         }
 
-
-
-        public List<T> GetList<T>(string name, SqlParameter[] paras)
-        {
-            throw new NotImplementedException();
-        }
-        public DataTable Do_Proc(string name, SqlParameter[] paras)
-        {
-            throw new NotImplementedException();
-        }
-        public int ExecuteNonQueryProc(string procName, SqlParameter[] sqlParameters)
-        {
-            throw new NotImplementedException();
-        }
-        public DataTable ExecuteProc(string procName, SqlParameter[] sqlParameters)
-        {
-            throw new NotImplementedException();
-        }
-        public DataTable ExecuteProc(string procName, SqlParameter[] sqlParameters, ref int RowsCount)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

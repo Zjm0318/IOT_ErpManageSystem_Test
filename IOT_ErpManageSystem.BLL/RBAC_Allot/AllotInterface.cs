@@ -8,7 +8,7 @@ using System.Text;
 
 namespace IOT_ErpManageSystem.BLL.InRBAC_Role
 {
-   public  interface AllotInterface:IDBHelper
+   public  interface AllotInterface
     {
         List<RBAC_Allots> GetAllot(int PageIndex, int PageSize, string AllotName, ref int RowsCount);
         //添加权限
