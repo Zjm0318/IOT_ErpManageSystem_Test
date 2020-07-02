@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace IOT_ErpManageSystem.View.Controllers
 {
@@ -28,7 +24,7 @@ namespace IOT_ErpManageSystem.View.Controllers
         }
 
         //反填信息
-        public IActionResult FanTRequList(string QId,string QgId)
+        public IActionResult FanTRequList(string QId, string QgId)
         {
             ViewBag.QId = QId;
             ViewBag.QgId = QgId;

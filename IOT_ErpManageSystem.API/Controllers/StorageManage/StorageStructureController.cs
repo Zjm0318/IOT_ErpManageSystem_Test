@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using IOT_ErpManageSystem.BLL.ISManage;
+﻿using IOT_ErpManageSystem.BLL.ISManage;
 using IOT_ErpManageSystem.Models;
 using IOT_ErpManageSystem.Models.Dto;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace IOT_ErpManageSystem.API.Controllers.StorageManage
 {
@@ -25,10 +21,10 @@ namespace IOT_ErpManageSystem.API.Controllers.StorageManage
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public StorageStructDataModel GetStorageList(int pageIndex,int pageSize)
+        public StorageStructDataModel GetStorageList(int pageIndex, int pageSize)
         {
             int RowCount = 0;
-            List<tb_Storage> _list= _structure.GetSotrageList(pageIndex, pageSize, ref RowCount);
+            List<tb_Storage> _list = _structure.GetSotrageList(pageIndex, pageSize, ref RowCount);
             StorageStructDataModel model = new StorageStructDataModel();
             model.list = _list;
             model.RowCount = RowCount;

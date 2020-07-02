@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace IOT_ErpManageSystem.BLL.GoodsInfos
+﻿namespace IOT_ErpManageSystem.BLL.GoodsInfos
 {
     public class Page
     {

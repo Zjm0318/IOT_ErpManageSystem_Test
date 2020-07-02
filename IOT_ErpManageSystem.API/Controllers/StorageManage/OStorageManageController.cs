@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using IOT_ErpManageSystem.BLL.ISManage;
+﻿using IOT_ErpManageSystem.BLL.ISManage;
 using IOT_ErpManageSystem.Models;
 using IOT_ErpManageSystem.Models.Dto;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 
 namespace IOT_ErpManageSystem.API.Controllers.StorageManage
 {

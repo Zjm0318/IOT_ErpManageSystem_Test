@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using IOT_ErpManageSystem.DAL;
-using IOT_ErpManageSystem.DAL.liuning;
+﻿using IOT_ErpManageSystem.DAL.liuning;
 using IOT_ErpManageSystem.Models;
+using System.Collections.Generic;
 
 namespace IOT_ErpManageSystem.BLL.liuning
 {
@@ -21,13 +18,13 @@ namespace IOT_ErpManageSystem.BLL.liuning
         //预购单显示
         public List<RequisitionOrder> GetRequList(string state, string time, string qgren, string shren, int pageindex, int pagesize, ref int rowcount)
         {
-            return _IRequDal.GetRequList(state, time, qgren, shren, pageindex, pagesize,ref rowcount);
+            return _IRequDal.GetRequList(state, time, qgren, shren, pageindex, pagesize, ref rowcount);
         }
 
         //获取员工信息
         public List<RoleModel> GetRoleList(string rolename, string rolecode)
         {
-            return _IRequDal.GetRoleList(rolename,rolecode);
+            return _IRequDal.GetRoleList(rolename, rolecode);
         }
 
         //修改状态 审核通过
@@ -45,7 +42,7 @@ namespace IOT_ErpManageSystem.BLL.liuning
         //指派预购员工
         public int UpdRole(string RId, string QgId)
         {
-            return _IRequDal.UpdRole(RId,QgId);
+            return _IRequDal.UpdRole(RId, QgId);
         }
         //撤回请购员工
         public int DelRole(string QgId)
@@ -71,7 +68,7 @@ namespace IOT_ErpManageSystem.BLL.liuning
             return _IRequDal.GetRequGoods(Id);
         }
 
-       //修改请购单信息
+        //修改请购单信息
         public int UpdateRequ(RequisitionInfo m)
         {
             return _IRequDal.UpdateRequ(m);
@@ -82,7 +79,7 @@ namespace IOT_ErpManageSystem.BLL.liuning
         //采购单显示
         public List<PurChaseOrder> GetPurList(string state, string time, string gname, string bgname, int pageindex, int pagesize, ref int rowcount)
         {
-            return _IRequDal.GetPurList(state,time,gname,bgname,pageindex,pagesize,ref rowcount);
+            return _IRequDal.GetPurList(state, time, gname, bgname, pageindex, pagesize, ref rowcount);
         }
 
         //审核通过
@@ -100,7 +97,7 @@ namespace IOT_ErpManageSystem.BLL.liuning
         //指派采购处理人
         public int ZhiPaiPur(string Id, string Cgclr)
         {
-            return _IRequDal.ZhiPaiPur(Id,Cgclr);
+            return _IRequDal.ZhiPaiPur(Id, Cgclr);
         }
 
         //撤回采购人员
@@ -147,8 +144,8 @@ namespace IOT_ErpManageSystem.BLL.liuning
         //添加请购单,采购单与商品的中间表数据
         public int AddRequGoods(string QgId, string GId)
         {
-            return _IRequDal.AddRequGoods(QgId,GId);
-           
+            return _IRequDal.AddRequGoods(QgId, GId);
+
         }
 
         //根据ID删除相关的商品信息

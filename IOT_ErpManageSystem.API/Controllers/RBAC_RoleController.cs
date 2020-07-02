@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using IOT_ErpManageSystem.API.DtoMoel;
 using IOT_ErpManageSystem.BLL;
 using IOT_ErpManageSystem.Models;
-using IOT_ErpManageSystem.API.DtoMoel;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace IOT_ErpManageSystem.API.Controllers
 {
@@ -17,24 +13,24 @@ namespace IOT_ErpManageSystem.API.Controllers
 
         private RoleInterface _roleInterface;
 
-         public RBAC_RoleController(RoleInterface roleInterface)
+        public RBAC_RoleController(RoleInterface roleInterface)
         {
             _roleInterface = roleInterface;
         }
 
         [HttpPost]
         //显示角色管理
-          public ShowRole GetRole([FromForm]RBAC_Role model)
+        public ShowRole GetRole([FromForm]RBAC_Role model)
         {
             int Rowcount = 0;
-       
+
             List<RBAC_Role> Rlist = _roleInterface.GetRole(model.PageIndex, model.PageSize, model.Role_Account, model.Role_Name, model.Job_Name, model.Role_State, ref Rowcount);
-            int count = (Rowcount/model.PageSize)+(Rowcount%model.PageSize>0?1:0);
-                    
+            int count = (Rowcount / model.PageSize) + (Rowcount % model.PageSize > 0 ? 1 : 0);
+
             foreach (var item in Rlist)
             {
                 item.CreateDate = item.Role_Create.ToString("yyyy-MM-dd");
-                item.Role_Tel = item.Role_Tel.Substring(0,3) + "××××××××";
+                item.Role_Tel = item.Role_Tel.Substring(0, 3) + "××××××××";
             }
             ShowRole show = new ShowRole();
             show.list = Rlist;

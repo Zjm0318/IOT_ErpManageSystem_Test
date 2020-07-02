@@ -1,8 +1,5 @@
-﻿using System;
+﻿using IOT_ErpManageSystem.Models;
 using System.Collections.Generic;
-using System.Text;
-using IOT_ErpManageSystem.DAL;
-using IOT_ErpManageSystem.Models;
 
 namespace IOT_ErpManageSystem.BLL.Supplier
 {
@@ -13,7 +10,7 @@ namespace IOT_ErpManageSystem.BLL.Supplier
         //显示反填数据
         SupAndCon ShowSupAndCon(string id);
         //添加
-        int AddSupplier(SupplierInfo supplier,ContactsInfo contacts);
+        int AddSupplier(SupplierInfo supplier, ContactsInfo contacts);
         //修改
         int EditSupplier(SupplierInfo supplier, ContactsInfo contacts);
     }
