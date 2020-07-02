@@ -16,7 +16,7 @@ namespace IOT_ErpManageSystem.Models
         public string GoodsBrand { get; set; }
         public Guid PropertyId { get; set; }
         public int GoodsStock { get; set; }
-        public string TypeId { get; set; }
+        public Guid TypeId { get; set; }
         public int StockYJ { get; set; }
         public DateTime UpTime { get; set; }
         public int GoodsState { get; set; }

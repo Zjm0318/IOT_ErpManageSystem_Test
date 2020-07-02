@@ -280,10 +280,21 @@ namespace IOT_ErpManageSystem.BLL.GoodsInfo
             SqlParameter[] param = new SqlParameter[]
            {
                 new SqlParameter{ ParameterName="@PriceId", DbType= DbType.Guid, Direction= ParameterDirection.Input,Value=m.PriceId },
-                new SqlParameter{ ParameterName="@Id", DbType= DbType.String, Direction= ParameterDirection.Input,Value=m.Id },
+                new SqlParameter{ ParameterName="@Id", DbType= DbType.Guid, Direction= ParameterDirection.Input,Value=m.Id },
                 new SqlParameter{ ParameterName="@JinHPrice", DbType= DbType.Decimal, Direction= ParameterDirection.Input,Value=m.JinHPrice }
            };
             return dBHelper.ExecuteNonQueryProc(procName, param);
+        }
+
+        #endregion
+
+        #region 判断价格本中是否已有此商品
+        public List<GoodsPrice> PricesInfo()
+        {
+            string procName = "RepareName";
+            DataTable tb = dBHelper.ExecuteProc(procName,null);
+            string json = JsonConvert.SerializeObject(tb);
+            return JsonConvert.DeserializeObject<List<GoodsPrice>>(json).ToList();
         }
         #endregion
 

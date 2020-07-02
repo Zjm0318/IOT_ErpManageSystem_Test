@@ -207,7 +207,7 @@ namespace IOT_ErpManageSystem.DAL.Dall
         {
             string proName = "Pro_Price";
             SqlParameter[] parameters = new SqlParameter[] {
-             new SqlParameter{ ParameterName="@Id",DbType=DbType.String,Direction=ParameterDirection.Input,Value=model.Id},
+             new SqlParameter{ ParameterName="@Id",DbType=DbType.Guid,Direction=ParameterDirection.Input,Value=model.Id},
              new SqlParameter{ ParameterName="@JinHPrice",DbType=DbType.Decimal,Direction=ParameterDirection.Input,Value=model.JinHPrice},
             };
             return _db.ExecuteNonQueryProc(proName, parameters);

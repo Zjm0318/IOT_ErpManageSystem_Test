@@ -269,21 +269,45 @@
                     return;
                 }
 
-                $.ajax("http://localhost:52645/api/Goods/AddPrice",
+                var codes = 0;
+                $.ajax("http://localhost:52645/api/Goods/PricesInfo",
                     {
-                        type: "post",
-                        data: obj,
-                        dataType: "json",
-                        contentType: "application/x-www-form-urlencoded"
-                    }).done(function (code) {
-                        if (code > 0) {
-                            alert("保存成功!");
-                            location.href = "GoodsPriceInfo";
+                        type: "get"
+                    }).done(function (data) {
+                       
+                        $.each(data, function (index, item) {
+                            if (obj.Id == item.id) {
+                                codes = 1
+                                return codes;
+                            }
+                        })
+                        if (codes > 0) {
+                            alert("此商品已有!");
+                            return;
                         }
                         else {
-                            alert("保存失败!");
+                            addp();
                         }
                     })
+                
+                function addp() {
+                    $.ajax("http://localhost:52645/api/Goods/AddPrice",
+                        {
+                            type: "post",
+                            data: obj,
+                            dataType: "json",
+                            contentType: "application/x-www-form-urlencoded"
+                        }).done(function (code) {
+                            if (code > 0) {
+                                alert("保存成功!");
+                                location.href = "GoodsPriceInfo";
+                            }
+                            else {
+                                alert("保存失败!");
+                            }
+                        })
+                }
+               
             })
 
             //取消添加

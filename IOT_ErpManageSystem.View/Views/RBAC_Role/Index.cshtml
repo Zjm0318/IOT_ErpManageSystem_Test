@@ -20,8 +20,8 @@
                         <option value="">请选择员工职位</option>
                     </select>
                     员工状态:
-                    <select style="width:200px;height:30px" id=" RoleState">
-                        <option value="">请选择员工状态</option>
+                    <select style="width:200px;height:30px" id="RoleState">
+                        <option value="-1">请选择员工状态</option>
                         <option value="0">离职</option>
                         <option value="1">在职</option>
                     </select>
@@ -69,14 +69,13 @@
     var PageIndex = 1;
     var PageSize = 6;
     var Count = 0;
-    var State = 2;
 
     $(function () {
 
         show(PageIndex);
         Role_Job();
     })
-
+     
     //显示数据
     function show(PageIndex) {
         var obj = {
@@ -85,7 +84,7 @@
             "Role_Account": $("#Role_Zhang").val(),
             "Role_Name": $("#Role_Name").val(),
             "Job_Name": $("#RoleJob").val(),
-            "Role_State": State,
+            "Role_State": $("#RoleState").val(),
         };
     
         $.ajax({
@@ -133,11 +132,6 @@
     }
     //查询条件
     function searchData() {
-        State = $("#RoleState").val();
-        if (State == "") {
-
-            State = 2;
-        }
         PageIndex = 1;
         show(PageIndex);
     }

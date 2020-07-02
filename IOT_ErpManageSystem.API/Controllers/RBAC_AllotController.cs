@@ -8,6 +8,7 @@ using IOT_ErpManageSystem.Models;
 using IOT_ErpManageSystem.Models.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace IOT_ErpManageSystem.API.Controllers
 {
@@ -72,5 +73,14 @@ namespace IOT_ErpManageSystem.API.Controllers
             List<RBAC_Dep> dlist = _allotinterface.GetDep();
             return dlist;
         }
+
+        //[HttpGet]
+        //public RBAC_Allots UserQuanInfo(string token)
+        //{
+        //    JWTHelper jwt = new JWTHelper();
+        //    string json = jwt.GetPayload(token);
+        //    Personal model = JsonConvert.DeserializeObject<Personal>(json);
+        //    return _allotinterface.UserQuanInfo(model.UID);
+        //}
     }
 }

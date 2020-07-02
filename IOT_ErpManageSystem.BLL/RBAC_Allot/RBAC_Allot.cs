@@ -1,4 +1,5 @@
 ﻿using IOT_ErpManageSystem.BLL.InRBAC_Role;
+using IOT_ErpManageSystem.DAL.DBHelper;
 using IOT_ErpManageSystem.DAL.IDBHelp;
 using IOT_ErpManageSystem.Models;
 using IOT_ErpManageSystem.Models.Models;
@@ -14,12 +15,8 @@ namespace IOT_ErpManageSystem.BLL.RBAC_Allot
 {
     public class RBAC_Allot : AllotInterface
     {
-        private IDBHelper _idbhelper;
+        DBHelper _idbhelper = new DBHelper();
 
-        public RBAC_Allot(IDBHelper idbhelper)
-        {
-            _idbhelper = idbhelper;
-        }
         //添加权限分配
         public int AddAllot(RBAC_Allots model)
         {
@@ -33,7 +30,6 @@ namespace IOT_ErpManageSystem.BLL.RBAC_Allot
             };
             return _idbhelper.ExecuteNonQueryProc(ProName, parametr);
         }
-
 
         //权限的显示
         public List<RBAC_Allots> GetAllot(int PageIndex, int PageSize, string DepName, ref int RowsCount)
@@ -75,7 +71,6 @@ namespace IOT_ErpManageSystem.BLL.RBAC_Allot
 
         }
 
-     
         //反填查询数据
         public RBAC_Allots Quan(string id)
         {
@@ -87,6 +82,15 @@ namespace IOT_ErpManageSystem.BLL.RBAC_Allot
             DataTable tb = _idbhelper.ExecuteProc(proName, parametr);
             return JsonConvert.DeserializeObject<List<RBAC_Allots>>(JsonConvert.SerializeObject(tb)).FirstOrDefault();
         }
+
+        //获取所有菜单信息
+        public List<RBAC_Quan> ShowQuanInfo()
+        {
+            string procName = "SelectQuan";
+            DataTable tb = _idbhelper.ExecuteProc(procName, null);
+            return JsonConvert.DeserializeObject<List<RBAC_Quan>>(JsonConvert.SerializeObject(tb)).ToList();
+        }
+
         //编辑权限
         public int UpdaAllot(RBAC_Allots model)
         {
@@ -104,5 +108,16 @@ namespace IOT_ErpManageSystem.BLL.RBAC_Allot
             return _idbhelper.ExecuteNonQueryProc(ProName, parametr);
         }
 
+        //用户权限
+        //public RBAC_Allots UserQuanInfo(Guid UId)
+        //{
+        //    string procName = "UserQuan";
+        //    SqlParameter[] param = new SqlParameter[]
+        //    {
+        //        new SqlParameter{ ParameterName="@UId", DbType= DbType.Guid, Direction= ParameterDirection.Input,Value=UId }
+        //    };
+        //    DataTable tb = _idbhelper.ExecuteProc(procName, param);
+        //    return JsonConvert.DeserializeObject<List<RBAC_Allots>>(JsonConvert.SerializeObject(tb)).FirstOrDefault();
+        //}
     }
 }

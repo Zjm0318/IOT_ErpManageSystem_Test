@@ -80,7 +80,7 @@ namespace IOT_ErpManageSystem.BLL
            {
                 wherestr += $" and g.Job_ID='{RoleJob}'";
            }
-            if(RoleState!=2)
+            if(RoleState!=-1)
             {
                 wherestr += $" and b.Role_State='{RoleState}'";
             }
@@ -126,6 +126,5 @@ namespace IOT_ErpManageSystem.BLL
         }
 
 
-        }
     }
 

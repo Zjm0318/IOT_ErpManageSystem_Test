@@ -8,7 +8,7 @@ namespace IOT_ErpManageSystem.Models
 	 public class GoodsPrice
 	 {
 		 public Guid  PriceId { get; set; }
-		 public string  Id { get; set; }
+		 public Guid  Id { get; set; }
 		public string GoodsId { get; set; }
 		public string GoodsName { get; set; }
 		public string GoodsBrand { get; set; }
