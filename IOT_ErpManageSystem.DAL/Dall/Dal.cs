@@ -1,6 +1,7 @@
 ﻿using IOT_ErpManageSystem.DAL.IDall;
 using IOT_ErpManageSystem.DAL.IDBHelp;
 using IOT_ErpManageSystem.Models;
+using IOT_ErpManageSystem.Models.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -253,7 +254,7 @@ namespace IOT_ErpManageSystem.DAL.Dall
              new SqlParameter{ ParameterName="@Id",DbType=DbType.String,Direction=ParameterDirection.Input,Value=m.Id.ToString()},
              new SqlParameter{ ParameterName="@GoodsName",DbType=DbType.String,Direction=ParameterDirection.Input,Value=m.GoodsName},
              new SqlParameter{ ParameterName="@GoodsBrand",DbType=DbType.String,Direction=ParameterDirection.Input,Value=m.GoodsBrand},
-             new SqlParameter{ ParameterName="@TypeId",DbType=DbType.String,Direction=ParameterDirection.Input,Value=m.TypeId},
+             new SqlParameter{ ParameterName="@TypeId",DbType=DbType.Guid,Direction=ParameterDirection.Input,Value=m.TypeId},
              new SqlParameter{ ParameterName="@GoodsRule",DbType=DbType.String,Direction=ParameterDirection.Input,Value=m.GoodsRule},
              new SqlParameter{ ParameterName="@SKU",DbType=DbType.String,Direction=ParameterDirection.Input,Value=m.SKU},
              new SqlParameter{ ParameterName="@GoodsPrices",DbType=DbType.String,Direction=ParameterDirection.Input,Value=m.GoodsPrices},

@@ -100,29 +100,6 @@
                         <span>ERP</span>
                     </div>
                     <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="lay-system-side-menu" lay-filter="layadmin-system-side-menu">
-                        @{
-                            IOT_ErpManageSystem.BLL.RBAC_Allot.RBAC_Allot bll = new IOT_ErpManageSystem.BLL.RBAC_Allot.RBAC_Allot();
-                            var menu = bll.ShowQuanInfo();
-                            
-                        }
-
-                        @foreach (var item in menu.Where(m=>m.Uid==0))
-                        {
-                            <li data-name="home" class="layui-nav-item">
-                                <a href="javascript:;" onclick="go(this)" lay-tips="@item.Quan_Name" lay-direction="2">
-                                    <i class="layui-icon layui-icon-home"></i>
-                                    <cite>@item.Quan_Name</cite>
-                                </a>
-                                <dl class="layui-nav-child">
-                                    <dd data-name="console" class="layui-this">
-                                        @foreach (var i in menu.Where(m => m.Uid == item.ID))
-                                        {
-                                            <a lay-href="@i.Quan_Url">@i.Quan_Name</a>
-                                        }
-                                    </dd>
-                                </dl>
-                            </li>
-                        }
 
                     </ul>
                 </div>
@@ -186,6 +163,50 @@
     //        list = data.allot_BaoId.split('/');
     //    });
 
+
+    var li = '';
+
+    $(function () {
+
+        $.ajax("http://localhost:52645/api/RBAC_Allot/ShowQuanInfo?UId=0",
+            {
+                type: "get",
+                async: false,
+        }).done(function (data) {
+            //第一级菜单
+            $.each(data, function (i, t) {
+                //调用方法
+                if (i == 0) {
+                    li = '<li data-name="home" class="layui-nav-item">';
+                } else {
+                    li = '<li data-name="component" class="layui-nav-item">';
+                }
+                li += '<a href="javascript:;" onclick="go(this)" lay-tips="' +t.quan_Name + '" lay-direction="2">';
+                li += '<i class="layui-icon layui-icon-component"></i>';
+                li += '<cite>' + t.quan_Name+ '</cite>';
+                li += '</a>';
+                li += '<dl class="layui-nav-child">';
+                FindTwo(t.id);
+                li += '</dl></li>';
+                $("#lay-system-side-menu").append(li);
+            });
+        });
+
+    });
+
+    function FindTwo(id) {
+        $.ajax("http://localhost:52645/api/RBAC_Allot/ShowQuanInfo?UId=" + id,
+            {
+                type: "get",
+                async: false,
+        }).done(function (list) {
+            //第一级菜单
+            $.each(list, function (index, item) {
+                li += '<dd data-name="console" class="layui-this">';
+                li += '<a lay-href="' + item.quan_Url + '">' + item.quan_Name + '</a></dd>';                
+            });
+        });
+    }
 
 
     function go(obj) {

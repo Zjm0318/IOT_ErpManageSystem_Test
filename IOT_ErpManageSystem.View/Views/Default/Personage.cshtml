@@ -90,7 +90,6 @@
             type: "get",
         }).done(function (d) {
             uid = d.uid;
-            console.log(d);
             $("#p").attr("src",d.photo);
             $("#userName").val(d.userName);
             $("#iphone").val(d.iPhone);

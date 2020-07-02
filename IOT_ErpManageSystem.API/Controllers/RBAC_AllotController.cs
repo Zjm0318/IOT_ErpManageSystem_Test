@@ -74,13 +74,28 @@ namespace IOT_ErpManageSystem.API.Controllers
             return dlist;
         }
 
+        //所有权限
+        [HttpGet]
+        public List<RBAC_Quan> ShowQuanInfo(int Uid)
+        {
+            return _allotinterface.ShowQuanInfo(Uid);
+        }
+
+        //登录用户权限
         //[HttpGet]
         //public RBAC_Allots UserQuanInfo(string token)
         //{
         //    JWTHelper jwt = new JWTHelper();
         //    string json = jwt.GetPayload(token);
         //    Personal model = JsonConvert.DeserializeObject<Personal>(json);
-        //    return _allotinterface.UserQuanInfo(model.UID);
+        //    if (model!=null)
+        //    {
+        //        return _allotinterface.UserQuanInfo(model.UID);
+        //    }
+        //    else
+        //    {
+        //        return null;
+        //    }
         //}
     }
 }
