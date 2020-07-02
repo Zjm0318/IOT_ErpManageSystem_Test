@@ -44,7 +44,7 @@
         </td>
     </tr>
     <tr>
-        <td><input type="button" value="保存" id="add" /></td>
+        <td><input type="button" value="保存" id="add" style="background-color:cornflowerblue" /></td>
     </tr>
 </table>
 <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -84,12 +84,29 @@
 
     //保存
     $("#add").click(function () {
-        if ($("#goodname").val() == "" || $("#goodname").val() == null || $("#goodname").val() == undefined) {
+        ///^[^\s]*$/
+        if (jQuery('#goodname').val() == "") {
+            jQuery('#goodname').focus();
             alert("商品名称不能为空！");
             return;
         }
-        if ($("#brand").val() == "" || $("#brand").val() == null || $("#brand").val() == undefined) {
+        //正则表达式
+        var reg = /^[^\s]*$/;
+        if (!reg.test(jQuery('#goodname').val())) {
+            jQuery('#goodname').focus();
+            alert("商品名称不能输入空格！");
+            return;
+        }
+        if (jQuery('#brand').val() == "") {
+            jQuery('#brand').focus();
             alert("商品品牌不能为空！");
+            return;
+        }
+        //正则表达式
+        var reg = /^[^\s]*$/;
+        if (!reg.test(jQuery('#brand').val())) {
+            jQuery('#brand').focus();
+            alert("商品品牌不能输入空格！");
             return;
         }
         if ($("#type").val() == "" || $("#type").val() == null || $("#type").val() == undefined) {
