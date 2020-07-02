@@ -44,7 +44,7 @@ namespace IOT_ErpManageSystem.BLL.RBAC_Allot
                 new SqlParameter{ParameterName="@wherestr",DbType= DbType.String,Direction= ParameterDirection.Input,Value=wherestr },
                 new SqlParameter{ParameterName="@pageIndex",DbType= DbType.Int32,Direction= ParameterDirection.Input,Value=PageIndex },
                 new SqlParameter{ParameterName="@PagieSize",DbType= DbType.Int32,Direction= ParameterDirection.Input,Value=PageSize },
-                new SqlParameter{ParameterName="@Rowcount",DbType= DbType.Int32,Direction= ParameterDirection.Output },
+                new SqlParameter{ParameterName="@rowcount",DbType= DbType.Int32,Direction= ParameterDirection.Output },
               };
 
             DataTable tb = _idbhelper.ExecuteProc(proName, parametr, ref RowsCount);
