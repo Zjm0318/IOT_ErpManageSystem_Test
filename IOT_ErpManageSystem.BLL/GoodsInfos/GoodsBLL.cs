@@ -1,17 +1,12 @@
-﻿using System;
+﻿using IOT_ErpManageSystem.BLL.GoodsInfos;
+using IOT_ErpManageSystem.DAL.DBHelper;
+using IOT_ErpManageSystem.Models;
+using IOT_ErpManageSystem.Models.Models;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using IOT_ErpManageSystem.BLL.GoodsInfos;
-using IOT_ErpManageSystem.DAL;
-using IOT_ErpManageSystem.DAL.DBHelper;
-using IOT_ErpManageSystem.DAL.IDBHelp;
-using IOT_ErpManageSystem.Models;
-using IOT_ErpManageSystem.Models.Models;
-using Newtonsoft.Json;
 
 namespace IOT_ErpManageSystem.BLL.GoodsInfo
 {
@@ -228,7 +223,7 @@ namespace IOT_ErpManageSystem.BLL.GoodsInfo
         #region 商品价格本模块
 
         #region 显示价格本信息
-        public List<GoodsPrice> ShowGoodsPrice(PagePrice m,ref int total)
+        public List<GoodsPrice> ShowGoodsPrice(PagePrice m, ref int total)
         {
             string procName = "PagePrice";
             SqlParameter[] param = new SqlParameter[]
@@ -238,7 +233,7 @@ namespace IOT_ErpManageSystem.BLL.GoodsInfo
                 new SqlParameter{ ParameterName="@rowCount", DbType= DbType.Int32, Direction= ParameterDirection.Output},
                 new SqlParameter{ ParameterName="@goodsId", DbType= DbType.String, Direction= ParameterDirection.Input,Value=m.goodsId }
             };
-            DataTable tb = dBHelper.ExecuteProc(procName, param,ref total);
+            DataTable tb = dBHelper.ExecuteProc(procName, param, ref total);
             string json = JsonConvert.SerializeObject(tb);
             return JsonConvert.DeserializeObject<List<GoodsPrice>>(json).ToList();
         }
@@ -248,7 +243,7 @@ namespace IOT_ErpManageSystem.BLL.GoodsInfo
         public int AddPrice(GoodsPrice m)
         {
             string procName = "AddPrice";
-            SqlParameter[] param = new SqlParameter[] 
+            SqlParameter[] param = new SqlParameter[]
             {
                 new SqlParameter{ ParameterName="@Id", DbType= DbType.Guid, Direction= ParameterDirection.Input,Value=m.Id },
                 new SqlParameter{ ParameterName="@JinHPrice", DbType= DbType.Decimal, Direction= ParameterDirection.Input,Value=m.JinHPrice }
@@ -292,7 +287,7 @@ namespace IOT_ErpManageSystem.BLL.GoodsInfo
         public List<GoodsPrice> PricesInfo()
         {
             string procName = "RepareName";
-            DataTable tb = dBHelper.ExecuteProc(procName,null);
+            DataTable tb = dBHelper.ExecuteProc(procName, null);
             string json = JsonConvert.SerializeObject(tb);
             return JsonConvert.DeserializeObject<List<GoodsPrice>>(json).ToList();
         }

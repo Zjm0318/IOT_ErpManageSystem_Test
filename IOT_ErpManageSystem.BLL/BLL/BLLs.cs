@@ -1,10 +1,7 @@
 ﻿using IOT_ErpManageSystem.BLL.IBLL;
 using IOT_ErpManageSystem.DAL.IDall;
 using IOT_ErpManageSystem.Models;
-using IOT_ErpManageSystem.Models.Models;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace IOT_ErpManageSystem.BLL.BLL
 {
@@ -74,7 +71,7 @@ namespace IOT_ErpManageSystem.BLL.BLL
         /// <returns></returns>
         public List<Order> ShowOrder(int pageIndex, int pageSize, string ddh, string userName, string time, int type, int from, ref int rowCount)
         {
-            return _dal.ShowOrder(pageIndex,pageSize,ddh,userName,time,type,from,ref rowCount);
+            return _dal.ShowOrder(pageIndex, pageSize, ddh, userName, time, type, from, ref rowCount);
         }
         /// <summary>
         /// 显示订单来源
@@ -111,7 +108,7 @@ namespace IOT_ErpManageSystem.BLL.BLL
         /// <returns></returns>
         public List<Models.GoodsInfo> GoodsPrice(int pageIndex, int pageSize, string proBh, ref int rowCount)
         {
-            return _dal.GoodsPrice(pageIndex,pageSize,proBh,ref rowCount);
+            return _dal.GoodsPrice(pageIndex, pageSize, proBh, ref rowCount);
         }
         /// <summary>
         /// 显示添加的商品名称

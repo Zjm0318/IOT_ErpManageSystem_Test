@@ -1,10 +1,8 @@
 ﻿using IOT_ErpManageSystem.DAL.IDBHelp;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Text;
 
 namespace IOT_ErpManageSystem.DAL.DBHelper
 {
@@ -69,11 +67,11 @@ namespace IOT_ErpManageSystem.DAL.DBHelper
                 using (SqlCommand cmd = new SqlCommand(procName, con))
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    if (sqlParameters!=null)
+                    if (sqlParameters != null)
                     {
                         cmd.Parameters.AddRange(sqlParameters);
                     }
-                    
+
                     SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                     adapter.Fill(tb);
                 }

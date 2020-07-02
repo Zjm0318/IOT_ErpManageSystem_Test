@@ -1,9 +1,5 @@
 ﻿using IOT_ErpManageSystem.BLL.TuiHuo;
-using IOT_ErpManageSystem.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace IOT_ErpManageSystem.API.ViewModel
 {

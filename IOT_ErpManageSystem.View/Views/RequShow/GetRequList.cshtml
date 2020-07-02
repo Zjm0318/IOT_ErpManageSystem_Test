@@ -67,6 +67,7 @@
     var pagesize = 2;
     var count = 0;
     var QgId = "";
+    var name1 = "";
 
     $(function () {
         show(pageindex);
@@ -95,6 +96,7 @@
 
         //循环
         $.each(da, function (index, item) {
+            name1 = item.role_Name;
             var str = "";
             if (item.states == "0") {
                 str = "<tr>"
@@ -211,21 +213,28 @@
 
     //撤回
     $("#chehui").click(function () {
+       
         QgId = $("input[type='radio']:checked").val();  //获取请购单ID
         //根据获取的值是否为空来判断单选框是否选中
         if (QgId != null) {
-            $.ajax("http://localhost:52645/api/RequList/DelRole?QgId=" + QgId, {
-                type: "get",
-                dataType: "text"
-            }).done(function (da) {
-                if (da > 0) {
-                    alert("撤回成功");
-                    window.location.reload();
-                }
-                else {
-                    alert("撤回失败")
-                }
-            })
+            //判断请购负责人是否为空
+            if (name1 == null) {
+                alert("不能撤回为null的值，请重新选择");
+            }
+            else {
+                $.ajax("http://localhost:52645/api/RequList/DelRole?QgId=" + QgId, {
+                    type: "get",
+                    dataType: "text"
+                }).done(function (da) {
+                    if (da > 0) {
+                        alert("撤回成功");
+                        window.location.reload();
+                    }
+                    else {
+                        alert("撤回失败")
+                    }
+                })
+            }
         }
         else {
             alert("请选择要删除的请购单");

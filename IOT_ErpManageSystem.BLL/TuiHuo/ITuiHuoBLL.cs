@@ -1,14 +1,12 @@
 ﻿using IOT_ErpManageSystem.Models;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace IOT_ErpManageSystem.BLL.TuiHuo
 {
     public interface ITuiHuoBLL
     {
         //显示退货信息
-        List<TuiHuo> GetTuiHuos(TuiHuoModel m,ref int rowCount);
+        List<TuiHuo> GetTuiHuos(TuiHuoModel m, ref int rowCount);
         //显示仓库
         List<tb_Storage> GetStorage();
         //显示供应商
@@ -24,6 +22,6 @@ namespace IOT_ErpManageSystem.BLL.TuiHuo
         //添加退货表信息
         int AddTuiHuo(TuiHouInfo m);
         //审核
-        int ShenHe(string id,string sta);
+        int ShenHe(string id, string sta);
     }
 }

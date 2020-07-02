@@ -1,11 +1,9 @@
 ﻿using IOT_ErpManageSystem.DAL.IDBHelp;
 using IOT_ErpManageSystem.Models;
-using System;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Text;
-using Newtonsoft.Json;
 using System.Linq;
 
 namespace IOT_ErpManageSystem.BLL.Supplier
@@ -95,7 +93,7 @@ namespace IOT_ErpManageSystem.BLL.Supplier
                 new SqlParameter{ ParameterName="@rowCount",DbType=DbType.Int32,Direction=ParameterDirection.Output },
             };
 
-            DataTable tb = _db.ExecuteProc(proc, parameters,ref rowCount);
+            DataTable tb = _db.ExecuteProc(proc, parameters, ref rowCount);
             string json = JsonConvert.SerializeObject(tb);
             return JsonConvert.DeserializeObject<List<SupplierInfo>>(json);
         }
@@ -108,9 +106,9 @@ namespace IOT_ErpManageSystem.BLL.Supplier
             SqlParameter[] parameters = new SqlParameter[] {
                 new SqlParameter{ ParameterName="@GId",Value=id,DbType=DbType.String,Direction=ParameterDirection.Input },
             };
-            DataTable tb= _db.ExecuteProc(proc,parameters);
+            DataTable tb = _db.ExecuteProc(proc, parameters);
             string json = JsonConvert.SerializeObject(tb);
-            List<SupAndCon> list= JsonConvert.DeserializeObject<List<SupAndCon>>(json);
+            List<SupAndCon> list = JsonConvert.DeserializeObject<List<SupAndCon>>(json);
             //循环获取值
             SupAndCon m = list.FirstOrDefault();
             return m;

@@ -1,15 +1,12 @@
 ﻿using IOT_ErpManageSystem.BLL.InRBAC_Role;
 using IOT_ErpManageSystem.DAL.DBHelper;
-using IOT_ErpManageSystem.DAL.IDBHelp;
 using IOT_ErpManageSystem.Models;
 using IOT_ErpManageSystem.Models.Models;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
 
 namespace IOT_ErpManageSystem.BLL.RBAC_Allot
 {
@@ -64,10 +61,10 @@ namespace IOT_ErpManageSystem.BLL.RBAC_Allot
         }
         //绑定部门下拉框
         public List<RBAC_Dep> GetDep()
-        {       
-                string proName = "proc_Dep";
-                SqlParameter[] parametr = new SqlParameter[] { };
-                return _idbhelper.GetList<RBAC_Dep>(proName, parametr);
+        {
+            string proName = "proc_Dep";
+            SqlParameter[] parametr = new SqlParameter[] { };
+            return _idbhelper.GetList<RBAC_Dep>(proName, parametr);
 
         }
 
@@ -107,7 +104,7 @@ namespace IOT_ErpManageSystem.BLL.RBAC_Allot
                 new SqlParameter{ParameterName="@Allot_Grade",Value=model.Allot_Grade,DbType= DbType.String,Direction= ParameterDirection.Input },
                 new SqlParameter{ParameterName="@Allot_BaoId",Value=model.Allot_BaoId,DbType= DbType.String,Direction= ParameterDirection.Input },
                 new SqlParameter{ParameterName="@Qid",Value=model.ID,DbType= DbType.String,Direction= ParameterDirection.Input },
-      
+
             };
             return _idbhelper.ExecuteNonQueryProc(ProName, parametr);
         }

@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace IOT_ErpManageSystem.Models
 {
-   public class RequGoods
+    public class RequGoods
     {
         //中间表ID
         public int RPGID { get; set; }

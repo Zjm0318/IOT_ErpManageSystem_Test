@@ -1,14 +1,11 @@
 ﻿using IOT_ErpManageSystem.DAL.IDall;
 using IOT_ErpManageSystem.DAL.IDBHelp;
 using IOT_ErpManageSystem.Models;
-using IOT_ErpManageSystem.Models.Models;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
 
 namespace IOT_ErpManageSystem.DAL.Dall
 {
@@ -98,11 +95,11 @@ namespace IOT_ErpManageSystem.DAL.Dall
         /// <param name="type"></param>
         /// <param name="from"></param>
         /// <returns></returns>
-        public List<Order> ShowOrder(int pageIndex, int pageSize,string ddh,string userName,string time,int type,int from, ref int rowCount)
+        public List<Order> ShowOrder(int pageIndex, int pageSize, string ddh, string userName, string time, int type, int from, ref int rowCount)
         {
             string proName = "Pro_Order";
             string where = " where (1=1) ";
-            if(!string.IsNullOrEmpty(ddh))
+            if (!string.IsNullOrEmpty(ddh))
             {
                 where += $" and o.OrderId='{ddh}'";
             }
@@ -114,11 +111,11 @@ namespace IOT_ErpManageSystem.DAL.Dall
             {
                 where += $" and o.SubmitTime= '{time}'";
             }
-            if (type!=0)
+            if (type != 0)
             {
                 where += $" and o.OrState='{type}'";
             }
-            if (from!=0)
+            if (from != 0)
             {
                 where += $" and o.OrFrom='{from}'";
             }
@@ -128,7 +125,7 @@ namespace IOT_ErpManageSystem.DAL.Dall
              new SqlParameter{ ParameterName="@where",DbType=DbType.String,Direction=ParameterDirection.Input,Value=where},
              new SqlParameter{ ParameterName="@Rowcount",DbType=DbType.Int32,Direction=ParameterDirection.Output},
             };
-            DataTable tb = _db.ExecuteProc(proName, parameters,ref rowCount);
+            DataTable tb = _db.ExecuteProc(proName, parameters, ref rowCount);
             return JsonConvert.DeserializeObject<List<Order>>(JsonConvert.SerializeObject(tb));
         }
         /// <summary>
@@ -138,8 +135,8 @@ namespace IOT_ErpManageSystem.DAL.Dall
         public List<OrderFrom> OrderFrom()
         {
             string proName = "ProOrderFrom";
-            SqlParameter[] parameters = new SqlParameter[] {};
-            return _db.GetList<OrderFrom>(proName,parameters);
+            SqlParameter[] parameters = new SqlParameter[] { };
+            return _db.GetList<OrderFrom>(proName, parameters);
         }
         /// <summary>
         /// 显示订单状态
@@ -148,7 +145,7 @@ namespace IOT_ErpManageSystem.DAL.Dall
         public List<OrderState> OrderState()
         {
             string proName = "ProOrderState";
-            SqlParameter[] parameters = new SqlParameter[] {};
+            SqlParameter[] parameters = new SqlParameter[] { };
             return _db.GetList<OrderState>(proName, parameters);
         }
         /// <summary>

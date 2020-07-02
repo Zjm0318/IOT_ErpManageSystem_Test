@@ -1,7 +1,5 @@
 ﻿using IOT_ErpManageSystem.Models;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace IOT_ErpManageSystem.DAL.liuning
 {
@@ -19,7 +17,7 @@ namespace IOT_ErpManageSystem.DAL.liuning
         //添加请购单信息
         int AddRequ(RequisitionInfo m);
         //指派请购人员工
-        int UpdRole(string RId,string QgId);
+        int UpdRole(string RId, string QgId);
 
         //撤回请购人员工
         int DelRole(string QgId);
@@ -33,7 +31,7 @@ namespace IOT_ErpManageSystem.DAL.liuning
         //查询商品ID
         List<GoodsInfo> GetGoodsId();
         //添加请购单,采购单与商品的中间表数据
-        int AddRequGoods(string QgId,string GId);
+        int AddRequGoods(string QgId, string GId);
 
         //根据ID删除相关的商品信息
         int DeleteGoods(int RpgId);
@@ -43,7 +41,7 @@ namespace IOT_ErpManageSystem.DAL.liuning
 
         #region 采购单
         //采购单显示
-        List<PurChaseOrder> GetPurList(string state, string time,string gname,string bgname,int pageindex,int pagesize, ref int rowcount);
+        List<PurChaseOrder> GetPurList(string state, string time, string gname, string bgname, int pageindex, int pagesize, ref int rowcount);
 
         //审核通过
         int UpdPurState1(string Id);
@@ -51,7 +49,7 @@ namespace IOT_ErpManageSystem.DAL.liuning
         int UpdPurState2(string Id);
 
         //指派采购处理人
-        int ZhiPaiPur(string Id,string Cgclr);
+        int ZhiPaiPur(string Id, string Cgclr);
         //撤回请购人员工
         int DelPurRole(string Id);
         //反填采购信息

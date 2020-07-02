@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace IOT_ErpManageSystem.Models.Models
 {
-  public  class RequPurGood
+    public class RequPurGood
     {
         public int RPGID { get; set; }
         //请购单ID 采购单ID
