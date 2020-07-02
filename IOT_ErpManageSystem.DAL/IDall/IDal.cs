@@ -1,8 +1,5 @@
 ﻿using IOT_ErpManageSystem.Models;
-using IOT_ErpManageSystem.Models.Models;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace IOT_ErpManageSystem.DAL.IDall
 {
@@ -27,7 +24,7 @@ namespace IOT_ErpManageSystem.DAL.IDall
         //删除
         int Dle(string id);
         //显示商品价格本
-        List<GoodsInfo> GoodsPrice(int pageIndex, int pageSize,string proBh, ref int rowCount);
+        List<GoodsInfo> GoodsPrice(int pageIndex, int pageSize, string proBh, ref int rowCount);
         //添加显示商品信息
         List<GoodsInfo> ShowPrice();
         //添加价格本

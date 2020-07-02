@@ -1,11 +1,9 @@
 ﻿using IOT_ErpManageSystem.DAL.IDBHelp;
 using IOT_ErpManageSystem.Models;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Text;
 
 namespace IOT_ErpManageSystem.BLL.TuiHuo
 {
@@ -18,7 +16,7 @@ namespace IOT_ErpManageSystem.BLL.TuiHuo
         }
 
         //显示退货单
-        public List<TuiHuo> GetTuiHuos(TuiHuoModel m,ref int rowCount)
+        public List<TuiHuo> GetTuiHuos(TuiHuoModel m, ref int rowCount)
         {
             string date = m.CreateDate;
             //存储过程名称
@@ -53,11 +51,11 @@ namespace IOT_ErpManageSystem.BLL.TuiHuo
         {
             //存储过程名称
             string proc = "TH_TuiHuo_Edit";
-            SqlParameter[] parameters = new SqlParameter[] { 
+            SqlParameter[] parameters = new SqlParameter[] {
             new SqlParameter{ParameterName="@Id",Value=id,DbType=DbType.String,Direction=ParameterDirection.Input },
             new SqlParameter{ParameterName="@Sta",Value=sta,DbType=DbType.String,Direction=ParameterDirection.Input },
             };
-            return _db.ExecuteNonQueryProc(proc,parameters);
+            return _db.ExecuteNonQueryProc(proc, parameters);
         }
 
         //显示供应商

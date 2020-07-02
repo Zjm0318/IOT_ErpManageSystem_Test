@@ -1,15 +1,11 @@
-﻿using IOT_ErpManageSystem.DAL.IDBHelp;
-using System;
+﻿using IOT_ErpManageSystem.Models;
 using System.Collections.Generic;
-using System.Text;
-using IOT_ErpManageSystem.DAL;
-using IOT_ErpManageSystem.Models;
 namespace IOT_ErpManageSystem.BLL
 {
-   public interface RoleInterface
+    public interface RoleInterface
     {
         //显示角色数据
-        List<RBAC_Role> GetRole(int PageIndex,int PageSize,string RoleZhang,string RoleName,string RoleJob,int RoleState,ref int RowsCount);
+        List<RBAC_Role> GetRole(int PageIndex, int PageSize, string RoleZhang, string RoleName, string RoleJob, int RoleState, ref int RowsCount);
 
         //添加员工
         int AddRole(RBAC_Role model);

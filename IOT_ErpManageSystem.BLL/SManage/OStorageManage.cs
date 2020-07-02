@@ -1,13 +1,10 @@
 ﻿using IOT_ErpManageSystem.BLL.ISManage;
 using IOT_ErpManageSystem.DAL.IDBHelp;
 using IOT_ErpManageSystem.Models;
-using IOT_ErpManageSystem.Models.Dto;
-using System;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Text;
-using Newtonsoft.Json;
 
 namespace IOT_ErpManageSystem.BLL.SManage
 {
@@ -26,11 +23,11 @@ namespace IOT_ErpManageSystem.BLL.SManage
         /// <param name="oStorageId"></param>
         /// <param name="orderNo"></param>
         /// <returns></returns>
-        public List<tb_OutStorage> GetOSMShowList(int pageIndex,int pageSize,string dId, string oTime, string oStorageId, string orderNo,ref int RowCount)
+        public List<tb_OutStorage> GetOSMShowList(int pageIndex, int pageSize, string dId, string oTime, string oStorageId, string orderNo, ref int RowCount)
         {
             string procName = "proc_OSManage";
             string where = " where (1=1) ";
-           if(!string.IsNullOrEmpty(dId))
+            if (!string.IsNullOrEmpty(dId))
             {
                 where += $" and d.id='{dId}'";
             }
@@ -63,7 +60,7 @@ namespace IOT_ErpManageSystem.BLL.SManage
         public List<tb_DisPatching> GetTb_DisList(string tbName)
         {
             string procName = "proc_Select";
-            SqlParameter[] sqlParameters = new SqlParameter[] { 
+            SqlParameter[] sqlParameters = new SqlParameter[] {
                 new SqlParameter{ParameterName="@table",DbType= DbType.String,Direction= ParameterDirection.Input,Value=tbName}
             };
             DataTable tb = _helper.ExecuteProc(procName, sqlParameters);
@@ -113,7 +110,7 @@ namespace IOT_ErpManageSystem.BLL.SManage
                 new SqlParameter{ParameterName="@DBMan",DbType= DbType.String,Direction= ParameterDirection.Input,Value= model.DBMan},
                 new SqlParameter{ParameterName="@OutState",DbType= DbType.Int32,Direction= ParameterDirection.Input,Value= model.OutState},
             };
-            return _helper.ExecuteNonQueryProc(procName,sqlParameters);
+            return _helper.ExecuteNonQueryProc(procName, sqlParameters);
         }
     }
 }

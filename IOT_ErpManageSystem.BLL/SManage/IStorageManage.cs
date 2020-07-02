@@ -1,12 +1,11 @@
 ﻿using IOT_ErpManageSystem.BLL.ISManage;
 using IOT_ErpManageSystem.DAL.IDBHelp;
 using IOT_ErpManageSystem.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Text;
 using System.Data;
-using Newtonsoft.Json;
+using System.Data.SqlClient;
 
 namespace IOT_ErpManageSystem.BLL.SManage
 {
@@ -27,19 +26,19 @@ namespace IOT_ErpManageSystem.BLL.SManage
         /// <param name="sName">供应商名称</param>
         /// <param name="bName">采购员名称</param>
         /// <returns></returns>
-        public List<tb_InStorage> GetInStorageList(int pageIndex,int pageSize,int state,string cTime,string sName,ref int rowCount)
+        public List<tb_InStorage> GetInStorageList(int pageIndex, int pageSize, int state, string cTime, string sName, ref int rowCount)
         {
             string procName = "proc_ISManage";
             string where = " where (1=1) ";
-            if(state!=0)
+            if (state != 0)
             {
                 where += $" and InStorageState={state}";
             }
-            if(!string.IsNullOrEmpty(cTime))
+            if (!string.IsNullOrEmpty(cTime))
             {
                 where += $" and InStorageTime like '%{cTime}%'";
             }
-            if(!string.IsNullOrEmpty(sName))
+            if (!string.IsNullOrEmpty(sName))
             {
                 where += $" and DwName like '%{sName}%'";
             }
@@ -73,8 +72,8 @@ namespace IOT_ErpManageSystem.BLL.SManage
             SqlParameter[] parameters = new SqlParameter[] {
                 new SqlParameter{ParameterName="@isId", DbType= DbType.String,Direction= ParameterDirection.Input,Value=isId},
             };
-            return _dbhelp.ExecuteNonQueryProc(procName,parameters);
-        }   
+            return _dbhelp.ExecuteNonQueryProc(procName, parameters);
+        }
         /// <summary>
         /// 修改收货员
         /// </summary>

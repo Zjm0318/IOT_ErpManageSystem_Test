@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using IOT_ErpManageSystem.Models;
-using IOT_ErpManageSystem.API.ViewModel;
+﻿using IOT_ErpManageSystem.API.ViewModel;
 using IOT_ErpManageSystem.BLL.TuiHuo;
+using IOT_ErpManageSystem.Models;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 
 namespace IOT_ErpManageSystem.API.Controllers
 {
@@ -49,7 +46,7 @@ namespace IOT_ErpManageSystem.API.Controllers
         [HttpPost]
         public int ShenHe([FromForm]string id, [FromForm] string sta)
         {
-            return _bll.ShenHe(id,sta);
+            return _bll.ShenHe(id, sta);
         }
 
         //显示供应商
@@ -81,7 +78,7 @@ namespace IOT_ErpManageSystem.API.Controllers
         [HttpPost]
         public int AddTuiHuo([FromForm]TuiHouInfo m)
         {
-            m.CreateTime =DateTime.Now;
+            m.CreateTime = DateTime.Now;
             m.States = "0";
             return _bll.AddTuiHuo(m);
         }

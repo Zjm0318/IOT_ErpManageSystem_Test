@@ -123,31 +123,67 @@
             "Url": $("#Url").val().toString()
         };
         //判断 负责人
-        if (obj.YJfzr == '') {
+        if (obj.YJfzr == '' || obj.YJfzr == null || obj.YJfzr == undefined) {
             return alert("引进负责人不能为空!");
         }
+        else {
+            var reg = /^[^\s]*$/;
+            if (!reg.test(obj.YJfzr)) {
+                return alert("负责人不能输入空格！");
+            }
+        }
         //供应商来源
-        if (obj.GLaiYuan == '') {
+        if (obj.GLaiYuan == '' || obj.GLaiYuan == null || obj.GLaiYuan == undefined) {
             return alert("供应商来源不能为空!");
         }
+        else {
+            var reg = /^[^\s]*$/;
+            if (!reg.test(obj.GLaiYuan)) {
+                return alert("供应商来源不能输入空格！");
+            }
+        }
         //单位名称
-        if (obj.DwName == '') {
+        if (obj.DwName == '' || obj.DwName == null || obj.DwName == undefined) {
             return alert("单位名称不能为空!");
         }
+        else {
+            var reg = /^[^\s]*$/;
+            if (!reg.test(obj.DwName)) {
+                return alert("单位名称不能输入空格！");
+            }
+        }
         //品牌
-        if (obj.PinPai == '') {
+        if (obj.PinPai == '' || obj.PinPai == null || obj.PinPai == undefined) {
             return alert("品牌不能为空!");
         }
+        else {
+            var reg = /^[^\s]*$/;
+            if (!reg.test(obj.PinPai)) {
+                return alert("品牌不能输入空格！");
+            }
+        }
         //经营范围
-        if (obj.JYRange == '') {
+        if (obj.JYRange == '' || obj.JYRange == null || obj.JYRange == undefined) {
             return alert("经营范围不能为空!");
         }
+        else {
+            var reg = /^[^\s]*$/;
+            if (!reg.test(obj.JYRange)) {
+                return alert("经营范围不能输入空格！");
+            }
+        }
         //联系人
-        if (obj1.LxrName == '') {
+        if (obj1.LxrName == '' || obj1.LxrName == null || obj1.LxrName == undefined) {
             return alert("联系人不能为空!");
         }
+        else {
+            var reg = /^[^\s]*$/;
+            if (!reg.test(obj1.LxrName)) {
+                return alert("联系人不能输入空格！");
+            }
+        }
         //手机
-        if (obj1.Phone == '') {
+        if (obj1.Phone == '' || obj1.Phone == null || obj1.Phone == undefined) {
             return alert("手机不能为空!");
         }
         var re = /^1[34578]\d{9}$/;
@@ -161,9 +197,22 @@
                 return alert("请输入正确的固定电话");
             }
         }
+        //QQ
+        if (obj1.QQ != "") {
+            var qq = /[1-9][0-9]{4,}/;
+            if (!qq.test(obj1.QQ)) {
+                return alert("请输入正确的QQ!");
+            }
+        }
         //地址
-        if (obj1.Addresss == '') {
+        if (obj1.Addresss == '' || obj.Addresss == null || obj.Addresss == undefined) {
             return alert("地址不能为空!");
+        }
+        else {
+            var reg = /^[^\s]*$/;
+            if (!reg.test(obj1.Addresss)) {
+                return alert("地址不能输入空格！");
+            }
         }
         //添加
         $.ajax({

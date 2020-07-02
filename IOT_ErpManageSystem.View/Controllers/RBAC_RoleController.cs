@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace IOT_ErpManageSystem.View.Controllers
 {
@@ -14,7 +10,7 @@ namespace IOT_ErpManageSystem.View.Controllers
         }
 
         //添加权限
-         public IActionResult Add()
+        public IActionResult Add()
         {
             return View();
         }

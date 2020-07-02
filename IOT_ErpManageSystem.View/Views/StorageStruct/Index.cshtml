@@ -150,6 +150,19 @@
             $("#save").click(function () {
                 var area = $("#area").val();
                 var storageId = $("#storage").val();
+                if (area == "") {
+                    alert("区域名称不能为空!");
+                    return;
+                }
+                var reg = /^[^\s]*$/;
+                if (!reg.test(area)) {
+                    alert("区域名称不能输入空格！");
+                    return;
+                }
+                if (storageId == "0") {
+                    alert("请选择所属仓库!");
+                    return;
+                }
                 var obj = {
                     "Area": area,
                     "StorageId": storageId
@@ -235,7 +248,7 @@
             var layer = layui.layer;
 
             layer.open({
-                title: '新增区域',
+                title: '新增huojia ',
                 area: ['800px', '500px']
                 , content: shelf()
             });
@@ -245,6 +258,23 @@
                 var shelf = $("#shelf").val();
                 var storage = $("#storage").val();
                 var area = $("#area").val();
+                if (shelf == "" || shelf == null) {
+                    alert("请输入货架名称!");
+                    return;
+                }
+                var reg = /^[^\s]*$/;
+                if (!reg.test(shelf)) {
+                    alert("货架名称不能输入空格！");
+                    return;
+                }
+                if (storage == "0") {
+                    alert("请选择所属仓库!");
+                    return;
+                }
+                if (area == "0") {
+                    alert("请选择所属区域!");
+                    return;
+                }
                 var obj = {
                     "ShelfName": shelf,
                     "StorageId": storage,

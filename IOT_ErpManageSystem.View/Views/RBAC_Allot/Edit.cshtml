@@ -136,17 +136,38 @@
 
     //添加修改后的信息
     function Role_Add() {
-        //非空判断
-        if ($("#RoleCode").val() == '') {
+        //编号
+        if (jQuery('#RoleCode').val() == "") {
+            jQuery('#RoleCode').focus();
             alert("编号不能为空！");
             return;
         }
-        if ($("#RoleName").val() == '') {
-            alert("部门不能为空！");
+        //正则表达式
+        var reg = /^[^\s]*$/;
+        if (!reg.test(jQuery('#RoleCode').val())) {
+            jQuery('#RoleCode').focus();
+            alert("编号不能输入空格！");
             return;
         }
-        if ($("#RoleTop").val() == '') {
-            alert("等级不能为空");
+        //名称
+        if (jQuery('#RoleName').val() == "") {
+            jQuery('#RoleName').focus();
+            alert("名称不能为空！");
+            return;
+        }
+        //正则表达式
+        var reg = /^[^\s]*$/;
+        if (!reg.test(jQuery('#RoleName').val())) {
+            jQuery('#RoleName').focus();
+            alert("名称不能输入空格！");
+            return;
+        }
+
+        //权限等级
+        if (jQuery('#RoleTop').val() == "") {
+            jQuery('#RoleTop').focus();
+            alert("等级不能为空！");
+            return;
         }
         var ids = "";
         $(".Fu").each(function (index, item) {

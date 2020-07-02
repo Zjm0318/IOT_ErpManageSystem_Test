@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-using JWT;
+﻿using JWT;
 using JWT.Algorithms; //加密算法
-using JWT.Builder;
 using JWT.Exceptions;
 using JWT.Serializers;
+using System;
+using System.Collections.Generic;
 
 
 namespace IOT_ErpManageSystem.API.Controllers
@@ -23,14 +19,14 @@ namespace IOT_ErpManageSystem.API.Controllers
 
         public JWTHelper()
         {
-             Key = "klklergsflergldsarertlherdsigerklgld";// 这个密钥
-             algorithm  = new HMACSHA256Algorithm(); // 这是 HMACSHA256加密算法
-             serializer  = new JsonNetSerializer();// 这是JSON序列化工具
-             urlEncoder  = new JwtBase64UrlEncoder(); // 这是BASE64编码工具
-             provider  = new UtcDateTimeProvider(); // 时间提供器
-             validator  = new JwtValidator(serializer, provider); // 令牌校验器，用来验证有效期和签名
+            Key = "klklergsflergldsarertlherdsigerklgld";// 这个密钥
+            algorithm = new HMACSHA256Algorithm(); // 这是 HMACSHA256加密算法
+            serializer = new JsonNetSerializer();// 这是JSON序列化工具
+            urlEncoder = new JwtBase64UrlEncoder(); // 这是BASE64编码工具
+            provider = new UtcDateTimeProvider(); // 时间提供器
+            validator = new JwtValidator(serializer, provider); // 令牌校验器，用来验证有效期和签名
         }
-        public string GetToken(Dictionary<string, object> payload,int expSeconds)
+        public string GetToken(Dictionary<string, object> payload, int expSeconds)
         {
             var unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc); // or use JwtValidator.UnixEpoch
             var now = provider.GetNow();
@@ -40,11 +36,11 @@ namespace IOT_ErpManageSystem.API.Controllers
             return token;
         }
         // 解密
-        public string GetPayload(string token) 
+        public string GetPayload(string token)
         {
             try
             {
-                IJwtDecoder decoder = new JwtDecoder(serializer,validator,  urlEncoder, algorithm); // 创建解密工具
+                IJwtDecoder decoder = new JwtDecoder(serializer, validator, urlEncoder, algorithm); // 创建解密工具
                 var json = decoder.Decode(token, Key, verify: true);//token 中的载体的 JSON 格式字符串
                 return json;  // payload
             }

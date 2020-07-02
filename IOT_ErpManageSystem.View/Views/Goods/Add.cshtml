@@ -169,7 +169,7 @@
     });
 
     layui.use('element', function () {
-        var element = layui.element;
+        var element = layui.element;s
 
     });
     /********************************添加商品信息********************************/
@@ -196,23 +196,55 @@
         };
 
         //非空判断
-        if (obj.GoodsId == "" || obj.GoodsId == null || obj.GoodsId == undefined) {
-            alert("商品编号不能为空!");
+        if (obj.GoodsId == "" || obj.GoodsId == null || obj.GoodsId == undefined || obj.GoodsId.length>50) {
+            alert("商品编号不能为空或不能过长!");
+            return;
+        }
+        //正则表达式
+        var reg = /^[^\s]*$/;
+        if (!reg.test(obj.GoodsId)) {
+            $('#goodsId').focus();
+            alert("不能输入空格！");
+            return;
+        }
+        if (!reg.test(obj.GoodsName)) {
+            $('#goodsname').focus();
+            alert("不能输入空格！");
+            return;
+        }
+        if (!reg.test(obj.GoodsImg)) {
+            $('#goodsimg').focus();
+            alert("不能输入空格！");
+            return;
+        }
+        if (!reg.test(obj.GoodsBrand)) {
+            $('#goodsbrand').focus();
+            alert("不能输入空格！");
+            return;
+        }
+        if (!reg.test(obj.GoodsRule)) {
+            $('#goodsrule').focus();
+            alert("不能输入空格！");
+            return;
+        }
+        if (!reg.test(obj.SKU)) {
+            $('#sku').focus();
+            alert("不能输入空格！");
             return;
         }
 
-        if (obj.GoodsName == "" || obj.GoodsName == null || obj.GoodsName == undefined) {
-            alert("商品名称不能为空!");
+        if (obj.GoodsName == "" || obj.GoodsName == null || obj.GoodsName == undefined || obj.GoodsName.length > 50) {
+            alert("商品名称不能为空或不能过长!");
             return;
         }
 
-        if (obj.GoodsImg == "" || obj.GoodsImg == null || obj.GoodsImg == undefined) {
-            alert("商品图片不能为空!");
+        if (obj.GoodsImg == "" || obj.GoodsImg == null || obj.GoodsImg == undefined || obj.GoodsImg.length > 100) {
+            alert("商品图片不能为空或不能过长!");
             return;
         }
 
-        if (obj.GoodsPrices == "" || obj.GoodsPrices == null || obj.GoodsPrices == undefined) {
-            alert("商品价格不能为空!");
+        if (obj.GoodsPrices == "" || obj.GoodsPrices == null || obj.GoodsPrices == undefined || parseFloat(obj.GoodsPrices) < 0) {
+            alert("商品价格不能为空或小于0!");
             return;
         }
         else if (isNaN(obj.GoodsPrices)) {
@@ -220,13 +252,13 @@
             return;
         }
 
-        if (obj.GoodsBrand == "" || obj.GoodsBrand == null || obj.GoodsBrand == undefined) {
-            alert("商品品牌不能为空!");
+        if (obj.GoodsBrand == "" || obj.GoodsBrand == null || obj.GoodsBrand == undefined || obj.GoodsBrand.length > 50) {
+            alert("商品品牌不能为空或不能过长!");
             return;
         }
 
-        if (obj.GoodsStock == "" || obj.GoodsStock == null || obj.GoodsStock == undefined) {
-            alert("商品库存不能为空!");
+        if (obj.GoodsStock == "" || obj.GoodsStock == null || obj.GoodsStock == undefined || parseInt(obj.GoodsStock) < 0) {
+            alert("商品库存不能为空或小于0!");
             return;
         }
 
@@ -235,8 +267,8 @@
             return;
         }
 
-        if (obj.StockYJ == "" || obj.StockYJ == null || obj.StockYJ == undefined) {
-            alert("库存预警不能为空!");
+        if (obj.StockYJ == "" || obj.StockYJ == null || obj.StockYJ == undefined || parseInt(obj.StockYJ) < 0 || parseInt(obj.StockYJ) > parseInt(obj.GoodsStock)) {
+            alert("库存预警不能为空或小于0或大于库存!");
             return;
         }      
 
@@ -245,13 +277,13 @@
             return;
         }
 
-        if (obj.GoodsRule == "" || obj.GoodsRule == null || obj.GoodsRule == undefined) {
-            alert("商品规格不能为空!");
+        if (obj.GoodsRule == "" || obj.GoodsRule == null || obj.GoodsRule == undefined || obj.GoodsRule.length > 20) {
+            alert("商品规格不能为空或不能过长!");
             return;
         }
 
-        if (obj.SKU == "" || obj.SKU == null || obj.SKU == undefined) {
-            alert("商品单位不能为空!");
+        if (obj.SKU == "" || obj.SKU == null || obj.SKU == undefined || obj.SKU.length > 10) {
+            alert("商品单位不能为空或不能过长!");
             return;
         }
 
@@ -354,6 +386,21 @@
             "CId": $("input[name='color']:checked").val().toString(),
             "SId": $("input[name='size']:checked").val().toString()
         };
+
+        if (obj.GoodsId == "" || obj.GoodsId == null || obj.GoodsId == undefined) {
+            alert("商品编号不能为空!");
+            return;
+        }
+
+        if (obj.CId == "" || obj.CId == null || obj.CId == undefined) {
+            alert("尺码不能为空!");
+            return;
+        }
+
+        if (obj.SId == "" || obj.SId == null || obj.SId == undefined) {
+            alert("颜色不能为空!");
+            return;
+        }
 
         $.ajax("http://localhost:52645/api/Goods/AddProperty",
             {

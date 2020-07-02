@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using IOT_ErpManageSystem.BLL.GoodsInfos;
-using IOT_ErpManageSystem.DAL;
+﻿using IOT_ErpManageSystem.BLL.GoodsInfos;
 using IOT_ErpManageSystem.Models;
 using IOT_ErpManageSystem.Models.Models;
+using System.Collections.Generic;
 
 namespace IOT_ErpManageSystem.BLL.GoodsInfo
 {
@@ -13,7 +10,7 @@ namespace IOT_ErpManageSystem.BLL.GoodsInfo
         #region 商品列表接口
 
         //显示商品信息
-        List<IOT_ErpManageSystem.Models.GoodsInfo> ShowGoodsInfo(Page m,ref int total);
+        List<IOT_ErpManageSystem.Models.GoodsInfo> ShowGoodsInfo(Page m, ref int total);
 
         //修改状态
         int UpdateState(string Id);
@@ -69,7 +66,7 @@ namespace IOT_ErpManageSystem.BLL.GoodsInfo
 
         #region 商品价格本接口
         //显示价格本信息
-        List<GoodsPrice> ShowGoodsPrice(PagePrice m,ref int total);
+        List<GoodsPrice> ShowGoodsPrice(PagePrice m, ref int total);
 
         //添加商品价格本
         int AddPrice(GoodsPrice m);
