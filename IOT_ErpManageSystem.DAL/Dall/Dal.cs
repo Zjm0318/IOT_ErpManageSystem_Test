@@ -1,6 +1,7 @@
 ﻿using IOT_ErpManageSystem.DAL.IDall;
 using IOT_ErpManageSystem.DAL.IDBHelp;
 using IOT_ErpManageSystem.Models;
+using IOT_ErpManageSystem.Models.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

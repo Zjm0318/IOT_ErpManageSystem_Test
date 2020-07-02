@@ -84,10 +84,14 @@ namespace IOT_ErpManageSystem.BLL.RBAC_Allot
         }
 
         //获取所有菜单信息
-        public List<RBAC_Quan> ShowQuanInfo()
+        public List<RBAC_Quan> ShowQuanInfo(int UId)
         {
             string procName = "SelectQuan";
-            DataTable tb = _idbhelper.ExecuteProc(procName, null);
+            SqlParameter[] parametr = new SqlParameter[] {
+          new SqlParameter{ParameterName="@UId",DbType= DbType.Int32,Direction= ParameterDirection.Input,Value=UId },
+
+            };
+            DataTable tb = _idbhelper.ExecuteProc(procName, parametr);
             return JsonConvert.DeserializeObject<List<RBAC_Quan>>(JsonConvert.SerializeObject(tb)).ToList();
         }
 
@@ -111,6 +115,8 @@ namespace IOT_ErpManageSystem.BLL.RBAC_Allot
         //用户权限
         //public RBAC_Allots UserQuanInfo(Guid UId)
         //{
+        //    //List<RBAC_Quan> list = null;
+
         //    string procName = "UserQuan";
         //    SqlParameter[] param = new SqlParameter[]
         //    {
