@@ -39,6 +39,5 @@ namespace IOT_ErpManageSystem.BLL.IBLL
         List<GoodsType> Type();
         //修改商品表
         int UpGoods(Models.GoodsInfo m);
-
     }
 }

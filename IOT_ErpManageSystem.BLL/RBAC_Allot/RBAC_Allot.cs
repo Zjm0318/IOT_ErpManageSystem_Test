@@ -108,5 +108,16 @@ namespace IOT_ErpManageSystem.BLL.RBAC_Allot
             return _idbhelper.ExecuteNonQueryProc(ProName, parametr);
         }
 
+        //用户权限
+        //public RBAC_Allots UserQuanInfo(Guid UId)
+        //{
+        //    string procName = "UserQuan";
+        //    SqlParameter[] param = new SqlParameter[]
+        //    {
+        //        new SqlParameter{ ParameterName="@UId", DbType= DbType.Guid, Direction= ParameterDirection.Input,Value=UId }
+        //    };
+        //    DataTable tb = _idbhelper.ExecuteProc(procName, param);
+        //    return JsonConvert.DeserializeObject<List<RBAC_Allots>>(JsonConvert.SerializeObject(tb)).FirstOrDefault();
+        //}
     }
 }
