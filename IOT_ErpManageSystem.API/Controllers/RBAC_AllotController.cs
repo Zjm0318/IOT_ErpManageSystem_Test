@@ -3,7 +3,6 @@ using IOT_ErpManageSystem.BLL.InRBAC_Role;
 using IOT_ErpManageSystem.Models;
 using IOT_ErpManageSystem.Models.Models;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace IOT_ErpManageSystem.API.Controllers
