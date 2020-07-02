@@ -110,17 +110,17 @@ namespace IOT_ErpManageSystem.BLL.RBAC_Allot
         }
 
         //用户权限
-        //public RBAC_Allots UserQuanInfo(Guid UId)
-        //{
-        //    //List<RBAC_Quan> list = null;
+        public RBAC_Allots UserQuanInfo(Guid UId)
+        {
+            //List<RBAC_Quan> list = null;
 
-        //    string procName = "UserQuan";
-        //    SqlParameter[] param = new SqlParameter[]
-        //    {
-        //        new SqlParameter{ ParameterName="@UId", DbType= DbType.Guid, Direction= ParameterDirection.Input,Value=UId }
-        //    };
-        //    DataTable tb = _idbhelper.ExecuteProc(procName, param);
-        //    return JsonConvert.DeserializeObject<List<RBAC_Allots>>(JsonConvert.SerializeObject(tb)).FirstOrDefault();
-        //}
+            string procName = "UserQuan";
+            SqlParameter[] param = new SqlParameter[]
+            {
+                new SqlParameter{ ParameterName="@UId", DbType= DbType.Guid, Direction= ParameterDirection.Input,Value=UId }
+            };
+            DataTable tb = _idbhelper.ExecuteProc(procName, param);
+            return JsonConvert.DeserializeObject<List<RBAC_Allots>>(JsonConvert.SerializeObject(tb)).FirstOrDefault();
+        }
     }
 }
