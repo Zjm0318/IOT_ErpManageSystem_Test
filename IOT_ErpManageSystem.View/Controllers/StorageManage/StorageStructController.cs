@@ -13,13 +13,6 @@ namespace IOT_ErpManageSystem.View.Controllers.StorageManage
             return View();
         }
 
-        public IActionResult AddArea()
-        {
-            return View();
-        }
-        public IActionResult AddShelf()
-        {
-            return View();
-        }
+       
     }
 }

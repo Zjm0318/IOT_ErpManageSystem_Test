@@ -11,11 +11,11 @@ using Microsoft.VisualBasic;
 using Newtonsoft.Json;
 namespace IOT_ErpManageSystem.BLL
 {
-   public class RBAC_RoleBll:RoleInterface
+    public class RBAC_RoleBll : RoleInterface
     {
         private IDBHelper _idbhelper;
 
-          public RBAC_RoleBll(IDBHelper idbhelper)
+        public RBAC_RoleBll(IDBHelper idbhelper)
         {
             _idbhelper = idbhelper;
         }
@@ -24,26 +24,26 @@ namespace IOT_ErpManageSystem.BLL
         {
             string ProName = "pro_Role_Add";
             SqlParameter[] parametr = new SqlParameter[] {
-
+                new SqlParameter{ParameterName="@Role_Bian",Value=model.Role_Code, DbType= DbType.String,Direction= ParameterDirection.Input },
                 new SqlParameter{ParameterName="@RoleName",Value=model.Role_Name, DbType= DbType.String,Direction= ParameterDirection.Input },
                 new SqlParameter{ParameterName="@Role_Code",Value=model.Role_Account,DbType= DbType.String,Direction= ParameterDirection.Input },
                 new SqlParameter{ParameterName="@RoleSex",Value=model.RoleSex,DbType= DbType.String,Direction= ParameterDirection.Input },
                 new SqlParameter{ParameterName="@RoleTel",Value=model.Role_Tel,DbType= DbType.String,Direction= ParameterDirection.Input },
+                new SqlParameter{ParameterName="@Dep_ID",Value=model.Dep_ID,DbType= DbType.String,Direction= ParameterDirection.Input },
                 new SqlParameter{ParameterName="@Job_ID",Value=model.Job_ID,DbType= DbType.String,Direction= ParameterDirection.Input },
-
             };
-             return  _idbhelper.ExecuteNonQueryProc(ProName,parametr);
-       
+            return _idbhelper.ExecuteNonQueryProc(ProName, parametr);
+
         }
         //绑定部门
-     
+
         public List<RBAC_Dep> GetDep()
         {
             string proName = "Pro_Dep";
             SqlParameter[] parametr = new SqlParameter[] { };
-            return _idbhelper.GetList<RBAC_Dep>(proName,parametr);
+            return _idbhelper.GetList<RBAC_Dep>(proName, parametr);
         }
-        
+
         public List<RBAC_Job> GetJob(string CodeId)
         {
             string proName = "Pro_Job";
@@ -68,33 +68,33 @@ namespace IOT_ErpManageSystem.BLL
         {
             string proName = "prc_RBAC_Role";
             string wherestr = " where (1=1)";
-            if(!string.IsNullOrEmpty(Role_Account))
+            if (!string.IsNullOrEmpty(Role_Account))
             {
                 wherestr += $" and b.Role_Account='{Role_Account}'";
             }
-            if(!string.IsNullOrEmpty(RoleName))
+            if (!string.IsNullOrEmpty(RoleName))
             {
                 wherestr += $" and b.Role_Name like '%{RoleName}%'";
             }
-             if(!string.IsNullOrEmpty(RoleJob))
-           {
-                wherestr += $" and g.Job_ID='{RoleJob}'";
-           }
-            if(RoleState!=2)
+            if (!string.IsNullOrEmpty(RoleJob))
             {
-                wherestr += $" and b.Role_State={RoleState}";
+                wherestr += $" and g.Job_ID='{RoleJob}'";
             }
-               SqlParameter[] parametr = new SqlParameter[] {
+            if (RoleState != -1)
+            {
+                wherestr += $" and b.Role_State='{RoleState}'";
+            }
+            SqlParameter[] parametr = new SqlParameter[] {
                 new SqlParameter{ParameterName="@wherestr",DbType= DbType.String,Direction= ParameterDirection.Input,Value=wherestr },
                 new SqlParameter{ParameterName="@pageIndex",DbType= DbType.Int32,Direction= ParameterDirection.Input,Value=PageIndex },
                 new SqlParameter{ParameterName="@PagieSize",DbType= DbType.Int32,Direction= ParameterDirection.Input,Value=PageSize },
-                new SqlParameter{ParameterName="@Rowcount",DbType= DbType.Int32,Direction= ParameterDirection.Output },
+                new SqlParameter{ParameterName="@rowcount",DbType= DbType.Int32,Direction= ParameterDirection.Output },
               };
 
-            DataTable tb = _idbhelper.ExecuteProc(proName, parametr,ref RowsCount);
+            DataTable tb = _idbhelper.ExecuteProc(proName, parametr, ref RowsCount);
             //转成字符串类型
-           return  JsonConvert.DeserializeObject<List<RBAC_Role>>(JsonConvert.SerializeObject(tb)).ToList();
-                 
+            return JsonConvert.DeserializeObject<List<RBAC_Role>>(JsonConvert.SerializeObject(tb)).ToList();
+
         }
         //编辑
         public int UpdateRole(RBAC_Role model)
@@ -114,7 +114,7 @@ namespace IOT_ErpManageSystem.BLL
         }
 
         //反填数据
-        public RBAC_Role role(string id)
+        public RBAC_Role Role(string id)
         {
             string proName = "Role_Id";
             SqlParameter[] parametr = new SqlParameter[] {
@@ -124,6 +124,8 @@ namespace IOT_ErpManageSystem.BLL
             DataTable tb = _idbhelper.ExecuteProc(proName, parametr);
             return JsonConvert.DeserializeObject<List<RBAC_Role>>(JsonConvert.SerializeObject(tb)).FirstOrDefault();
         }
-    }
 
+
+    }
 }
+
