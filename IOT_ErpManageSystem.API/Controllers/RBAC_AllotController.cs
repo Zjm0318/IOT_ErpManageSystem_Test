@@ -82,20 +82,20 @@ namespace IOT_ErpManageSystem.API.Controllers
         }
 
         //登录用户权限
-        //[HttpGet]
-        //public RBAC_Allots UserQuanInfo(string token)
-        //{
-        //    JWTHelper jwt = new JWTHelper();
-        //    string json = jwt.GetPayload(token);
-        //    Personal model = JsonConvert.DeserializeObject<Personal>(json);
-        //    if (model!=null)
-        //    {
-        //        return _allotinterface.UserQuanInfo(model.UID);
-        //    }
-        //    else
-        //    {
-        //        return null;
-        //    }
-        //}
+        [HttpGet]
+        public RBAC_Allots UserQuanInfo(string token)
+        {
+            JWTHelper jwt = new JWTHelper();
+            string json = jwt.GetPayload(token);
+            Personal model = JsonConvert.DeserializeObject<Personal>(json);
+            if (model != null)
+            {
+                return _allotinterface.UserQuanInfo(model.UID);
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }
