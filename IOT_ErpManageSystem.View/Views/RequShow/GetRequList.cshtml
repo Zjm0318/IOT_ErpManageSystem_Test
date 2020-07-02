@@ -6,18 +6,31 @@
 <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
 <link href="~/layuiadmin/style/admin.css" rel="stylesheet" />
 
-请购单状态 <select id="states">
-    <option value="">请选择</option>
-    <option value="0">待分配</option>
-    <option value="1">审核成功</option>
-    <option value="2">审核失败</option>
-</select>
-创建日期
-<input type="date" id="time" />
-请购人
-<input type="text" id="qgren" />
-审核人
-<input type="text" id="shren" />
+请购单状态
+<div class="layui-input-inline">
+    <select id="states" class="layui-select">
+        <option value="">请选择</option>
+        <option value="0">待分配</option>
+        <option value="1">审核成功</option>
+        <option value="2">审核失败</option>
+    </select>
+</div>
+
+        创建日期
+<div class="layui-input-inline">
+    <input type="date" id="time" class="layui-input" />
+</div>
+
+       请购人
+<div class="layui-input-inline">
+    <input type="text" id="qgren" class="layui-input" placeholder="请输入请购人" />
+</div>
+
+      审核人
+<div class="layui-input-inline">
+    <input type="text" id="shren" class="layui-input" placeholder="请输入审核人" />
+</div>
+
 <br />
 <input type="button" value="搜索" id="cha" class="layui-btn" />
 <input type="button" value="添加" id="add" class="layui-btn layui-btn-normal" />
@@ -79,7 +92,7 @@
     //显示
     function showlist(da) {
         $("#body").empty();  //清空
-        
+
         //循环
         $.each(da, function (index, item) {
             var str = "";
@@ -124,12 +137,12 @@
                     + "</td> "
                     + "</tr>";
             }
-            
+
             $("#body").append(str);  //向尾部添加
         })
     }
 
-  
+
 
     //首页
     function Shouye() {
@@ -154,7 +167,7 @@
 
     //修改状态  审核通过
     function Update1(id) {
-        $.ajax("http://localhost:52645/api/RequList/UpdateState?Id=" + id,{
+        $.ajax("http://localhost:52645/api/RequList/UpdateState?Id=" + id, {
             type: "get",
             dataType: "text",
         }).done(function (da) {
@@ -167,7 +180,7 @@
             }
         })
     }
-     
+
     //修改状态  审核未通过
     function Update2(id) {
         $.ajax("http://localhost:52645/api/RequList/UpdateState2?Id=" + id, {
@@ -186,13 +199,13 @@
 
     //指派
     $("#zhipai").click(function () {
-        QgId = $("input[type='radio']:checked").val();   
+        QgId = $("input[type='radio']:checked").val();
         if (QgId != null) {
             window.location.href = "/RequShow/GetRoleList?QgId=" + QgId;
         }
         else {
             alert("请选择要指派的请购单");
-        }  
+        }
     })
 
 
@@ -217,7 +230,7 @@
         else {
             alert("请选择要删除的请购单");
         }
-    })   
+    })
 
     //添加
     $("#add").click(function () {
@@ -228,5 +241,5 @@
     function edit(QId, QgId) {
         window.location.href = "/RequShow/FanTRequList?QId=" + QId + "&QgId=" + QgId;
     }
-   
+
 </script>

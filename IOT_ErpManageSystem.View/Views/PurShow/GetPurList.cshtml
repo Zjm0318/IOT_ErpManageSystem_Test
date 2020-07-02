@@ -4,18 +4,31 @@
 }
 
 
-请购单状态 <select id="States">
-    <option value="">请选择</option>
-    <option value="0">待分配</option>
-    <option value="1">审核成功</option>
-    <option value="2">审核失败</option>
-</select>
+请购单状态
+<div class="layui-input-inline">
+    <select id="States" class="layui-select">
+        <option value="">请选择</option>
+        <option value="0">待分配</option>
+        <option value="1">审核成功</option>
+        <option value="2">审核失败</option>
+    </select>
+</div>
+
 创建日期
-<input type="date" id="Time" />
+<div class="layui-input-inline">
+    <input type="date" id="Time" class="layui-input" />
+</div>
+
 供应商名称
-<input type="text" id="Gname" />
+<div class="layui-input-inline">
+    <input type="text" id="Gname" class="layui-input" placeholder="请输入供应商名称" />
+</div>
+
 请购负责人
-<input type="text" id="Bgname" />
+<div class="layui-input-inline">
+    <input type="text" id="Bgname" class="layui-input" placeholder="请输入请购负责人" />
+</div>
+
 <br />
 <input type="button" value="搜索" id="cha" class="layui-btn" />
 <input type="button" value="添加" id="add" class="layui-btn layui-btn-normal" />
@@ -127,7 +140,7 @@
                     + "</tr>";
             }
             $("#body").append(str);
-        })   
+        })
     }
 
     //首页
@@ -157,8 +170,8 @@
         show(pageindex);
     })
 
-   
-    
+
+
 
     //审核通过
     function Update1(Id) {
@@ -175,7 +188,7 @@
             }
         })
     }
-    
+
     //审核未通过
     function Update2(Id) {
         $.ajax("http://localhost:52645/api/RequList/UpdPurState2?Id=" + Id, {
