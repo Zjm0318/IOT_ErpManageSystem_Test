@@ -103,12 +103,13 @@
                         @{
                             IOT_ErpManageSystem.BLL.RBAC_Allot.RBAC_Allot bll = new IOT_ErpManageSystem.BLL.RBAC_Allot.RBAC_Allot();
                             var menu = bll.ShowQuanInfo();
-
+                            
                         }
-                        <li data-name="home" class="layui-nav-item layui-nav-itemed">
-                            @foreach (var item in menu.Where(m=>m.Uid==0))
-                            {
-                                <a href="javascript:;" onclick="go(this)" lay-tips="权限管理" lay-direction="2">
+
+                        @foreach (var item in menu.Where(m=>m.Uid==0))
+                        {
+                            <li data-name="home" class="layui-nav-item">
+                                <a href="javascript:;" onclick="go(this)" lay-tips="@item.Quan_Name" lay-direction="2">
                                     <i class="layui-icon layui-icon-home"></i>
                                     <cite>@item.Quan_Name</cite>
                                 </a>
@@ -116,12 +117,13 @@
                                     <dd data-name="console" class="layui-this">
                                         @foreach (var i in menu.Where(m => m.Uid == item.ID))
                                         {
-                                        <a lay-href="@i.Quan_Url">@i.Quan_Name</a>
+                                            <a lay-href="@i.Quan_Url">@i.Quan_Name</a>
                                         }
-                                    </dd>                                  
+                                    </dd>
                                 </dl>
-                            }
-                        </li>
+                            </li>
+                        }
+
                     </ul>
                 </div>
             </div>
@@ -161,7 +163,7 @@
             <div class="layadmin-body-shade" layadmin-event="shade"></div>
         </div>
     </div>
-
+    
     <script src="../layuiadmin/layui/layui.js"></script>
     <script>
         layui.config({
@@ -175,7 +177,17 @@
 </html>
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script>
-   
+    //var list = [];
+    
+    //$.ajax("http://localhost:52645/api/RBAC_Allot/UserQuanInfo?token=" + localStorage["token"],
+    //    {
+    //        data: "get"
+    //    }).done(function (data) {
+    //        list = data.allot_BaoId.split('/');
+    //    });
+
+
+
     function go(obj) {
         $(obj).next().toggleClass("aa");
     }
