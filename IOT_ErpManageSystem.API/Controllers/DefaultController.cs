@@ -186,12 +186,23 @@ namespace IOT_ErpManageSystem.API.Controllers
         [HttpGet]
         public Models.GoodsInfo GoodsThree(string id)
         {
-            return _bll.GoodsThree(id).FirstOrDefault();
+            Models.GoodsInfo model = _bll.GoodsThree(id).FirstOrDefault();
+
+            model.TypeId = Guid.Parse(model.TypeId.ToString().ToUpper());
+
+            
+            return model;
         }
         [HttpGet]
         public List<GoodsType> Type()
         {
-            return _bll.Type();
+            List<GoodsType> model = _bll.Type();
+            foreach (var item in model)
+            {
+                item.TId = item.TId.ToLower();
+            }
+            
+            return model;
         }
         /// <summary>
         /// 修改商品表的数据

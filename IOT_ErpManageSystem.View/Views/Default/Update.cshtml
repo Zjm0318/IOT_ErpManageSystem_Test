@@ -44,7 +44,7 @@
         </td>
     </tr>
     <tr>
-        <td><input type="button" value="保存" id="add" style="background-color:cornflowerblue" /></td>
+        <td><input type="button" value="保存" id="add" /></td>
     </tr>
 </table>
 <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -84,7 +84,6 @@
 
     //保存
     $("#add").click(function () {
-        ///^[^\s]*$/
         if (jQuery('#goodname').val() == "") {
             jQuery('#goodname').focus();
             alert("商品名称不能为空！");
@@ -141,7 +140,7 @@
             jQuery('#chuprice').focus();
             alert("出售价格不能为空！");
             return;
-        }        
+        }
         //正则表达式
         var reg = /(^\d+$)/;
         if (!reg.test(jQuery('#chuprice').val())) {

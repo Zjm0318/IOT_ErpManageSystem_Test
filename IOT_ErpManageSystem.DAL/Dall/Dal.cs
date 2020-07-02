@@ -210,7 +210,11 @@ namespace IOT_ErpManageSystem.DAL.Dall
             };
             return _db.ExecuteNonQueryProc(proName, parameters);
         }
-
+        /// <summary>
+        /// 删除商品表里数据
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public int DleGoodsInfo(string id)
         {
             string proName = "DelGoodsInfo";
