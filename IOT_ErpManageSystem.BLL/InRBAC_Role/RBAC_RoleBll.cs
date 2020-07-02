@@ -98,13 +98,15 @@ namespace IOT_ErpManageSystem.BLL
 
             string ProName = "pro_Role_upda";
             SqlParameter[] parametr = new SqlParameter[] {
-
+                new SqlParameter{ParameterName="@Role_Bian",Value=model.Role_Code, DbType= DbType.String,Direction= ParameterDirection.Input },
                 new SqlParameter{ParameterName="@RoleName",Value=model.Role_Name, DbType= DbType.String,Direction= ParameterDirection.Input },
                 new SqlParameter{ParameterName="@Role_Code",Value=model.Role_Account,DbType= DbType.String,Direction= ParameterDirection.Input },
                 new SqlParameter{ParameterName="@RoleSex",Value=model.RoleSex,DbType= DbType.String,Direction= ParameterDirection.Input },
                 new SqlParameter{ParameterName="@RoleTel",Value=model.Role_Tel,DbType= DbType.String,Direction= ParameterDirection.Input },
                 new SqlParameter{ParameterName="@Job_ID",Value=model.Job_ID,DbType= DbType.String,Direction= ParameterDirection.Input },
                 new SqlParameter{ParameterName="@RoleId",Value=model.ID,DbType= DbType.String,Direction= ParameterDirection.Input },
+                new SqlParameter{ParameterName="@Dep_ID",Value=model.Dep_ID,DbType= DbType.String,Direction= ParameterDirection.Input },
+
             };
             return _idbhelper.ExecuteNonQueryProc(ProName, parametr);
         }
