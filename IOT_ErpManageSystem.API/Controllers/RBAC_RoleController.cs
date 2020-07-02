@@ -79,7 +79,7 @@ namespace IOT_ErpManageSystem.API.Controllers
         //反填数据
         public RBAC_Role FanRole(string Id)
         {
-            return _roleInterface.role(Id);
+            return _roleInterface.Role(Id);
         }
 
         //编辑员工信息
