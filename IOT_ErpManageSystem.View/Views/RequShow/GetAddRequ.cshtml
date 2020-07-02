@@ -14,7 +14,16 @@
         <td>请购人员</td>
         <td><input type="text" id="qgname" /></td>
         <td>所在部门</td>
-        <td><input type="text" id="dept" /></td>
+        <td>
+            <select id="dept">
+                <option value="请选择">请选择</option>
+                <option value="调查部">调查部</option>
+                <option value="销售部">销售部</option>
+                <option value="人事部">人事部</option>
+                <option value="产品部">产品部</option>
+                <option value="董事部">董事部</option>
+            </select>
+        </td>
     </tr>
     <tr>
         <td colspan="2">
@@ -27,26 +36,34 @@
 <script src="~/lib/jquery/dist/jquery.js"></script>
 
 <script>
+    var reg =/^[^\s]*$/;
 
     //添加
     $("#add").click(function () {
         var obj = {
-            "CreateDate": $("#time").val().toString(),
             "DhAddress": $("#address").val().toString(),
             "QgName": $("#qgname").val().toString(),
             "DeptName": $("#dept").val().toString(),
         };
 
-        if (obj.DhAddress == "") {
+        if (obj.DhAddress == "" || obj.DhAddress == undefined || obj.DhAddress == null) {
             alert("请输入地址");
             return;
         }
-        if (obj.QgName == "") {
+        if (!reg.test(obj.DhAddress)) {
+            alert("不能输入空格！");
+            return;
+        }
+        if (obj.QgName == "" || obj.QgName == undefined || obj.QgName == null) {
             alert("请输入请购人姓名");
             return;
         }
-        if (obj.DeptName == "") {
-            alert("请输入部门名称");
+        if (!reg.test(obj.QgName)) {
+            alert("不能输入空格！");
+            return;
+        }
+        if (obj.DeptName == "请选择") {
+            alert("请选择部门");
             return;
         }
 

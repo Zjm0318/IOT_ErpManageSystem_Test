@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace IOT_ErpManageSystem.View.Controllers
 {
@@ -15,7 +11,7 @@ namespace IOT_ErpManageSystem.View.Controllers
         }
 
         //反填采购单信息
-        public IActionResult FanTPur(string CId,string Id)
+        public IActionResult FanTPur(string CId, string Id)
         {
             ViewBag.CId = CId;
             ViewBag.Id = Id;

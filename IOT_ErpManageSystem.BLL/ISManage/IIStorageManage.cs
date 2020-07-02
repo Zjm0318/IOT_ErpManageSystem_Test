@@ -1,7 +1,5 @@
 ﻿using IOT_ErpManageSystem.Models;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace IOT_ErpManageSystem.BLL.ISManage
 {

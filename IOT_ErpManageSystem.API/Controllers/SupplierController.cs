@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using IOT_ErpManageSystem.BLL;
-using IOT_ErpManageSystem.Models;
+﻿using IOT_ErpManageSystem.API.SupplierViewModel;
 using IOT_ErpManageSystem.BLL.Supplier;
-using IOT_ErpManageSystem.API.SupplierViewModel;
+using IOT_ErpManageSystem.Models;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 
 namespace IOT_ErpManageSystem.API.Controllers
 {

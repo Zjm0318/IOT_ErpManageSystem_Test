@@ -1,14 +1,9 @@
-﻿using IOT_ErpManageSystem.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using IOT_ErpManageSystem.DAL;
-using IOT_ErpManageSystem.DAL.IDBHelp;
-using System.Data.SqlClient;
-using System.Data;
+﻿using IOT_ErpManageSystem.DAL.IDBHelp;
+using IOT_ErpManageSystem.Models;
 using Newtonsoft.Json;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace IOT_ErpManageSystem.DAL.liuning
 {

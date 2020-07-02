@@ -1,30 +1,24 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using IOT_ErpManageSystem.BLL;
+using IOT_ErpManageSystem.BLL.BLL;
 using IOT_ErpManageSystem.BLL.GoodsInfo;
-using IOT_ErpManageSystem.DAL.IDBHelp;
+using IOT_ErpManageSystem.BLL.IBLL;
+using IOT_ErpManageSystem.BLL.InRBAC_Role;
+using IOT_ErpManageSystem.BLL.ISManage;
+using IOT_ErpManageSystem.BLL.liuning;
+using IOT_ErpManageSystem.BLL.RBAC_Allot;
+using IOT_ErpManageSystem.BLL.SManage;
 using IOT_ErpManageSystem.BLL.Supplier;
 using IOT_ErpManageSystem.BLL.TuiHuo;
+using IOT_ErpManageSystem.DAL.Dall;
 using IOT_ErpManageSystem.DAL.DBHelper;
-using IOT_ErpManageSystem.BLL.liuning;
+using IOT_ErpManageSystem.DAL.IDall;
+using IOT_ErpManageSystem.DAL.IDBHelp;
 using IOT_ErpManageSystem.DAL.liuning;
-using IOT_ErpManageSystem.BLL.InRBAC_Role;
-using IOT_ErpManageSystem.BLL.RBAC_Allot;
-using IOT_ErpManageSystem.BLL.ISManage;
-using IOT_ErpManageSystem.BLL.SManage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using IOT_ErpManageSystem.DAL.IDall;
-using IOT_ErpManageSystem.DAL.Dall;
-using IOT_ErpManageSystem.BLL.IBLL;
-using IOT_ErpManageSystem.BLL.BLL;
-using IOT_ErpManageSystem.BLL;
 
 namespace IOT_ErpManageSystem.API
 {
@@ -42,7 +36,7 @@ namespace IOT_ErpManageSystem.API
         {
             services.AddControllers();
             services.AddSingleton<IGoodsBLL, GoodsBLL>();
-            services.AddSingleton<IDBHelper,DBHelper>();
+            services.AddSingleton<IDBHelper, DBHelper>();
             services.AddSingleton<ISupplierBLL, SupplierBLL>();
             services.AddSingleton<ITuiHuoBLL, TuiHuoBLL>();
             services.AddSingleton<IRequDal, RequDal>();

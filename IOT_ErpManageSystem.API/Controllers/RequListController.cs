@@ -1,23 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using IOT_ErpManageSystem.BLL.liuning;
-using IOT_ErpManageSystem.DAL.liuning;
+﻿using IOT_ErpManageSystem.BLL.liuning;
 using IOT_ErpManageSystem.Models;
 using IOT_ErpManageSystem.Models.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace IOT_ErpManageSystem.API.Controllers
 {
-    [Route("api/[controller]/[action]")]                                               
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class RequListController : ControllerBase
     {
         //依赖注入
         public IRequBLL _IRequBLL;
-        public RequListController(IRequBLL IRequBLL) {
+        public RequListController(IRequBLL IRequBLL)
+        {
             _IRequBLL = IRequBLL;
         }
 
@@ -25,17 +23,18 @@ namespace IOT_ErpManageSystem.API.Controllers
         #region
         //预购单显示
         [HttpGet]
-        public PageModel<RequisitionOrder> GetRequList(string state="",string time="",string qgren="",string shren="",int pageindex=0, int pagesize=0)
+        public PageModel<RequisitionOrder> GetRequList(string state = "", string time = "", string qgren = "", string shren = "", int pageindex = 0, int pagesize = 0)
         {
             int rowcount = 0;
-            List<RequisitionOrder> list = _IRequBLL.GetRequList(state,time,qgren,shren,pageindex,pagesize,ref rowcount);
+            List<RequisitionOrder> list = _IRequBLL.GetRequList(state, time, qgren, shren, pageindex, pagesize, ref rowcount);
             //计算总页数
-            int code =0;
+            int code = 0;
             double b = double.Parse(pagesize.ToString());
-            b = Math.Ceiling(double.Parse(rowcount.ToString())/b);
+            b = Math.Ceiling(double.Parse(rowcount.ToString()) / b);
             code = int.Parse(b.ToString());
 
-            PageModel<RequisitionOrder> model = new PageModel<RequisitionOrder>() {
+            PageModel<RequisitionOrder> model = new PageModel<RequisitionOrder>()
+            {
                 list = list,
                 rowcount = code
             };
@@ -58,20 +57,20 @@ namespace IOT_ErpManageSystem.API.Controllers
             return flag;
         }
 
-        
+
         //获取员工信息
         [HttpGet]
         public List<RoleModel> GetRoleList(string rolename, string rolecode)
         {
-            List<RoleModel> list = _IRequBLL.GetRoleList(rolename,rolecode);
+            List<RoleModel> list = _IRequBLL.GetRoleList(rolename, rolecode);
             return list;
         }
 
         //指派预购员工
         [HttpGet]
-        public int UpdateRole(string RId,string QgId)
+        public int UpdateRole(string RId, string QgId)
         {
-            int flag = _IRequBLL.UpdRole(RId,QgId);
+            int flag = _IRequBLL.UpdRole(RId, QgId);
             return flag;
         }
 
@@ -87,7 +86,7 @@ namespace IOT_ErpManageSystem.API.Controllers
         public RequisitionInfo FanTRequ(string QId)
         {
             List<RequisitionInfo> list = _IRequBLL.FanTRequ(QId);
-           
+
             var list1 = list.FirstOrDefault();
             return list1;
         }
@@ -122,19 +121,20 @@ namespace IOT_ErpManageSystem.API.Controllers
         #region
         //采购单显示
         [HttpGet]
-           public PageModel<PurChaseOrder> GetPurList(string state, string time, string gname, string bgname, int pageindex, int pagesize)
+        public PageModel<PurChaseOrder> GetPurList(string state, string time, string gname, string bgname, int pageindex, int pagesize)
         {
             int rowcount = 0;
             List<PurChaseOrder> list = _IRequBLL.GetPurList(state, time, gname, bgname, pageindex, pagesize, ref rowcount);
             int code = 0;
             double b = double.Parse(pagesize.ToString());
-            b = Math.Ceiling(double.Parse(rowcount.ToString())/b);
+            b = Math.Ceiling(double.Parse(rowcount.ToString()) / b);
             code = int.Parse(b.ToString());
-            PageModel<PurChaseOrder> model = new PageModel<PurChaseOrder>() {
+            PageModel<PurChaseOrder> model = new PageModel<PurChaseOrder>()
+            {
                 list = list,
-                rowcount=code
+                rowcount = code
             };
-          
+
 
             return model;
         }
@@ -155,9 +155,9 @@ namespace IOT_ErpManageSystem.API.Controllers
         }
 
         //指派采购处理人
-        public int ZhiPaiPur(string Id,string Cgclr)
+        public int ZhiPaiPur(string Id, string Cgclr)
         {
-            int flag = _IRequBLL.ZhiPaiPur(Id,Cgclr);
+            int flag = _IRequBLL.ZhiPaiPur(Id, Cgclr);
             return flag;
         }
 
@@ -214,7 +214,7 @@ namespace IOT_ErpManageSystem.API.Controllers
         public List<Models.GoodsInfo> GetChaGoodsID()
         {
             List<Models.GoodsInfo> list = _IRequBLL.GetGoodsId();
-           
+
             return list;
         }
         //添加请购单,采购单与商品的中间表数据
@@ -223,7 +223,7 @@ namespace IOT_ErpManageSystem.API.Controllers
         {
             string qgid = m.QPId.ToString();
             string gid = m.GId.ToString();
-             int flag = _IRequBLL.AddRequGoods(qgid, gid);
+            int flag = _IRequBLL.AddRequGoods(qgid, gid);
             return flag;
         }
 

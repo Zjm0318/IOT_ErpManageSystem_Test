@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using IOT_ErpManageSystem.API.DtoMoel;
+﻿using IOT_ErpManageSystem.API.DtoMoel;
 using IOT_ErpManageSystem.BLL.InRBAC_Role;
 using IOT_ErpManageSystem.Models;
 using IOT_ErpManageSystem.Models.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace IOT_ErpManageSystem.API.Controllers
 {
@@ -18,23 +13,23 @@ namespace IOT_ErpManageSystem.API.Controllers
     {
         private AllotInterface _allotinterface;
 
-         public RBAC_AllotController(AllotInterface allotinterface)
+        public RBAC_AllotController(AllotInterface allotinterface)
         {
             _allotinterface = allotinterface;
         }
 
-          [HttpPost]
-            public ShowRole GetAllot([FromForm]RBAC_Allots model)
-           {
+        [HttpPost]
+        public ShowRole GetAllot([FromForm]RBAC_Allots model)
+        {
             int Rowcount = 0;
-            List<RBAC_Allots> slist = _allotinterface.GetAllot(model.PageIndex, model.PageSize,model.Dep_Name, ref Rowcount);
-            int count = (Rowcount/model.PageSize)+(Rowcount%model.PageSize>0?1:0);
+            List<RBAC_Allots> slist = _allotinterface.GetAllot(model.PageIndex, model.PageSize, model.Dep_Name, ref Rowcount);
+            int count = (Rowcount / model.PageSize) + (Rowcount % model.PageSize > 0 ? 1 : 0);
 
             ShowRole show = new ShowRole();
             show.alist = slist;
             show.Count = count;
             return show;
-          }
+        }
 
         //添加权限
         [HttpPost]

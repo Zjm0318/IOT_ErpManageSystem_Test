@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using IOT_ErpManageSystem.BLL.GoodsInfo;
+﻿using IOT_ErpManageSystem.BLL.GoodsInfo;
 using IOT_ErpManageSystem.BLL.GoodsInfos;
 using IOT_ErpManageSystem.Models;
 using IOT_ErpManageSystem.Models.Models;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Hosting;
-using System.IO;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -35,9 +33,9 @@ namespace IOT_ErpManageSystem.API.Controllers.GoodsInfo
         [HttpPost]
         public async Task<ShowInfo> ShowGoodsInfo([FromForm]Page m)
         {
-            int total=0;
+            int total = 0;
             ShowInfo slist = new ShowInfo();
-            slist.list= goodsBLL.ShowGoodsInfo(m, ref total);
+            slist.list = goodsBLL.ShowGoodsInfo(m, ref total);
             slist.count = (total / m.pageSize) + (total % m.pageSize > 0 ? 1 : 0);
 
             ShowInfo info = await Task.Run(() => { return slist; });
@@ -85,7 +83,7 @@ namespace IOT_ErpManageSystem.API.Controllers.GoodsInfo
                 {
                     file.CopyToAsync(stream);
                 }
-                m.GoodsImg = "/Img/" +file.FileName;
+                m.GoodsImg = "/Img/" + file.FileName;
             }
 
             return goodsBLL.AddGoodsInfo(m);
@@ -130,7 +128,7 @@ namespace IOT_ErpManageSystem.API.Controllers.GoodsInfo
         public async Task<List<Colors>> ShowColors()
         {
             List<Colors> clist = await Task.Run(() => { return goodsBLL.ShowColor(); });
-            return clist;            
+            return clist;
         }
 
         //添加属性
@@ -159,7 +157,7 @@ namespace IOT_ErpManageSystem.API.Controllers.GoodsInfo
         public async Task<List<Models.GoodsInfo>> ShowGoodsSC(string Id)
         {
             List<Models.GoodsInfo> list = await Task.Run(() => { return goodsBLL.ShowGoodsSC(Id); });
-            return list;          
+            return list;
         }
 
         //删除商品属性信息

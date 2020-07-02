@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using IOT_ErpManageSystem.View.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using IOT_ErpManageSystem.View.Models;
+using System.Diagnostics;
 
 namespace IOT_ErpManageSystem.View.Controllers
 {

@@ -1,14 +1,10 @@
-﻿using IOT_ErpManageSystem.BLL.RBAC_Allot;
-using IOT_ErpManageSystem.DAL.IDBHelp;
-using IOT_ErpManageSystem.Models;
+﻿using IOT_ErpManageSystem.Models;
 using IOT_ErpManageSystem.Models.Models;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace IOT_ErpManageSystem.BLL.InRBAC_Role
 {
-   public  interface AllotInterface
+    public interface AllotInterface
     {
         List<RBAC_Allots> GetAllot(int PageIndex, int PageSize, string AllotName, ref int RowsCount);
         //添加权限

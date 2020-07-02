@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace IOT_ErpManageSystem.BLL.TuiHuo
+﻿namespace IOT_ErpManageSystem.BLL.TuiHuo
 {
     public class TuiHuoModel
     {

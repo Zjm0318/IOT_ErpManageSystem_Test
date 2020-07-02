@@ -1,15 +1,10 @@
-﻿using System;
+﻿using IOT_ErpManageSystem.API.Model;
+using IOT_ErpManageSystem.BLL.IBLL;
+using IOT_ErpManageSystem.Models;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using IOT_ErpManageSystem.BLL;
-using IOT_ErpManageSystem.Models;
-using Microsoft.AspNetCore.Cors;
-using IOT_ErpManageSystem.BLL.IBLL;
-using Newtonsoft.Json;
-using IOT_ErpManageSystem.API.Model;
 
 namespace IOT_ErpManageSystem.API.Controllers
 {
@@ -31,14 +26,14 @@ namespace IOT_ErpManageSystem.API.Controllers
         public string Log([FromForm]Personal m)
         {
             Personal model = _bll.Log(m);
-            if(model!=null)
+            if (model != null)
             {
                 JWTHelper jwt = new JWTHelper();
                 Dictionary<string, object> keys = new Dictionary<string, object>();
                 keys.Add("UID", model.UID);
                 keys.Add("UserName", model.UserName);
                 keys.Add("Pwd", model.Pwd);
-                string token = jwt.GetToken(keys,30000);
+                string token = jwt.GetToken(keys, 30000);
                 return token;
             }
             else
@@ -57,7 +52,7 @@ namespace IOT_ErpManageSystem.API.Controllers
             JWTHelper jwt = new JWTHelper();
             string json = jwt.GetPayload(token);
             Personal model = JsonConvert.DeserializeObject<Personal>(json);
-            if(model!=null)
+            if (model != null)
             {
                 return _bll.ShowPer(model.UID.ToString()).FirstOrDefault();
             }
@@ -162,7 +157,7 @@ namespace IOT_ErpManageSystem.API.Controllers
         public PriceModel GoodsPrice(int pageIndex, int pageSize, string proBh)
         {
             int rowCount = 0;
-            List<Models.GoodsInfo> lit = _bll.GoodsPrice(pageIndex, pageSize,proBh, ref rowCount);
+            List<Models.GoodsInfo> lit = _bll.GoodsPrice(pageIndex, pageSize, proBh, ref rowCount);
             int count = (rowCount / pageSize) + (rowCount % pageSize > 0 ? 1 : 0);
             PriceModel m = new PriceModel();
             m.list = lit;

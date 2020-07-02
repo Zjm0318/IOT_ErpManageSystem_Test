@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace IOT_ErpManageSystem.Models.Models
+﻿namespace IOT_ErpManageSystem.Models.Models
 {
     public class RBAC_Quan
     {
