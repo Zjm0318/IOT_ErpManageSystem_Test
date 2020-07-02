@@ -1,0 +1,290 @@
+﻿
+@{
+    ViewData["Title"] = "Order";
+}
+
+
+<style>
+    .div1 {
+        width: 1300px;
+        height: 170px;
+        border: 1px solid
+        
+    }
+
+    .div2 {
+        margin-top: 20px;
+        width: 1300px;
+        height: 500px;
+        border: 1px solid
+    }
+
+    #o {
+        padding-top: 5px;
+        padding-left: 10px;
+    }
+
+    #t {
+        margin-top: 10px;
+        border-top: 1px solid;
+        height: 60px;
+        padding-left: 10px;
+        padding-top: 10px;
+    }
+
+    #th {
+        border-top: 1px solid;
+        height: 60px;
+        padding-left: 10px;
+        padding-top: 15px;
+    }
+
+    #f {
+        height: 40px;
+        padding-top: 5px;
+        padding-left: 10px;
+    }
+
+    #fi {
+        height:280px;
+        border-top: 1px solid;
+    }
+    #he{
+        padding-top:20px;
+        margin:0 auto;
+        width:1146px;
+        height:300px;
+    }
+</style>
+<div id="he">
+    <h4>订单报表</h4>
+    <div class="div1">
+        <div id="o">
+            筛选查询
+        </div>
+        <div id="t">
+            订单号：
+            <input type="text" id="dh" placeholder="订单号码" style="width:230px;height:40px" />
+            用户账号：
+            <input type="text" id="zh" placeholder="用户账号" style="width:230px;height:40px" />
+            提交时间：
+            <input type="date" id="time" placeholder="提交时间" style="width:180px;height:40px" /><br />
+        </div>
+        <div id="th">
+            订单状态：
+            <select id="stype" style="width:200px;height:40px">
+                <option value="">全部</option>
+            </select>
+            订单来源：
+            <select id="lai" style="width:200px;height:40px">
+                <option value="">全部</option>
+            </select>
+            <input type="button" id="cha" value="搜索" style="background-color:#17978b;width:100px;height:35px" />
+            <input type="button" id="btnDeleteList" value="批量删除" class="btn-danger" />
+        </div>
+    </div>
+    <div class="div2">
+        <div id="f">
+            数据列表
+        </div>
+        <div id="fi">
+            <table class="table">
+                <tr class="active">
+                    <td><input type="checkbox" id="check" />选择</td>
+                    <td>订单编号</td>
+                    <td>提交时间</td>
+                    <td>用户账号</td>
+                    <td>订单金额</td>
+                    <td>支付方式</td>
+                    <td>订单来源</td>
+                    <td>订单状态</td>
+                    <td>操作</td>
+                </tr>
+                <tbody id="tb"></tbody>
+            </table>
+            <a href="#" style="margin-right:10px" onclick="First()">首页</a>
+            <a href="#" style="margin-right:10px" onclick="Pre()">上一页</a>
+            <a href="#" style="margin-right:10px" onclick="Next()">下一页</a>
+            <a href="#" style="margin-right:10px" onclick="Last()">尾页</a>
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    //页码
+    var pageIndex = 1;
+    //每页显示几条数据
+    var pageSize = 3;
+    var Count = 0;
+    var type = 0;
+    var from = 0;
+    $(function () {
+        //订单来源
+        ShowFrom();
+        //订单状态
+        ShowState();
+        ShowOrder();
+    });
+    //搜索
+    $("#cha").click(function () {
+        ShowOrder();
+    });
+    function ShowOrder() {
+        type = $("#stype").val();
+        from = $("#lai").val();
+        if (type == "") {
+            type = 0;
+        }
+        if (from == "") {
+            from = 0;
+        }
+        $.ajax({
+            url: "http://localhost:52645/api/Default/ShowOrder?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&ddh=" +
+                $("#dh").val() + "&userName=" + $("#zh").val() + "&time=" + $("#time").val() + "&type=" + type + "&from=" + from,
+            type: "get",
+        }).done(function (d) {
+            Count = d.count;
+            console.log(d.list);
+            var tr = "";
+            $("#tb").empty();
+            $.each(d.list, function (index, item) {
+                tr += "<tr class='active'>";
+                tr += "<td><input type='checkbox' class='checkAll' value='" + item.id + "' /></td>";
+                tr += "<td>" + item.orderId + "</td>";
+                tr += "<td>" + item.time + "</td>";
+                tr += "<td>" + item.userName + "</td>";
+                tr += "<td>" + item.orMoney + "</td>";
+                tr += "<td>" + item.payment + "</td>";
+                tr += "<td>" + item.fromName + "</td>";
+                tr += "<td>" + item.stateName + "</td>";
+                tr += "<td><input type='button' id='Gb' value='关闭' onclick='Del(" + item.id + ")' style='background - color: orange' /></td>";
+                tr += "</tr>";
+            });
+            $("#tb").append(tr);
+        });
+
+    }
+    //全选反选
+    $("#check").click(function () {
+        $(".checkAll").prop("checked", $(this).prop("checked"));
+    });
+    function ShowState() {
+        $.ajax({
+            url: "http://localhost:52645/api/Default/OrderState",
+            type: "get",
+        }).done(function (d) {
+            console.log(d);
+            var tr = "";
+            $.each(d, function (index, item) {
+                tr += "<option value='" + item.id + "'>" + item.stateName + "</option>";
+            });
+            $("#stype").append(tr);
+        });
+    }
+    function ShowFrom() {
+        $.ajax({
+            url: "http://localhost:52645/api/Default/OrderFrom",
+            type: "get",
+        }).done(function (d) {
+            var tr = "";
+            $.each(d, function (index, item) {
+                tr += "<option value='" + item.id + "'>" + item.fromName + "</option>";
+            });
+            $("#lai").append(tr);
+        });
+    }
+    //批量删除
+    $("#btnDeleteList").click(function () {
+        if (confirm("是否确认删除？")) {
+            var idStr = "";
+            $(".checkAll:checked").each(function (index, item) {
+                idStr = idStr + $(item).val() + ",";
+            });
+            idStr = idStr.substr(0, idStr.length - 1);
+            if (idStr==0) {
+                alert("请先选择一行数据！");
+                return;
+            }
+            $.ajax({
+                url: "http://localhost:52645/api/Default/Del",
+                type: "post",
+                accepts: "application/x-www-form-urlencoded",
+                contentType: "application/x-www-form-urlencoded",
+                data: { id: idStr }
+            }).done(function (d) {
+                console.log(d);
+                if (d > 0) {
+                    alert("删除成功！");
+                    //$(obj).parent().parent().remove();
+                    location.reload();
+                }
+                else {
+                    alert("删除失败！");
+                }
+            });
+        }
+    })
+    
+
+    //删除
+    function Del(id) {
+        if (confirm("是否确认删除？")) {
+
+            $.ajax({
+                url: "http://localhost:52645/api/Default/Del",
+                type: "post",
+                accepts: "application/x-www-form-urlencoded",
+                contentType: "application/x-www-form-urlencoded",
+                data: { id: id }
+            }).done(function (d) {
+                console.log(d);
+                if (d > 0) {
+                    alert("删除成功！");
+                    //$(obj).parent().parent().remove();
+                    location.reload();
+                }
+                else {
+                    alert("删除失败！");
+                }
+            });
+
+        }
+        
+    }
+    //首页
+    function First() {
+        pageIndex = 1;
+        ShowOrder(pageSize);
+
+    }
+    //上一页
+    function Pre() {
+        if (pageIndex <= 1) {
+            alert("已经是第一页了！");
+        }
+        else {
+            pageIndex = pageIndex - 1;          
+        }
+        ShowOrder(pageSize);
+    }
+
+    //下一页
+    function Next() {
+        if (pageIndex >= Count) {
+            alert("已经是最后一页了！");
+        }
+        else {
+            pageIndex = pageIndex + 1;   
+        }
+        ShowOrder(pageSize);
+    }
+    //尾页
+    function Last() {
+        pageIndex = Count;
+        ShowOrder(pageSize);
+
+    }
+</script>
+
+

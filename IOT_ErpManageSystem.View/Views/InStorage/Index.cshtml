@@ -1,0 +1,193 @@
+﻿;=
+@{
+    ViewData["Title"] = "Index";
+}
+<style>
+    .open {
+        background: #f88408;
+        width: 60px;
+        height: 30px;
+        text-align: center;
+        line-height: 30px
+    }
+</style>
+    <div class="layui-fluid" style="margin-top:20px;width:1300px;height:140px;border:solid 1px;border-color:darkgrey;padding-top:30px">
+        <div class="layui-inline">
+            <label class="layui-form-label">入库状态</label>
+            <div class="layui-col-md6">
+                <select id="state" name="city" lay-verify="">
+                    <option value="0">--入库状态--</option>
+                    <option value="1">待入库</option>
+                    <option value="2">入库待确认</option>
+                    <option value="3">已入库</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">入库日期</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" id="time" placeholder="yyyy年MM月dd日">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">供应商名称</label>
+            <div class="layui-input-inline">
+                <input type="text" name="id" id="name" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div style="padding-bottom: 10px;">
+            <button style="margin-left:40px" class="layui-btn layuiadmin-btn-list" onclick="Look()">搜索</button>
+
+        </div>
+
+    </div>
+    <div class="layui-inline">
+        <table class="layui-table" style="width:1340px;text-align:center;margin-left:75px">
+            <tr>
+                <td>
+                    <input type="checkbox" id="ckALL" />
+                </td>
+                <td>入库日期</td>
+                <td>入库单编号</td>
+                <td>采购单编号</td>
+                <td>入库状态</td>
+                <td>入库类型</td>
+                <td>供应商编号</td>
+                <td>入货仓库</td>
+                <td>收货员</td>
+                <td>仓管员</td>
+                <td>操作</td>
+            </tr>
+            <tbody id="tb">
+            </tbody>
+        </table>
+        <div style="margin-top:30px">
+            <div class="page" style="width:300px;margin-left:500px;float:right">
+                <a href="#" style="margin-right:25px" onclick="First()">首页</a>
+                <a href="#" style="margin-right:25px" onclick="Pre()">上一页</a>
+                <a href="#" style="margin-right:25px" onclick="Next()">下一页</a>
+                <a href="#" style="margin-right:25px" onclick="Last()">尾页</a>
+            </div>
+        </div>
+    </div>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    var pageIndex = 1;
+    var pageSize = 2;
+    var state = 0;
+    var cTime = "";
+    var sName = "";
+    var pageCount = 0;
+    //初始化加载
+    $(function () {
+        Show();
+    })
+    //查询
+    function Look() {
+        state = $("#state").val();
+        cTime = $("#time").val();
+        sName = $("#name").val();
+        Show();
+    }
+    //初始化加载方法
+    function Show() {
+        var obj = {
+            "pageIndex": pageIndex,
+            "pageSize": pageSize,
+            "state": state,
+            "cTime": cTime,
+            "sName": sName
+        };
+        $.ajax({
+            url: "http://localhost:52645/api/IStorageManage/GetInStorageList",
+            type: "post",
+            data: obj,
+            accepts: "application/x-www-form-urlencoded",
+            contentType: "application/x-www-form-urlencoded"
+        }).done(function (data) {
+            $("#tb").empty();
+            $.each(data.iSMShowList, function (index, item) {
+                var tr = "<tr>" +
+                    "<td><input type='checkbox' class='ck' /></td >" +
+                    "<td>" + item.inStorageTime + "</td>" +
+                    "<td>" + item.inStorageNo + "</td>" +
+                    "<td>" + item.buyListNo + "</td>" +
+                    "<td>" + item.inStorageState + "</td>" +
+                    "<td>" + item.inStorageType + "</td>" +
+                    "<td>" + item.gid + "</td>" +
+                    "<td>" + item.storageName + "</td>" +
+                    "<td>" + item.consignee + "</td>" +
+                    "<td>" + item.storageMan + "</td>";
+                if (item.inStorageState == "已入库") {
+                    tr += "<td></td>";
+                }
+                else {
+                    tr += "<td><button style='margin-left:40px; margin - top:30px;background-color:orangered' class='layui-btn' onclick='UpdateState(/" + item.id + "/)'>入库完成确认</button></td>";
+                }
+                tr += "</tr>";
+                $("#tb").append(tr);
+            })
+            pageCount = data.rowCount;
+            pageCount = Math.ceil(pageCount / pageSize);
+        })
+    }
+    //首页
+    function First() {
+        pageIndex = 1;
+        Show();
+    }
+    //上一页
+    function Pre() {
+        if (pageIndex == 1) {
+            alert("已经是第一页了");
+            return;
+        }
+        pageIndex = pageIndex - 1;
+        Show();
+    }
+    //下一页
+    function Next() {
+        if (pageIndex == pageCount) {
+            alert("已经是最后一页了");
+            return;
+        }
+        pageIndex = pageIndex + 1;
+        Show();
+    }
+    //尾页
+    function Last() {
+        pageIndex = pageCount;
+        Show();
+    }
+    //入库确认
+    function UpdateState(iId) {
+        if (confirm("是否确认?")) {
+            $.ajax({
+                url: "http://localhost:52645/api/IStorageManage/UpdateState?iId=" + iId,
+                type: "get",
+            }).done(function (data) {
+                if (data > 0) {
+                    alert("确认成功!");
+                    Show();
+                }
+                else {
+                    alert("确认失败!");
+                }
+            })
+        }
+    }
+
+    //function Emp(src, width, height) {
+    //    var _doc_width = $(document).width();
+    //    var _doc_height = $(document).height();
+    //    var _html = "<div id='bg' style='position: absolute; z-index: 10000; display: block; left: 0px; top: 0px; opacity: 0.5;      height: " + _doc_width + "px; width: " + _doc_width + "px; background-color:#CCC;'></div>";
+    //    _html += "<div id='ifdiv'style='z-index:10001;background-color:#FFF;border:solid 1px;position: fixed;      left:128px; top:32px;'>";
+    //    _html += "<iframe src='" + src + "' frameborder='0' style='width:" + width + "px;height:" + height + "px;overflow:visible;'></iframe></div>";
+    //    $('body').append(_html);
+    //}
+
+    //全选
+    $("#ckALL").click(function () {
+        $(".ck").prop("checked", $("#ckALL").prop("checked"))
+    })
+</script>

@@ -9,6 +9,10 @@ using IOT_ErpManageSystem.BLL.TuiHuo;
 using IOT_ErpManageSystem.DAL.DBHelper;
 using IOT_ErpManageSystem.BLL.liuning;
 using IOT_ErpManageSystem.DAL.liuning;
+using IOT_ErpManageSystem.BLL.InRBAC_Role;
+using IOT_ErpManageSystem.BLL.RBAC_Allot;
+using IOT_ErpManageSystem.BLL.ISManage;
+using IOT_ErpManageSystem.BLL.SManage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +20,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using IOT_ErpManageSystem.DAL.IDall;
+using IOT_ErpManageSystem.DAL.Dall;
+using IOT_ErpManageSystem.BLL.IBLL;
+using IOT_ErpManageSystem.BLL.BLL;
+using IOT_ErpManageSystem.BLL;
 
 namespace IOT_ErpManageSystem.API
 {
@@ -38,6 +47,13 @@ namespace IOT_ErpManageSystem.API
             services.AddSingleton<ITuiHuoBLL, TuiHuoBLL>();
             services.AddSingleton<IRequDal, RequDal>();
             services.AddSingleton<IRequBLL, RequBLL>();
+            services.AddSingleton<IDal, Dal>();
+            services.AddSingleton<IBLLs, BLLs>();
+            services.AddSingleton<IIStorageManage, IStorageManage>();
+            services.AddSingleton<IOStorageManage, OStorageManage>();
+            services.AddSingleton<AllotInterface, RBAC_Allot>();
+            services.AddSingleton<RoleInterface, RBAC_RoleBll>();
+            services.AddSingleton<IStorageStructure, StorageStructure>();
             services.AddCors(options =>
             {
                 // Policy 名稱 CorsPolicy 是自訂的，可以自己改
@@ -61,7 +77,7 @@ namespace IOT_ErpManageSystem.API
             }
             app.UseCors("ZXL");
             app.UseRouting();
-
+            app.UseCors("DSZ");
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -1,0 +1,198 @@
+﻿
+@{
+    ViewData["Title"] = "Add";
+}
+
+
+<h2 >添加员工信息</h2>
+<form class="layui-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width:100px">员工编号</label>
+        <div class="layui-input-inline">
+            <input type="tel" placeholder="请输入姓名" id="RoleCode" name="phone" style="width:300px" lay-verify="required|phone" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width:100px">员工姓名</label>
+        <div class="layui-input-inline">
+            <input type="tel" placeholder="请输入姓名" id="RoleName" name="phone" style="width:300px" lay-verify="required|phone" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <br />
+    <div class="layui-inline">
+        <label class="layui-form-label" style="width:100px">员工账号</label>
+        <div class="layui-input-inline">
+            <input type="tel" name="phone" placeholder="请输入账号" id="RoleAccount" style="width:300px" lay-verify="required|phone" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width:100px">单选框</label>
+        <div class="layui-input-block">
+            <input type="radio" name="sex" id="man" value="男" checked="checked">男
+            <input type="radio" name="sex" id="woman" value="女">女
+        </div>
+    </div>
+    <div class="layui-inline">
+        <label class="layui-form-label" style="width:100px">手机号</label>
+        <div class="layui-input-inline">
+            <input type="text" name="phone" style="width:300px" placeholder="请输入手机号" id="RoleTel" lay-verify="required|phone" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width:100px">部门名称</label>
+        <div class="layui-input-block" style="width:300px">
+            <select name="city" lay-filter="test" lay-verify="required" id="RolName">
+                <option value="">请选择部门</option>
+
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width:100px">直属上级</label>
+        <div class="layui-input-block" style="width:300px">
+            <select name="city" lay-filter="test" lay-verify="required" id="RoleTop">
+                <option value="">请选择</option>
+
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width:100px">选择职位</label>
+        <div class="layui-input-block" style="width:300px">
+            <select name="city" lay-verify="required" id="RoleJob">
+                <option value="">请选择</option>
+
+            </select>
+        </div>
+    </div>
+    <div style="margin-left:220px">
+        <button type="button" class="layui-btn" onclick="Role_Add()">保存</button>
+
+    </div>
+</form>
+
+
+ <script>
+    layui.use(['form'], function () {
+        var form = layui.form;
+        form.render();
+        // 监听
+        $(document).ready(function () {
+            // select下拉框选中触发事件
+            form.on("select(test)", function (data) {
+                // 获取选中的值
+                change(data.value);
+            });
+        });
+    });
+
+     $(function () {
+         Allt_Dep();
+         Role_Top();
+        
+    })
+
+     //部门绑定
+     function Allt_Dep() {
+         $.ajax({
+             url: "http://localhost:52645/api/RBAC_Role/GetDep",
+             type: "get",
+         }).done(function (data) {
+             $("#RoleName").empty();
+             $.each(data, function (Index, item) {
+                 var option = '<option value=' + item.dep_ID + '>' + item.dep_Name + '</option>';
+                 $("#RolName").append(option);
+             })
+             emp();
+         })
+     }
+    //添加
+    function Role_Add() {
+        if ($("#RoleCode").val() == '') {
+            alert("编号不能为空！");
+            return;
+        }
+        if ($("#RoleName").val() == '') {
+            alert("姓名不能为空！");
+            return;
+        }
+        if ($("#RoleAccount").val() == '') {
+            alert("账号不能为空！");
+            return;
+        }
+        if ($("#RoleTel").val() == '') {
+            alert("手机号不能为空！");
+            return;
+        }
+        var re = /^1[34578]\d{9}$/;
+        if (!re.test($("#RoleTel").val())) {
+            return alert("请输入正确的手机号");
+        }
+
+        var obj = {
+            "Role_Code": $("#RoleCode").val(),
+            "Role_Name": $("#RoleName").val(),
+            "Role_Account": $("#RoleAccount").val(),
+            "RoleSex": $("input[type='radio']:checked").val(),
+            "Role_Tel": $("#RoleTel").val(),
+            "Job_ID": $("#RoleJob").val(),
+            "Dep_ID": $("#RolName").val()
+        };
+        $.ajax({
+            url: "http://localhost:52645/api/RBAC_Role/Add_Role",
+            data: obj,
+            type: "post",
+            dataType: "text",
+            accepts: "application/x-www-form-urlencoded",
+            contentType: "application/x-www-form-urlencoded",
+        }).done(function (data) {
+            if (data > 0) {
+                alert("添加成功");
+                window.location.href = "Index";
+            }
+        })
+    }
+
+    //直属上级绑定
+    function Role_Top() {
+        $.ajax({
+            url: "http://localhost:52645/api/RBAC_Role/GetJob?RoleId=0",
+            type: "get",
+        }).done(function (data) {
+            $.each(data, function (Index, item) {
+                var option = '<option value=' + item.job_ID + '>' + item.job_Name + '</option>';
+                $("#RoleTop").append(option);
+            })
+            emp();
+        })
+    }
+
+    function emp() {
+        layui.use('form', function () {
+            var form = layui.form;
+            form.render();
+        });
+    }
+
+    //职位绑定
+    function change(id) {
+        $.ajax({
+            url: "http://localhost:52645/api/RBAC_Role/GetJob?RoleId=" + id,
+            type: "get",
+        }).done(function (data) {
+            $.each(data, function (Index, item) {
+                var option = '<option value=' + item.job_ID + '>' + item.job_Name + '</option>';
+                $("#RoleJob").append(option);
+            })
+            emp();
+        })
+    }
+
+    layui.use(['form'], function () {
+        var form = layui.form;
+        form.render();
+    });
+ </script>
+
+
+

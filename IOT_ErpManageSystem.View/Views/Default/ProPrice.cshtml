@@ -1,0 +1,179 @@
+﻿
+@{
+    ViewData["Title"] = "ProPrice";
+}
+<style>
+    #he {
+        padding-top: 20px;
+        margin: 0 auto;
+        width: 1146px;
+        height: 300px;
+    }
+</style>
+<div id="he">
+    <h4>商品价格本</h4>
+    <input type="text" id="bh" placeholder="请输入商品编号" /><input type="button" value="搜索" id="sousuo" style="background-color:forestgreen" />
+    <input type="button" value="添加" id="add" style="background-color:dodgerblue" />
+    <input type="button" id="btnDeleteList" value="批量删除" class="btn-danger" />
+    <div class="box" style="width:1049px;height:350px;border:1px solid">
+        <table class="table">
+            <tr class="active">
+                <td><input type="checkbox" id="check" />选择</td>
+                <td>商品编号</td>
+                <td>商品名称</td>
+                <td>品牌</td>
+                <td>分类</td>
+                <td>规格</td>
+                <td>单位</td>
+                <td>出售价格</td>
+                <td>进货价格</td>
+                <td>操作</td>
+            </tr>
+            <tbody id="tb"></tbody>
+        </table>
+        <a href="#" style="margin-right:10px" onclick="First()">首页</a>
+        <a href="#" style="margin-right:10px" onclick="Pre()">上一页</a>
+        <a href="#" style="margin-right:10px" onclick="Next()">下一页</a>
+        <a href="#" style="margin-right:10px" onclick="Last()">尾页</a>
+    </div>
+</div>
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    $("#add").click(function () {
+        location.href = "/default/addprice";
+    });
+    //页码
+    var pageIndex = 1;
+    //每页显示几条数据
+    var pageSize = 3;
+    var Count = 0;
+    $(function () {
+        GoodsPrice();
+    });
+    $("#sousuo").click(function () {
+        GoodsPrice();
+    });
+    function GoodsPrice() {
+        $.ajax({
+            url: "http://localhost:52645/api/Default/GoodsPrice?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&proBh=" + $("#bh").val(),    
+        }).done(function (d) {
+            console.log(d);
+            Count = d.count;
+            console.log(d.list);
+            var tr = "";
+            $("#tb").empty();
+            $.each(d.list, function (index, item) {
+                tr += "<tr class='active'>";
+                tr += "<td><input type='checkbox' class='checkAll' value='" + item.id + "' /></td>";
+                tr += "<td>" + item.goodsId + "</td>";
+                tr += "<td>" + item.goodsName + "</td>";
+                tr += "<td>" + item.goodsBrand + "</td>";
+                tr += "<td>" + item.typeName + "</td>";
+                tr += "<td>" + item.goodsRule + "</td>";
+                tr += "<td>" + item.sku + "</td>";
+                tr += "<td>" + item.goodsPrices + "</td>";
+                tr += "<td>" + item.jinHPrice + "</td>";
+                tr += "<td><a href='#' onclick='Del(/" + item.id + "/)' >删除</a> <a href='../Default/Update?GId=/" + item.id + "/&PId=/" + item.priceId + "/' >编辑</a></td>";
+                tr += "</tr>";
+            });
+            $("#tb").append(tr);
+        });
+    }
+    //全选反选
+    $("#check").click(function () {
+        $(".checkAll").prop("checked", $(this).prop("checked"));
+    });
+    //批量删除
+    $("#btnDeleteList").click(function () {
+        if (confirm("是否确认删除？")) {
+            var idStr = "";
+            $(".checkAll:checked").each(function (index, item) {
+                idStr = idStr + $(item).val() + ",";
+            });
+            idStr = idStr.substr(0, idStr.length - 1);
+            if (idStr == 0) {
+                alert("请先选择一行数据！");
+                return;
+            }
+            $.ajax({
+                url: "http://localhost:52645/api/Default/DelGoods",
+                type: "post",
+                accepts: "application/x-www-form-urlencoded",
+                contentType: "application/x-www-form-urlencoded",
+                data: { id: idStr }
+            }).done(function (d) {
+                console.log(d);
+                if (d > 0) {
+                    alert("删除成功！");
+                    location.reload();
+                }
+                else {
+                    alert("删除失败！");
+                }
+            });
+        }
+    });
+    //删除
+    function Del(id) {
+        if (confirm("是否确认删除？")) {
+
+            $.ajax({
+                url: "http://localhost:52645/api/Default/DelGoods",
+                type: "post",
+                accepts: "application/x-www-form-urlencoded",
+                contentType: "application/x-www-form-urlencoded",
+                data: { id: id }
+            }).done(function (d) {
+                console.log(d);
+                if (d > 0) {
+                    alert("删除成功！");
+                    location.reload();
+                }
+                else {
+                    alert("删除失败！");
+                }
+            });
+
+        }
+
+    }
+    //首页
+    function First() {
+        pageIndex = 1;
+        GoodsPrice();
+
+    }
+    //上一页
+    function Pre() {
+        if (pageIndex == 1) {
+            alert("已经是第一页了！");
+        }
+        else {
+            pageIndex = pageIndex - 1;
+           
+
+        }
+        GoodsPrice();
+    }
+
+    //下一页
+    function Next() {
+        if (pageIndex == Count) {
+            alert("已经是最后一页了！");
+        }
+        else {
+            pageIndex = pageIndex + 1;
+           
+
+        }
+        GoodsPrice();
+    }
+    //尾页
+    function Last() {
+        pageIndex = Count;
+        GoodsPrice();
+
+    }
+</script>

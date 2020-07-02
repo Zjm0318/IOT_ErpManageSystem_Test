@@ -12,7 +12,7 @@ namespace IOT_ErpManageSystem.Models
 		public string GoodsId { get; set; }
 		public string GoodsName { get; set; }
 		public string GoodsBrand { get; set; }
-		public Guid TypeId { get; set; }
+		public string TypeId { get; set; }
 		public string TypeName { get; set; }
 		public string GoodsRule { get; set; }
 		public string SKU { get; set; }

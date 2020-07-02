@@ -156,7 +156,7 @@
         }
         //固定电话
         if (obj1.GDphone!="") {
-            var gd = /^(\\d{3,4}-)\\d{7,8}$/;
+            var gd = /^(\d{3,4}-)\d{7,8}$/;
             if (!gd.test(obj1.GDphone)) {
                 return alert("请输入正确的固定电话");
             }

@@ -1,0 +1,165 @@
+﻿
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+<link href="~/layuiadmin/style/admin.css" rel="stylesheet" />
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px">
+    <legend>编辑员工信息</legend>
+</fieldset>
+<div class="layui-inline">
+    <label class="layui-form-label" style="width:100px">员工姓名</label>
+    <div class="layui-input-inline">
+        <input type="hidden" id="eid" value="@ViewBag.Id" />
+        <input type="tel" placeholder="请输入姓名" id="RoleName" name="phone" style="width:300px" lay-verify="required|phone" autocomplete="off" class="layui-input">
+    </div>
+</div>
+<br />
+<div class="layui-inline">
+    <label class="layui-form-label" style="width:100px">员工账号</label>
+    <div class="layui-input-inline">
+        <input type="tel" name="phone" placeholder="请输入账号" id="RoleAccount" style="width:300px" lay-verify="required|phone" autocomplete="off" class="layui-input">
+    </div>
+</div>
+
+ 
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width:100px">单选框</label>
+        <div class="layui-input-block">
+            <input type="radio" name="sex" id="man" value="男">男
+            <input type="radio" name="sex" id="woman" value="女">女
+        </div>
+    </div>
+    <div class="layui-inline">
+        <label class="layui-form-label" style="width:100px">手机号</label>
+        <div class="layui-input-inline">
+            <input type="text" name="phone" style="width:300px" placeholder="请输入手机号" id="RoleTel" lay-verify="required|phone" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width:100px">直属上级</label>
+        <div class="layui-input-block">
+            <select name="city" lay-verify="required" id="RoleTop" onchange="change(this.value)">
+                <option value="">请选择</option>
+
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width:100px">选择职位</label>
+        <div class="layui-input-block">
+            <select name="city" lay-verify="required" id="RoleJob">
+                <option value="">请选择</option>
+
+            </select>
+        </div>
+    </div>
+    <div style="margin-left:220px">
+        <button type="button" class="layui-btn" onclick="Role_Add()">保存</button>
+
+    </div>
+    <script>
+        //初始化
+        $(function () {
+            show();
+            Role_Top();
+
+        })
+
+        //直属上级绑定
+        function Role_Top() {
+            $.ajax({
+                url: "http://localhost:52645/api/RBAC_Role/GetJob?RoleId=0",
+                type: "get",
+            }).done(function (data) {
+                $.each(data, function (Index, item) {
+                    var option = '<option value=' + item.job_ID + '>' + item.job_Name + '</option>';
+                    $("#RoleTop").append(option);
+                })
+
+            })
+        }
+
+        //职位绑定
+        function change(id) {
+            $.ajax({
+                url: "http://localhost:52645/api/RBAC_Role/GetJob?RoleId=" + id,
+                type: "get",
+            }).done(function (data) {
+                $("#RoleJob").empty();
+                $.each(data, function (Index, item) {
+                    var option = '<option value=' + item.job_ID + '>' + item.job_Name + '</option>';
+                    $("#RoleJob").append(option);
+                })
+
+            })
+        }
+        //反填
+        function show() {
+            var Eid = $("#eid").val();
+            $.ajax({
+                url: "http://localhost:52645/api/RBAC_Role/FanRole?Id=" + Eid,
+                type: "get"
+            }).done(function (data) {
+                $("#RoleName").val(data.role_Name);
+                $("#RoleAccount").val(data.role_Account);
+                //单选框
+                if (Boolean(data.RoleSex) == true) {
+                    //给单选框:是加一个checked属性表示选中
+                    $("#man").prop("checked", true);
+                }
+                else {
+                    $("#woman").prop("checked", true);
+                }
+                $("#RoleTel").val(data.role_Tel);
+                $("#RoleTop").val(data.job_ID);
+                change(data.job_ID);
+                $("#RoleJob").val(data.job_ID);
+            })
+        }
+
+        //保存修改信息
+        function Role_Add() {
+            if ($("#RoleName").val() == '') {
+                alert("姓名不能为空！");
+                return;
+            }
+            if ($("#RoleAccount").val() == '') {
+                alert("账号不能为空！");
+                return;
+            }
+            if ($("#RoleTel").val() == '') {
+                alert("手机号不能为空！");
+                return;
+            }
+            var re = /^1[34578]\d{9}$/;
+            if (!re.test($("#RoleTel").val())) {
+                return alert("请输入正确的手机号");
+            }
+            var obj = {
+                "ID": $("#eid").val(),
+                "Role_Name": $("#RoleName").val(),
+                "Role_Account": $("#RoleAccount").val(),
+                "RoleSex": $("input[type='radio']:checked").val(),
+                "Role_Tel": $("#RoleTel").val(),
+                "Job_ID": $("#RoleJob").val()
+            };
+            $.ajax({
+                url: "http://localhost:52645/api/RBAC_Role/Update_Role",
+                data: obj,
+                type: "post",
+                dataType: "text",
+                accepts: "application/x-www-form-urlencoded",
+                contentType: "application/x-www-form-urlencoded",
+            }).done(function (data) {
+                if (data > 0) {
+                    alert("编辑成功");
+                    window.location.href = "/RBAC_Role/Index";
+                }
+            })
+        }
+
+    </script>
+

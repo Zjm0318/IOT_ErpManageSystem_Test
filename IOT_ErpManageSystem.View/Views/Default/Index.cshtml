@@ -3,16 +3,23 @@
     Layout = null;
 }
 <!DOCTYPE html>
+<style>
+    .aa {
+        display: none
+    }
+</style>
+
 <html>
 <head>
     <meta charset="utf-8">
-    <title>易购销售管理系统</title>
+    <title>ERP后台管理系统</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" href="../layuiadmin/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="../layuiadmin/style/admin.css" media="all">
-
+    <script src="~/layuiadmin/layui/layui.js"></script>
+    <link href="~/layuiadmin/style/admin.css" rel="stylesheet" />
 </head>
 <body class="layui-layout-body">
 
@@ -72,7 +79,7 @@
                         <dl class="layui-nav-child">
                             <dd><a lay-href="set/user/info.html">基本资料</a></dd>
                             <dd><a lay-href="set/user/password.html">修改密码</a></dd>
-                            
+
                             <dd layadmin-event="logout" style="text-align: center;"><a>退出</a></dd>
                         </dl>
                     </li>
@@ -89,89 +96,11 @@
             <!-- 侧边菜单 -->
             <div class="layui-side layui-side-menu">
                 <div class="layui-side-scroll">
-                    <div class="layui-logo" lay-href="home/console.html">
-                        <span>易购</span>
+                    <div class="layui-logo" lay-href="">
+                        <span>ERP</span>
                     </div>
+                    <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="lay-system-side-menu" lay-filter="layadmin-system-side-menu">
 
-                    <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
-                        <li data-name="home" class="layui-nav-item layui-nav-itemed">
-                            <a href="javascript:;" lay-tips="权限管理" lay-direction="2">
-                                <i class="layui-icon layui-icon-home"></i>
-                                <cite>基础信息</cite>
-                            </a>
-                            <dl class="layui-nav-child">
-                                <dd data-name="console" class="layui-this">
-                                    <a lay-href="/menu">系统首页</a>
-                                </dd>
-                                <dd data-name="console">
-                                    <a lay-href="/user">个人信息</a>
-                                </dd>
-                            </dl>
-                        </li>
-                        <li data-name="component" class="layui-nav-item">
-                            <a href="javascript:;" lay-tips="组件" lay-direction="2">
-                                <i class="layui-icon layui-icon-component"></i>
-                                <cite>商品管理</cite>
-                            </a>
-                            <dl class="layui-nav-child">
-                                <dd data-name="grid">
-                                    <a lay-href="/Goods/Index">商品列表</a>
-                                </dd>
-                                <dd data-name="button">
-                                    <a lay-href="/Goods/Add">添加商品</a>
-                                </dd>
-                                <dd data-name="form">
-                                    <a lay-href="/Goods/GoodsPriceInfo">商品价格本</a>
-                                </dd>
-                            </dl>
-                        </li>
-                        <li data-name="template" class="layui-nav-item">
-                            <a href="javascript:;" lay-tips="页面" lay-direction="2">
-                                <i class="layui-icon layui-icon-template"></i>
-                                <cite>数据报表</cite>
-                            </a>
-                            <dl class="layui-nav-child">
-                                <dd><a lay-href="template/personalpage.html">订单报表</a></dd>
-                            </dl>
-                        </li>
-                        <li data-name="app" class="layui-nav-item">
-                            <a href="javascript:;" lay-tips="应用" lay-direction="2">
-                                <i class="layui-icon layui-icon-app"></i>
-                                <cite>采购管理</cite>
-                            </a>
-                            <dl class="layui-nav-child">
-                                <dd data-name="list"><a lay-href="Supplier/Index">供应商管理</a></dd>
-                                <dd data-name="tags"><a lay-href="/RequShow/GetRequList">请购单管理</a></dd>
-                                <dd data-name="comment"><a lay-href="/PurShow/GetPurList">采购单管理</a></dd>
-                                <dd data-name="coment"><a lay-href="TuiHuo/Index">退货单管理</a></dd>
-                            </dl>
-                        </li>
-                        <li data-name="senior" class="layui-nav-item">
-                            <a href="javascript:;" lay-tips="高级" lay-direction="2">
-                                <i class="layui-icon layui-icon-senior"></i>
-                                <cite>仓库管理</cite>
-                            </a>
-
-                            <dl class="layui-nav-child">
-                                <dd><a lay-href="senior/echarts/line.html">入库管理</a></dd>
-                                <dd><a lay-href="senior/echarts/bar.html">出库管理</a></dd>
-                                <dd><a lay-href="senior/echarts/map.html">仓库结构</a></dd>
-                            </dl>
-                        </li>
-                        <li data-name="user" class="layui-nav-item">
-                            <a href="javascript:;" lay-tips="用户" lay-direction="2">
-                                <i class="layui-icon layui-icon-user"></i>
-                                <cite>权限管理</cite>
-                            </a>
-                            <dl class="layui-nav-child">
-                                <dd>
-                                    <a lay-href="user/user/list.html">员工管理</a>
-                                </dd>
-                                <dd>
-                                    <a lay-href="user/administrators/list.html">权限分配</a>
-                                </dd>
-                            </dl>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -203,7 +132,7 @@
             <!-- 主体内容 -->
             <div class="layui-body" id="LAY_app_body">
                 <div class="layadmin-tabsbody-item layui-show">
-                    <iframe src="home/console.html" frameborder="0" class="layadmin-iframe"></iframe>
+                    <iframe src="" frameborder="0" class="layadmin-iframe"></iframe>
                 </div>
             </div>
 
@@ -211,18 +140,79 @@
             <div class="layadmin-body-shade" layadmin-event="shade"></div>
         </div>
     </div>
-
+    
     <script src="../layuiadmin/layui/layui.js"></script>
     <script>
         layui.config({
             base: '../layuiadmin/' //静态资源所在路径
         }).extend({
             index: 'lib/index', //主入口模块
-             courseTask: 'task/courseTask'
+            courseTask: 'task/courseTask'
         }).use('index');
     </script>
 </body>
 </html>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    //var list = [];
+    
+    //$.ajax("http://localhost:52645/api/RBAC_Allot/UserQuanInfo?token=" + localStorage["token"],
+    //    {
+    //        data: "get"
+    //    }).done(function (data) {
+    //        list = data.allot_BaoId.split('/');
+    //    });
+
+
+    var li = '';
+
+    $(function () {
+
+        $.ajax("http://localhost:52645/api/RBAC_Allot/ShowQuanInfo?UId=0",
+            {
+                type: "get",
+                async: false,
+        }).done(function (data) {
+            //第一级菜单
+            $.each(data, function (i, t) {
+                //调用方法
+                if (i == 0) {
+                    li = '<li data-name="home" class="layui-nav-item">';
+                } else {
+                    li = '<li data-name="component" class="layui-nav-item">';
+                }
+                li += '<a href="javascript:;" onclick="go(this)" lay-tips="' +t.quan_Name + '" lay-direction="2">';
+                li += '<i class="layui-icon layui-icon-component"></i>';
+                li += '<cite>' + t.quan_Name+ '</cite>';
+                li += '</a>';
+                li += '<dl class="layui-nav-child">';
+                FindTwo(t.id);
+                li += '</dl></li>';
+                $("#lay-system-side-menu").append(li);
+            });
+        });
+
+    });
+
+    function FindTwo(id) {
+        $.ajax("http://localhost:52645/api/RBAC_Allot/ShowQuanInfo?UId=" + id,
+            {
+                type: "get",
+                async: false,
+        }).done(function (list) {
+            //第一级菜单
+            $.each(list, function (index, item) {
+                li += '<dd data-name="console" class="layui-this">';
+                li += '<a lay-href="' + item.quan_Url + '">' + item.quan_Name + '</a></dd>';                
+            });
+        });
+    }
+
+
+    function go(obj) {
+        $(obj).next().toggleClass("aa");
+    }
+</script>
 
 
 

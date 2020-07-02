@@ -207,6 +207,13 @@ namespace IOT_ErpManageSystem.API.Controllers.GoodsInfo
         {
             return goodsBLL.UpdatePrice(m);
         }
+
+        //判断价格本中是否已有此商品
+        [HttpGet]
+        public List<GoodsPrice> PricesInfo()
+        {
+            return goodsBLL.PricesInfo();
+        }
         #endregion
     }
 }
