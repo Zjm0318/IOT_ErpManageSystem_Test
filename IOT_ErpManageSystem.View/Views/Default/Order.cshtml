@@ -140,7 +140,7 @@
             from = 0;
         }
         $.ajax({
-            url: "http://localhost:52645/api/Default/ShowOrder?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&ddh=" +
+            url: "http://192.168.0.190:8085/api/Default/ShowOrder?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&ddh=" +
                 $("#dh").val() + "&userName=" + $("#zh").val() + "&time=" + $("#time").val() + "&type=" + type + "&from=" + from,
             type: "get",
         }).done(function (d) {
@@ -171,7 +171,7 @@
     });
     function ShowState() {
         $.ajax({
-            url: "http://localhost:52645/api/Default/OrderState",
+            url: "http://192.168.0.190:8085/api/Default/OrderState",
             type: "get",
         }).done(function (d) {
             console.log(d);
@@ -184,7 +184,7 @@
     }
     function ShowFrom() {
         $.ajax({
-            url: "http://localhost:52645/api/Default/OrderFrom",
+            url: "http://192.168.0.190:8085/api/Default/OrderFrom",
             type: "get",
         }).done(function (d) {
             var tr = "";
@@ -207,7 +207,7 @@
                 return;
             }
             $.ajax({
-                url: "http://localhost:52645/api/Default/Del",
+                url: "http://192.168.0.190:8085/api/Default/Del",
                 type: "post",
                 accepts: "application/x-www-form-urlencoded",
                 contentType: "application/x-www-form-urlencoded",
@@ -232,7 +232,7 @@
         if (confirm("是否确认删除？")) {
 
             $.ajax({
-                url: "http://localhost:52645/api/Default/Del",
+                url: "http://192.168.0.190:8085/api/Default/Del",
                 type: "post",
                 accepts: "application/x-www-form-urlencoded",
                 contentType: "application/x-www-form-urlencoded",
