@@ -9,7 +9,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label" style="width:100px">员工编号</label>
         <div class="layui-input-inline">
-            <input type="tel" placeholder="请输入姓名" id="RoleCode" name="phone" style="width:300px" lay-verify="required|phone" autocomplete="off" class="layui-input">
+            <input type="tel" placeholder="请输入编号" id="RoleCode" name="phone" style="width:300px" lay-verify="required|phone" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
@@ -28,7 +28,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label" style="width:100px">单选框</label>
         <div class="layui-input-block">
-            <input type="radio" name="sex" id="man" value="男" checked="checked">男
+            <input type="radio" name="sex" id="man" value="男">男
             <input type="radio" name="sex" id="woman" value="女">女
         </div>
     </div>
@@ -65,14 +65,14 @@
             </select>
         </div>
     </div>
-    <div style="margin-left:220px">
+    <div style="margin-left:180px">
         <button type="button" class="layui-btn" onclick="Role_Add()">保存</button>
-
+        <button type="button" class="layui-btn" onclick="Back()">返回</button>
     </div>
 </form>
 
 
- <script>
+<script>
     layui.use(['form'], function () {
         var form = layui.form;
         form.render();
@@ -89,7 +89,7 @@
      $(function () {
          Allt_Dep();
          Role_Top();
-        
+
     })
 
      //部门绑定
@@ -108,6 +108,8 @@
      }
     //添加
      function Role_Add() {
+
+
          //编号
          if (jQuery('#RoleCode').val() == "") {
              jQuery('#RoleCode').focus();
@@ -121,10 +123,22 @@
              alert("编号不能输入空格！");
              return;
          }
+         var rolecode = $("#RoleCode").val();
+         var myReg = /^[a-zA-Z0-9_]{0,}$/;
+         if (!myReg.test(rolecode)) {
+             alert("编号不能含有中文")
+             return;
+         }
          //姓名
          if (jQuery('#RoleName').val() == "") {
              jQuery('#RoleName').focus();
              alert("名称不能为空！");
+             return;
+         }
+         var custname = $("#RoleName").val();
+         var reg = /[^u4e00-u9fa5]/;
+         if (!reg.test(custname)) {
+             alert("名称只能输入汉字");
              return;
          }
          //正则表达式
@@ -145,6 +159,12 @@
          if (!reg.test(jQuery('#RoleAccount').val())) {
              jQuery('#RoleAccount').focus();
              alert("账号不能输入空格！");
+             return;
+         }
+         var rolecode = $("#RoleAccount").val();
+         var myReg = /^[a-zA-Z0-9_]{0,}$/;
+         if (!myReg.test(rolecode)) {
+             alert("账号不能含有中文")
              return;
          }
          //手机号
@@ -248,7 +268,11 @@
         var form = layui.form;
         form.render();
     });
- </script>
+
+    function Back() {
+        window.location.href = "/RBAC_Role/Index";
+    }
+</script>
 
 
 

@@ -46,7 +46,7 @@
 </div>
 <div style="margin-left:220px">
     <button type="button" class="layui-btn" onclick="Role_Add()">保存</button>
-
+    <button type="button" class="layui-btn" onclick="Back()">返回</button>
 </div>
 <script>
     $(function () {
@@ -121,17 +121,16 @@
             alert("编号不能输入空格！");
             return;
         }
+        var rolecode = $("#RoleCode").val();
+        var myReg = /^[a-zA-Z0-9_]{0,}$/;
+        if (!myReg.test(rolecode)) {
+            alert("账号不能含有中文")
+            return;
+        }
         //名称
         if (jQuery('#RoleName').val() == "") {
             jQuery('#RoleName').focus();
             alert("名称不能为空！");
-            return;
-        }
-        //正则表达式
-        var reg = /^[^\s]*$/;
-        if (!reg.test(jQuery('#RoleName').val())) {
-            jQuery('#RoleName').focus();
-            alert("名称不能输入空格！");
             return;
         }
 
@@ -173,7 +172,10 @@
         })
 
     }
-
+    //返回
+    function Back() {
+        window.location.href = "/RBAC_Role/Index";
+    }
 
     layui.use(['form'], function () {
         var form = layui.form;
