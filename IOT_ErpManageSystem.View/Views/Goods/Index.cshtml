@@ -11,13 +11,7 @@
         <h1>商品品牌</h1>
     </div>
     <div class="layui-card-body">
-        <blockquote class="layui-elem-quote role_search">
-            <div class="layui-inline">
-                <a class="layui-btn layui-btn-normal newsAdd_btn" href="/Goods/Add">
-                    <i class="layui-icon layui-icon-add-1"></i>
-                    添加品牌
-                </a>
-            </div>
+        <blockquote class="layui-elem-quote role_search">           
             <div class="layui-inline">
                 <a class="layui-btn layui-btn-danger batchDel" onclick="delDatas();"><i class="layui-icon layui-icon-delete"></i> 批量删除</a>
             </div>
@@ -36,7 +30,6 @@
         </blockquote>
     </div>
 </div>
-
 <div style="padding: 15px; background-color: #F2F2F2;">
     <table class="layui-table">
         <tr>
@@ -69,10 +62,10 @@
         <i class="layui-icon">&#xe65b;</i>
     </button>
 </div>
-
+<img style="width:100px;height:80px" />
 <script>
     var pageIndex = 1;
-    var pageSize = 3;
+    var pageSize = 10;
     var total = 0;
 
     $(function () {
@@ -112,17 +105,17 @@
                 '<td><input id="Checkbox1" class="check" value="' + item.id + '" type="checkbox" /></td>' +
                 "<td>" + item.goodsId + "</td>" +
                 "<td>" + item.goodsName + "</td>" +
-                "<td><img src=" + item.goodsImg + " /></td>" +
+                "<td><img style='width: 60px; height: 40px' src=" + item.goodsImg + " /></td>" +
                 "<td>￥" + item.goodsPrices + "</td>" +
                 "<td>" + item.goodsBrand + "</td>" +
                 "<td>" + item.color + "/" + item.size + "</td>" +
                 "<td>剩余：" + item.goodsStock + "</td>";
             if (item.goodsState == 0) {
-                list += '<td><input id="Button1" type="button" class="layui-btn layui-btn-normal" value="上架中" /></td>';
+                list += '<td><label class="layui-text-center">上架中</label></td>';
                 list += '<td><input id="Button1" type="button" class="layui-btn layui-btn-warm" onclick=del(\'' + id + '\') value="删除" /><input id="Button1" type="button" value="下架" onclick=down(\'' + id + '\') class="layui-btn layui-btn-danger" /></td>';
             }
             else {
-                list += '<td><input id="Button1" type="button" value="下架" class="layui-btn layui-btn-danger" /></td>';
+                list += '<td><label class="layui-text-center">下架</label></td>';
                 list += '<td><input id="Button1" type="button" class="layui-btn layui-btn-warm" onclick=del(\'' + id + '\') value="删除" /><input id="Button1" type="button" value="下架" class="layui-btn layui-btn-disabled" onclick=down(\'' + id + '\') disabled="disabled" /></td>';
             }
             list += "</tr>";
