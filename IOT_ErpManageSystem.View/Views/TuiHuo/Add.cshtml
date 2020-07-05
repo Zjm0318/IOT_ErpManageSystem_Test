@@ -293,28 +293,33 @@
                 ids = ids + $(item).val() + ",";
             }
         })
-        ids = ids.substring(0, ids.length - 1);
-        $.ajax({
-            url: "http://localhost:52645/api/TuiHuo/AddGoods",
-            type: "post",
-            dataType: "text",
-            data: { id: ids },
-            accepts: "application/x-www-form-urlencoded",
-            contentType: "application/x-www-form-urlencoded",
-            success: function (d) {
-                //判断
-                if (d == 1) {
-                    alert("添加成功!");
-                    window.location.reload(); //刷新父窗口中的网页
+        if (ids == "") {
+            return alert("请选择要添加的数据");
+        }
+        else {
+            ids = ids.substring(0, ids.length - 1);
+            $.ajax({
+                url: "http://localhost:52645/api/TuiHuo/AddGoods",
+                type: "post",
+                dataType: "text",
+                data: { id: ids },
+                accepts: "application/x-www-form-urlencoded",
+                contentType: "application/x-www-form-urlencoded",
+                success: function (d) {
+                    //判断
+                    if (d == 1) {
+                        alert("添加成功!");
+                        window.location.reload(); //刷新父窗口中的网页
+                    }
+                    else if (d == -1) {
+                        alert("数据添加不全!");
+                    }
+                    else {
+                        alert("添加失败!");
+                    }
                 }
-                else if (d == -1) {
-                    alert("数据添加不全!");
-                }
-                else {
-                    alert("添加失败!");
-                }
-            }
-        })
+            })
+        }
     }
-
+    
 </script>
