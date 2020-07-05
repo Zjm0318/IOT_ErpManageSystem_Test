@@ -12,6 +12,8 @@ namespace IOT_ErpManageSystem.Models
         public string GoodsId { get; set; }
         //商品名称
         public string GoodsName { get; set; }
+        //商品品牌
+        public string GoodsBrand { get; set; }
         //规格
         public string GoodsRule { get; set; }
         //单位

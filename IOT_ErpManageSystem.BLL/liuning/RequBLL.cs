@@ -73,9 +73,34 @@ namespace IOT_ErpManageSystem.BLL.liuning
         {
             return _IRequDal.UpdateRequ(m);
         }
+
+        //查询角色名称
+        public List<RBAC_Role> SelectRole()
+        {
+            return _IRequDal.SelectRole();
+        }
+        //查询部门名称
+        public List<RBAC_Dep> SelectDep()
+        {
+            return _IRequDal.SelectDep();
+        }
+
+        //查询商品信息
+        public List<RequGoods> SelectGoods()
+        {
+            return _IRequDal.SelectGoods();
+        }
         #endregion
 
-        #region
+
+        #region  添加请购单,采购单与商品的中间表数据
+        public int AddRequGood(string GId, int Num)
+        {
+            return _IRequDal.AddRequGood(GId,Num);
+        }
+          #endregion
+
+        #region   采购单
         //采购单显示
         public List<PurChaseOrder> GetPurList(string state, string time, string gname, string bgname, int pageindex, int pagesize, ref int rowcount)
         {
@@ -141,12 +166,6 @@ namespace IOT_ErpManageSystem.BLL.liuning
         {
             return _IRequDal.GetGoodsId();
         }
-        //添加请购单,采购单与商品的中间表数据
-        public int AddRequGoods(string QgId, string GId)
-        {
-            return _IRequDal.AddRequGoods(QgId, GId);
-
-        }
 
         //根据ID删除相关的商品信息
         public int DeleteGoods(int RpgId)
@@ -160,9 +179,6 @@ namespace IOT_ErpManageSystem.BLL.liuning
         {
             return _IRequDal.UpdatePurInfo(m);
         }
-
-
-
 
         #endregion
 

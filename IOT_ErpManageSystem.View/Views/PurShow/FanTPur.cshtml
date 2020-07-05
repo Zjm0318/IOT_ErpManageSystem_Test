@@ -42,7 +42,7 @@
 <br />
 
 添加商品
-<input type="button" value="添加" id="add" class="layui-btn" />
+<input type="button" value="添加商品" id="add" class="layui-btn" onclick="showadd()" />
 <table class="layui-table">
     <tr>
         <td>商品编号</td>
@@ -59,9 +59,7 @@
     </tr>
     <tbody id="body"></tbody>
 </table>
-
-商品编号
-<select id="goodid"><option value="请选择">请选择</option></select>
+<br />
 
 <input type="button" value="保存" id="update" class="layui-btn" />
 <input type="button" value="返回" id="back" class="layui-btn layui-btn-normal" />
@@ -71,7 +69,6 @@
     $(function () {
         show();   //显示反填信息
         showlist();  //显示商品信息
-        BingXia();   //绑定商品下拉框
     })
 
     //显示反填信息
@@ -91,8 +88,6 @@
             if (da.isShui == 0) {
                 $("#h2").prop("checked", true);
             }
-
-            
 
             $("#shuilv").val(da.shuiLv)
             $("#address").val(da.address)
@@ -119,7 +114,7 @@
                     + "<td>" + item.goodsRule + "</td>"
                     + "<td>" + item.sku + "</td>"
                     + "<td>" + item.buyNum + "</td>"
-                    + "<td>" + item.kyNum + "</td>"
+                    + "<td>" + item.goodsStock + "</td>"
                     + "<td>" + item.goodsStock + "</td>"
                     + "<td>" + item.goodsPrices + "</td>"
                     + "<td>" + item.jinHPrice + "</td>"
@@ -131,46 +126,114 @@
         })
     }
 
+    //添加商品信息
+    function showadd() {
+        layui.use('layer', function () {
+            var layer = layui.layer;
 
-
-    //绑定商品下拉框
-    function BingXia() {
-        $.ajax("http://localhost:52645/api/RequList/GetChaGoodsID", {
-            type: "get",
-            dataType: "json"
-        }).done(function (da) {
-            $("#goodid").empty();
-
-            $.each(da, function (index, item) {
-                var str = "<option value=" + item.id + ">" + item.id + "</option>";
-                $("#goodid").append(str);
+            //页面层
+            layer.open({
+                type: 1,
+                title: '添加商品',
+                area: ['1000px', '500px'],
+                content: '<table class="layui-table"><tr>'
+                    + '<td><input type="checkbox" id="ck"  onclick="cks()" lay-skin="primary" /></td>'
+                    + '<td>商品编号</td>'
+                    + '<td>商品名称</td>'
+                    + '<td>商品售价</td>'
+                    + '<td>商品库存</td>'
+                    + '</tr>'
+                    + '<tbody id="tbody"></tbody></table>'
+                    + '购买量  <input type="number" id="num"> <br />'
+                    + '<input type="button" onclick="Save()" value="保存" style="background-color:forestgreen" class="layui-btn layui-btn-normal" />'
             })
-        })
+        });
+
+        goodshow();   //查询商品信息
+
+    }
+
+    //全选反选
+    function cks() {
+        if ($("#ck").prop("checked") == true) {
+            $(".chk").prop("checked", true);
+        }
+        else {
+            $(".chk").prop("checked", false);
+        }
     }
 
     //添加商品
-    $("#add").click(function () {
-        var obj = {
-            "QPId": $("#id").val(),
-            "GId": $("#goodid").val()
-        };
-
-        $.ajax("http://localhost:52645/api/RequList/AddRequGoods", {
-            type: "post",
-            data: obj,
-            dataType: "json",
-            contentType: "application/x-www-form-urlencoded",
-            accepts: "application/x-www-form-urlencoded"
-        }).done(function (da) {
-            if (da > 0) {
-                alert("添加成功");
-                window.location.reload();
-            }
-            else {
-                alert("添加失败");
+    function Save() {
+        //获取复选框的值
+        var ids = "";
+        $(".chk").each(function (index, item) {
+            if ($(item).prop("checked") == true) {
+                ids = ids + $(item).val() + ",";
             }
         })
-    })
+
+        ids = ids.substr(0, ids.length - 1);
+
+        if (ids =="") {
+            alert("请选择商品");
+            return;
+        }
+        else {
+            //判断是否输入数量
+            if ($("#num").val() == '' || $("#num").val() == undefined || $("#num").val() == null || $("#num").val() < 0) {
+                alert("请输入数量,并且不能是负数");
+                return;
+            }
+
+            $.ajax("http://localhost:52645/api/RequList/AddRequGood", {
+                type: "post",
+                data: { GId: ids, Num: $("#num").val() },
+                dataType: "text",
+                contentType: "application/x-www-form-urlencoded",
+                accepts: "application/x-www-form-urlencoded"
+            }).done(function (da) {
+                if (da == 1) {
+                    alert("添加成功");
+                    window.location.reload();
+                }
+                else if (da == -1) {
+                    alert("数据添加不全!");
+                }
+                else {
+                    alert("添加失败");
+                }
+            });
+        }
+
+       
+    }
+
+
+
+    //查询商品信息
+    function goodshow() {
+        $.ajax("http://localhost:52645/api/RequList/SelectGoods", {
+            type: "get",
+            dataType: "json"
+        }).done(function (da) {
+            $("#tbody").empty();
+
+            $.each(da, function (index, item) {
+                var str = "<tr>"
+                    + "<td><input type='checkbox' class='chk' value='" + item.id + "' /></td>"
+                    + "<td>" + item.goodsName + "</td>"
+                    + "<td>" + item.goodsBrand + "</td>"
+                    + "<td>" + item.goodsPrices + "</td>"
+                    + "<td>" + item.goodsStock + "</td>"
+                    + "</tr>";
+
+                $("#tbody").append(str);
+            })
+        })
+
+    }
+
 
     //删除
     function shan(Id) {
@@ -200,6 +263,7 @@
             state = 0;
         }
         var obj = {
+            "PId": $("#id").val(),
             "ID": $("#cid").val(),
             "IsShui": state,
             "ShuiLv": $("#shuilv").val(),
