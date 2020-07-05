@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewData["Title"] = "AddDep";
+}
+
+<h1>添加部门</h1>
+
+<form class="layui-form">
+    <div class="layui-inline">
+        <label class="layui-form-label" style="width:100px">部门名称</label>
+        <div class="layui-input-inline">
+            <input type="tel" placeholder="请输入名称" id="Depment" name="phone" style="width:300px" lay-verify="required|phone" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+</form>
+<div style="margin-left:200px">
+    <button type="button" class="layui-btn" onclick="Role_Add()">保存</button>
+    <button type="button" class="layui-btn" onclick="Back()">返回</button>
+
+</div>
+<script>
+    //添加信息
+    function Role_Add() {
+        //编号
+        if (jQuery('#Depment').val() == "") {
+            jQuery('#Depment').focus();
+            alert("名称不能为空！");
+            return;
+        }
+        //正则表达式
+        var reg = /^[^\s]*$/;
+        if (!reg.test(jQuery('#Depment').val())) {
+            jQuery('#Depment').focus();
+            alert("名称不能输入空格！");
+            return;
+        }
+        var custname = $("#Depment").val();
+        var reg = /[^u4e00-u9fa5]/;
+        if (!reg.test(custname)) {
+            alert("名称只能输入汉字");
+            return;
+        }
+
+         
+        var obj = {
+            "Dep_Name": $("#Depment").val(),
+
+        };
+        $.ajax({
+            url: "http://localhost:52645/api/RBAC_Allot/AddDep",
+            type: "post",
+            data: obj,
+            dataType: "text",
+            accepts: "application/x-www-form-urlencoded",
+            contentType: "application/x-www-form-urlencoded",
+        }).done(function (data) {
+
+            if (data > 0) {
+                alert("添加成功");
+                window.location.href = "Index";
+            }
+        })
+
+    }
+    //返回
+    function Back() {
+        window.location.href = "/RBAC_Role/Index";
+    }
+</script>

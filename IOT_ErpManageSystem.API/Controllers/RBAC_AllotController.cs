@@ -93,5 +93,11 @@ namespace IOT_ErpManageSystem.API.Controllers
                 return null;
             }
         }
+        //添加部门
+        [HttpPost]
+         public int AddDep([FromForm]RBAC_Dep model)
+        {
+            return _allotinterface.AddDep(model);
+        }
     }
 }

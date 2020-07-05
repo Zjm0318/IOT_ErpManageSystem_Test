@@ -22,5 +22,7 @@ namespace IOT_ErpManageSystem.BLL.InRBAC_Role
 
         RBAC_Allots Quan(string id);
         List<RBAC_Dep> GetDep();
+        //添加部门
+        int AddDep(RBAC_Dep model);
     }
 }
