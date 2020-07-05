@@ -3,6 +3,8 @@ namespace IOT_ErpManageSystem.Models
 {
     public class RequisitionInfo
     {
+        //编号
+        public Guid QgId { get; set; }
         //请购信息ID
         public Guid QId { get; set; }
         //创建日期

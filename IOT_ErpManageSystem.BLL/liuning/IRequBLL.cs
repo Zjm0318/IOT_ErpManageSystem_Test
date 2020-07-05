@@ -30,12 +30,21 @@ namespace IOT_ErpManageSystem.BLL.liuning
         //查询商品ID
         List<Models.GoodsInfo> GetGoodsId();
 
+        //查询商品信息
+        List<RequGoods> SelectGoods();
+
         //添加请购单,采购单与商品的中间表数据
-        int AddRequGoods(string QgId, string GId);
+        int AddRequGood(string GId, int Num);
+
         //根据ID删除相关的商品信息
         int DeleteGoods(int RpgId);
         //修改请购单信息
         int UpdateRequ(RequisitionInfo m);
+
+        //查询员工名称
+        public List<RBAC_Role> SelectRole();
+        //查询部门名称
+        public List<RBAC_Dep> SelectDep();
 
         #endregion
         #region 采购单

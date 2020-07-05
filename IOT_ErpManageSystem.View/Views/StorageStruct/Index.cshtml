@@ -13,15 +13,12 @@
         margin-right: 30px
     }
 </style>
-<script src="~/lib/jquery/dist/jquery.js"></script>
-<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
-<link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
-<link href="~/layuiadmin/style/admin.css" rel="stylesheet" />
+
 @*<div style="width:200px;margin-left:75px;float:left;margin-top:30px;margin-bottom:30px">
         <div class="alert open" onclick="mizhu.open(200,300, '新增区域', '/StorageStruct/addarea');">新增区域</div>
         <div class="alert open" onclick="mizhu.open(200, 300, '新增货架', '/StorageStruct/addshelf');">新增货架</div>
     </div>*@
-<div class="layui-inline">
+<div class="layui-inline" style="margin-left:75px;margin-top:30px">
     <a class="layui-btn layui-btn-normal newsAdd_btn" onclick="addArea()">
         <i class="layui-icon layui-icon-add-1"></i>
         新增区域
@@ -44,12 +41,16 @@
     <tbody id="tb">
     </tbody>
 </table>
-<div style="margin-top:30px">
-    <div class="page" style="width:300px;margin-left:500px;float:right">
-        <a href="#" style="margin-right:25px" onclick="First()">首页</a>
-        <a href="#" style="margin-right:25px" onclick="Pre()">上一页</a>
-        <a href="#" style="margin-right:25px" onclick="Next()">下一页</a>
-        <a href="#" style="margin-right:25px" onclick="Last()">尾页</a>
+<div style="margin-top:30px" class="layui-btn-container">
+    <div class="page" style="width:300px;float:left;margin-left:65px">
+        @*<a href="#" style="margin-right:25px" onclick="First()">首页</a>
+            <a href="#" style="margin-right:25px" onclick="Pre()">上一页</a>
+            <a href="#" style="margin-right:25px" onclick="Next()">下一页</a>
+            <a href="#" style="margin-right:25px" onclick="Last()">尾页</a>*@
+        <button class="layui-btn layui-btn-sm" onclick="First()">首页</button>
+        <button class="layui-btn layui-btn-sm" onclick="Pre()">上一页</button>
+        <button class="layui-btn layui-btn-sm" onclick="Next()">下一页</button>
+        <button class="layui-btn layui-btn-sm" onclick="Last()">尾页</button>
     </div>
 </div>
 <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -115,17 +116,18 @@
     }
     //新增区域页面布局
     function list() {
-        var list = "<div style='width: 300px; height: 200px; margin: 0 auto; padding - top: 20px'>" +
+        var list = "<div class='layui-form' style='width: 400px; height: 300px; margin: 0 auto; padding - top: 20px'>" +
+            "<div class='layui-form-item'>" +
             "<div class='layui-inline'>" +
             "<label class='layui-form-label'>区域名称</label>" +
             "<div class='layui-input-inline'>" +
             "<input type='text' class='layui-input' id = 'area' placeholder = '请输入新增区域名称' > " +
             "</div>" +
             "</div>" +
-            "<div class='layui-inline' style='float:left'>" +
+            "<div class='layui-inline' >" +
             " <label class='layui-form-label'>所属仓库</label>" +
-            " <div class='layui-col-md6'>" +
-            "<select id='storage' name ='city' lay-verify=''>" +
+            " <div class='layui-input-inline'>" +
+            "<select id='storage'  class='layui-select' name ='city' lay-verify=''>" +
             "<option value='0'>--仓库--</option>" +
             "</select>" +
             " </div>" +
@@ -133,7 +135,8 @@
             "<div class='layui-inline'>" +
             "  <button style='margin-left:120px;margin-top:30px' class='layui-btn layuiadmin-btn-list' id='save'>保存</button>" +
             " </div>" +
-            " </div >";
+            "</div>"+
+            " </div>";
         return list;
     }
     //新增区域
@@ -143,7 +146,7 @@
 
             layer.open({
                 title: '新增区域',
-                area: ['800px', '500px']
+                area: ['600px', '300px']
                 , content: list()
             });
             BindStorage();
@@ -195,6 +198,10 @@
                 var option = "<option value='" + item.id + "'>" + item.storageName + "</option>";
                 $("#storage").append(option);
             })
+            layui.use('form', function () {
+                var form = layui.form;
+                form.render();
+            });
         })
     }
     //绑定区域
@@ -207,30 +214,35 @@
                 var option = "<option value='" + item.id + "'>" + item.area + "</option>";
                 $("#area").append(option);
             })
+            layui.use('form', function () {
+                var form = layui.form;
+                form.render();
+            });
         })
     }
 
     //新增货架布局
     function shelf() {
-        var list = "<div style='width: 300px; height: 200px; margin: 0 auto; padding - top: 20px'>" +
-            "<div class='layui-inline'>" +
+        var list = "<div class='layui-form' style='width: 400px; height: 200px; margin: 0 auto; padding - top: 20px'>" +
+            "<div class='layui-form-item'>" +
+            "<div  class='layui-inline'>" +
             "<label class='layui-form-label'>货架名称</label>" +
             "<div class='layui-input-inline'>" +
             "<input type='text' class='layui-input' id='shelf' placeholder='请输入新增货架名称'>" +
             "</div>" +
             "</div>" +
-            "<div class='layui-inline' style='float:left'>" +
+            "<div class='layui-inline'>" +
             "<label class='layui-form-label'>所属仓库</label>" +
-            "<div class='layui-col-md6'>" +
-            "<select id='storage' name='city' lay-verify=''>" +
+            "<div class='layui-input-inline'>" +
+            "<select id='storage' class='layui-select'  name='city' lay-verify=''>" +
             "<option value='0'>--仓库--</option>" +
             "</select>" +
             "</div>" +
             "</div>" +
-            "<div class='layui-inline' style='float:left'>" +
+            "<div class='layui-inline' >" +
             "<label class='layui-form-label'>所属区域</label>" +
-            "<div class='layui-col-md6'>" +
-            "<select id='area' lay-verify=''>" +
+            "<div class='layui-input-inline'>" +
+            "<select id='area'  class='layui-select'  lay-verify=''>" +
             "<option value='0'>--区域--</option>" +
             "</select>" +
             "</div>" +
@@ -238,6 +250,7 @@
             "<div class='layui-inline'>" +
             "<button style='margin-left:120px;margin-top:30px' class='layui-btn layuiadmin-btn-list'id='addShelf' >保存</button>" +
             "</div>" +
+            "</div>"+
             "</div >";
         return list;
     }

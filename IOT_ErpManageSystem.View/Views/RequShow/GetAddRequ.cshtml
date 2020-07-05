@@ -12,16 +12,17 @@
     </tr>
     <tr>
         <td>请购人员</td>
-        <td><input type="text" id="qgname" /></td>
+        <td>
+            <select id="qgname">
+                <option value="请选择">请选择</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
         <td>所在部门</td>
         <td>
             <select id="dept">
                 <option value="请选择">请选择</option>
-                <option value="调查部">调查部</option>
-                <option value="销售部">销售部</option>
-                <option value="人事部">人事部</option>
-                <option value="产品部">产品部</option>
-                <option value="董事部">董事部</option>
             </select>
         </td>
     </tr>
@@ -38,6 +39,28 @@
 <script>
     var reg =/^[^\s]*$/;
 
+      //绑定员工名称
+    $.ajax("http://localhost:52645/api/RequList/SelectRole", {
+        type: "get",
+        dataType: "json",
+    }).done(function (da) {
+
+        $.each(da, function (index, item) {
+            var str = "<option value='" + item.role_Name + "'>" + item.role_Name + "</option>";
+            $("#qgname").append(str);
+        })
+    })
+    //绑定部门名称
+    $.ajax("http://localhost:52645/api/RequList/SelectDep", {
+        type: "get",
+        dataType: "json",
+    }).done(function (da) {
+
+        $.each(da, function (index, item) {
+            var str = "<option value='" + item.dep_Name + "'>" + item.dep_Name + "</option>";
+            $("#dept").append(str);
+        })
+    })
     //添加
     $("#add").click(function () {
         var obj = {
@@ -54,12 +77,9 @@
             alert("不能输入空格！");
             return;
         }
-        if (obj.QgName == "" || obj.QgName == undefined || obj.QgName == null) {
-            alert("请输入请购人姓名");
-            return;
-        }
-        if (!reg.test(obj.QgName)) {
-            alert("不能输入空格！");
+
+        if (obj.QgName == "请选择") {
+            alert("请选择请购人");
             return;
         }
         if (obj.DeptName == "请选择") {

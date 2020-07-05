@@ -1,4 +1,4 @@
-﻿;=
+﻿
 @{
     ViewData["Title"] = "Index";
 }
@@ -11,10 +11,11 @@
         line-height: 30px
     }
 </style>
-    <div class="layui-fluid" style="margin-top:20px;width:1300px;height:140px;border:solid 1px;border-color:darkgrey;padding-top:30px">
+<div class="layui-form">
+    <div class="layui-fluid" style="margin-top:20px;width:1340px;height:140px;border:solid 1px;border-color:darkgrey;padding-top:30px">
         <div class="layui-inline">
             <label class="layui-form-label">入库状态</label>
-            <div class="layui-col-md6">
+            <div class="layui-input-inline">
                 <select id="state" name="city" lay-verify="">
                     <option value="0">--入库状态--</option>
                     <option value="1">待入库</option>
@@ -45,7 +46,7 @@
         <table class="layui-table" style="width:1340px;text-align:center;margin-left:75px">
             <tr>
                 <td>
-                    <input type="checkbox" id="ckALL" />
+                    <input type="checkbox" name="" lay-skin="primary" class="ckALL">
                 </td>
                 <td>入库日期</td>
                 <td>入库单编号</td>
@@ -61,15 +62,20 @@
             <tbody id="tb">
             </tbody>
         </table>
-        <div style="margin-top:30px">
-            <div class="page" style="width:300px;margin-left:500px;float:right">
-                <a href="#" style="margin-right:25px" onclick="First()">首页</a>
+        <div style="margin-top:30px" class="layui-btn-container">
+            <div class="page" style="width:300px;float:left;margin-left:75px">
+              @*<a href="#" style="margin-right:25px" onclick="First()">首页</a>
                 <a href="#" style="margin-right:25px" onclick="Pre()">上一页</a>
                 <a href="#" style="margin-right:25px" onclick="Next()">下一页</a>
-                <a href="#" style="margin-right:25px" onclick="Last()">尾页</a>
+                <a href="#" style="margin-right:25px" onclick="Last()">尾页</a>*@
+                <button class="layui-btn layui-btn-sm" onclick="First()">首页</button>
+                <button class="layui-btn layui-btn-sm" onclick="Pre()">上一页</button>
+                <button class="layui-btn layui-btn-sm" onclick="Next()">下一页</button>
+                <button class="layui-btn layui-btn-sm" onclick="Last()">尾页</button>
             </div>
         </div>
     </div>
+</div>
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script>
     var pageIndex = 1;
@@ -81,6 +87,10 @@
     //初始化加载
     $(function () {
         Show();
+        layui.use('form', function () {
+            var form = layui.form;
+            form.render();
+        });
     })
     //查询
     function Look() {
@@ -108,7 +118,7 @@
             $("#tb").empty();
             $.each(data.iSMShowList, function (index, item) {
                 var tr = "<tr>" +
-                    "<td><input type='checkbox' class='ck' /></td >" +
+                    "<td><input type='checkbox' class='ck' lay-skin='primary'> </td>" +
                     "<td>" + item.inStorageTime + "</td>" +
                     "<td>" + item.inStorageNo + "</td>" +
                     "<td>" + item.buyListNo + "</td>" +

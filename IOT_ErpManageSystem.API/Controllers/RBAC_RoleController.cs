@@ -3,6 +3,7 @@ using IOT_ErpManageSystem.BLL;
 using IOT_ErpManageSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace IOT_ErpManageSystem.API.Controllers
 {
@@ -51,7 +52,9 @@ namespace IOT_ErpManageSystem.API.Controllers
         [HttpGet]
         public List<RBAC_Job> GetJob(string RoleId)
         {
+
             List<RBAC_Job> jlist = _roleInterface.GetJob(RoleId);
+
             return jlist;
         }
 

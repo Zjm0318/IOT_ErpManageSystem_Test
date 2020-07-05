@@ -9,12 +9,15 @@
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px">
     <legend>编辑员工信息</legend>
 </fieldset>
+
+
 <div class="layui-form-item">
     <label class="layui-form-label" style="width:100px">员工编号</label>
     <div class="layui-input-inline">
         <input type="tel" placeholder="请输入姓名" id="RoleCode" name="phone" style="width:300px" lay-verify="required|phone" autocomplete="off" class="layui-input">
     </div>
 </div>
+
 <div class="layui-inline">
     <label class="layui-form-label" style="width:100px">员工姓名</label>
     <div class="layui-input-inline">
@@ -67,20 +70,21 @@
     <div class="layui-input-block">
         <select name="city" lay-verify="required" id="RoleJob">
             <option value="">请选择</option>
-
         </select>
     </div>
 </div>
 <div style="margin-left:220px">
     <button type="button" class="layui-btn" onclick="Role_Add()">保存</button>
-
+    <button type="button" class="layui-btn" onclick="Back()">返回</button>
 </div>
 <script>
+
     //初始化
     $(function () {
-        show();      
+        show();
         Allt_Dep();
         Role_Top();
+
     })
 
     //部门绑定
@@ -94,7 +98,6 @@
                 var option = '<option value=' + item.dep_ID + '>' + item.dep_Name + '</option>';
                 $("#RolName").append(option);
             })
-            emp();
         })
     }
 
@@ -109,7 +112,7 @@
                 var option = '<option value=' + item.job_ID + '>' + item.job_Name + '</option>';
                 $("#RoleTop").append(option);
             })
-
+            change($("#RoleTop").val());
         })
     }
 
@@ -124,7 +127,6 @@
                 var option = '<option value=' + item.job_ID + '>' + item.job_Name + '</option>';
                 $("#RoleJob").append(option);
             })
-
         })
     }
     //反填
@@ -168,10 +170,22 @@
             alert("编号不能输入空格！");
             return;
         }
+        var rolecode = $("#RoleCode").val();
+        var myReg = /^[a-zA-Z0-9_]{0,}$/;
+        if (!myReg.test(rolecode)) {
+            alert("编号不能含有中文")
+            return;
+        }
         //姓名
         if (jQuery('#RoleName').val() == "") {
             jQuery('#RoleName').focus();
             alert("名称不能为空！");
+            return;
+        }
+        var custname = $("#RoleName").val();
+        var reg = /[^u4e00-u9fa5]/;
+        if (!reg.test(custname)) {
+            alert("名称只能输入汉字");
             return;
         }
         //正则表达式
@@ -192,6 +206,12 @@
         if (!reg.test(jQuery('#RoleAccount').val())) {
             jQuery('#RoleAccount').focus();
             alert("账号不能输入空格！");
+            return;
+        }
+        var rolecode = $("#RoleAccount").val();
+        var myReg = /^[a-zA-Z0-9_]{0,}$/;
+        if (!myReg.test(rolecode)) {
+            alert("账号不能含有中文")
             return;
         }
         //手机号
@@ -239,7 +259,8 @@
             "Role_Account": $("#RoleAccount").val(),
             "RoleSex": $("input[type='radio']:checked").val(),
             "Role_Tel": $("#RoleTel").val(),
-            "Job_ID": $("#RoleJob").val()
+            "Job_ID": $("#RoleJob").val(),
+            "Dep_ID": $("#RolName").val()
         };
         $.ajax({
             url: "http://192.168.0.190:8085/api/RBAC_Role/Update_Role",
@@ -254,6 +275,9 @@
                 window.location.href = "/RBAC_Role/Index";
             }
         })
+    }
+    function Back() {
+        window.location.href = "/RBAC_Role/Index";
     }
 
 </script>
