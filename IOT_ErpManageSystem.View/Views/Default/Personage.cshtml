@@ -86,7 +86,7 @@
     function ShowPer() {
         var token = localStorage["token"];
         $.ajax({
-            url: "http://localhost:52645/api/Default/ShowPer?token=" + token,
+            url: "http://192.168.0.190:8085/api/Default/ShowPer?token=" + token,
             type: "get",
         }).done(function (d) {
             uid = d.uid;
@@ -115,7 +115,7 @@
                 UserName: $("#userName").val()
             };
             $.ajax({
-                url: "http://localhost:52645/api/Default/UpName",
+                url: "http://192.168.0.190:8085/api/Default/UpName",
                 type: "post",
                 accepts: "application/x-www-form-urlencoded",
                 contentType: "application/x-www-form-urlencoded",
@@ -151,7 +151,7 @@
                 IPhone: $("#iphone").val(),
             };
             $.ajax({
-                url: "http://localhost:52645/api/Default/UpPhone",
+                url: "http://192.168.0.190:8085/api/Default/UpPhone",
                 type: "post",
                 accepts: "application/x-www-form-urlencoded",
                 contentType: "application/x-www-form-urlencoded",
@@ -196,7 +196,7 @@
         };
         //var token = localStorage["token"];
         $.ajax({
-            url: "http://localhost:52645/api/Default/Update",
+            url: "http://192.168.0.190:8085/api/Default/Update",
             type: "post",
             accepts: "application/x-www-form-urlencoded",
             contentType: "application/x-www-form-urlencoded",

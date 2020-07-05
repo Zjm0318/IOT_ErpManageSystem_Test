@@ -54,8 +54,8 @@
     </div>
 </div>
 
-<input type="button" id="Cha" value="搜索" style="background-color:forestgreen" class="layui-btn" />
-<input type="button" id="Add" value="添加" style="background-color:cornflowerblue" class="layui-btn layui-btn-normal" />
+<input type="button" id="Cha" value="搜索" style="background-color:cornflowerblue" class="layui-btn" />
+<input type="button" id="Add" value="添加" style="background-color:forestgreen" class="layui-btn layui-btn-normal" />
 
 <table class="layui-table">
     <colgroup>
@@ -78,16 +78,16 @@
     <tbody id="tbody"></tbody>
 </table>
 
-<div>
-    <a id="First" class="layui-form-label">首页</a>
-    <a id="Per" class="layui-form-label">上一页</a>
-    <a id="Next" class="layui-form-label">下一页</a>
-    <a id="Last" class="layui-form-label">尾页</a>
+<div style="float:left;margin-right:50px">
+    <button type="button" class="layui-btn layui-btn-sm" id="First">首页</button>
+    <button type="button" class="layui-btn layui-btn-sm" id="Per">上一页</button>
+    <button type="button" class="layui-btn layui-btn-sm" id="Next">下一页</button>
+    <button type="button" class="layui-btn layui-btn-sm" id="Last">尾页</button>
 </div>
 
 <script>
     var PageIndex = 1;
-    var PageSize = 3;
+    var PageSize = 10;
     var count = 0;
 
     //页面初始化
@@ -128,7 +128,7 @@
                         '<td>' + item.jyRange + '</td>' +
                         '<td>' + item.yJfzr + '</td>' +
                         '<td>' + item.createDate.split('T')[0] + '</td>' +
-                        '<td><input type="button" class="layui-btn layui-btn-primary" onclick="Edit(\'' + item.gysId + '\')" value="编辑" /></td>' +
+                        '<td><input type="button" class="layui-btn layui-btn-warm" onclick="Edit(\'' + item.gysId + '\')" value="编辑" /></td>' +
                         '</tr>';
                     $("#tbody").append(str);
                 })

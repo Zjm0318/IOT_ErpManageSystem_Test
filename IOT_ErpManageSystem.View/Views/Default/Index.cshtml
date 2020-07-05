@@ -77,10 +77,10 @@
                             <cite>管理员</cite>
                         </a>
                         <dl class="layui-nav-child">
-                            <dd><a lay-href="set/user/info.html">基本资料</a></dd>
-                            <dd><a lay-href="set/user/password.html">修改密码</a></dd>
+                            <dd><a lay-href="/Default/Personage">基本资料</a></dd>
+                            <dd><a lay-href="/Default/Personage">修改密码</a></dd>
 
-                            <dd layadmin-event="logout" style="text-align: center;"><a>退出</a></dd>
+                            <dd layadmin-event="logout" style="text-align: center;"><a href="/Default/Log">退出</a></dd>
                         </dl>
                     </li>
 
@@ -160,7 +160,7 @@
 
     $(function () {
 
-        $.ajax("http://localhost:52645/api/RBAC_Allot/UserQuanInfo?token=" + localStorage["token"],
+        $.ajax("http://192.168.0.190:8085/api/RBAC_Allot/UserQuanInfo?token=" + localStorage["token"],
             {
                 data: "get",
                 async: false
@@ -168,7 +168,7 @@
                 list = data.allot_BaoId.split('/');
             });
 
-        $.ajax("http://localhost:52645/api/RBAC_Allot/ShowQuanInfo?UId=0",
+        $.ajax("http://192.168.0.190:8085/api/RBAC_Allot/ShowQuanInfo?UId=0",
             {
                 type: "get",
                 async: false,
@@ -200,7 +200,7 @@
     });
 
     function FindTwo(id) {
-        $.ajax("http://localhost:52645/api/RBAC_Allot/ShowQuanInfo?UId=" + id,
+        $.ajax("http://192.168.0.190:8085/api/RBAC_Allot/ShowQuanInfo?UId=" + id,
             {
                 type: "get",
                 async: false,

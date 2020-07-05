@@ -54,7 +54,7 @@ namespace IOT_ErpManageSystem.API
                 options.AddPolicy("ZXL", policy =>
                 {
                     // 設定允許跨域的來源，有多個的話可以用 `,` 隔開
-                    policy.WithOrigins("http://localhost:52645", "http://localhost:52649")
+                    policy.WithOrigins("http://localhost:52645", "http://localhost:52649", "http://192.168.0.190:8085", "http://192.168.0.190:8086")
                             .AllowAnyHeader()
                             .AllowAnyMethod()
                             .AllowCredentials();

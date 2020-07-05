@@ -59,7 +59,7 @@
     <tbody id="tbody"></tbody>
 </table>
 <input type="button" id="Back" value="返回" style="background-color:gray" class="layui-btn layui-btn-normal" />
-<input type="button" id="Save" value="保存" style="background-color:cornflowerblue" class="layui-btn layui-btn-normal" />
+<input type="button" id="Save" value="保存" style="background-color:forestgreen" class="layui-btn layui-btn-normal" />
 
 <script>
     var s = 0;
@@ -158,6 +158,10 @@
             if (!reg.test(obj.THFqr)) {
                 return alert("不能输入空格！");
             }
+            var re = /[^u4e00-u9fa5]/;
+            if (!re.test(obj.THFqr)) {
+                return alert("退货发起人只能输入汉字");
+            }
         }
         if (obj.TCangKu == '') {
             return alert("请选择退货仓库");
@@ -225,20 +229,26 @@
             layer.open({
                 type: 1,
                 title: '添加商品',
-                area: ['500px', '300px'],
-                content: '<div style="width:500px;height:300px;margin:auto" >' +
-                    '<div class="layui-form-item"><div class="layui-inline">' +
-                    '<label class="layui-form-label">商品</label>' +
-                    '<div class="layui-input-inline">' +
-                    '<select id="GoodsName" required>' +
-                    '<option value="">请选择</option>' +
-                    '</select>' +
-                    '</div></div></div>' +
-                    '<input type="button" onclick="Save()" value="保存" style="background-color:cornflowerblue" class="layui-btn layui-btn-normal" /></div> ',
+                area: ['1000px', '500px'],
+                content: '<table class="layui-table">'+
+                    '<colgroup><col width="150"><col width="200"><col></colgroup>'+
+                    '<thead><tr style="background-color:gainsboro">' +
+                    '<th><input type="checkbox" id="ck" onclick="cks()" lay-skin="primary" /></th>' +
+                    '<th>商品编号</th>'+
+                    '<th>商品名称</th>'+
+                    '</tr></thead>'+
+                    '<tbody id="tbodys"></tbody></table>'+
+                    '<input type="button" onclick="Save()" value="保存" style="background-color:forestgreen" class="layui-btn layui-btn-normal" />',
             });
         });
         //显示商品
         Goods();
+
+        //全选/反选
+        function cks() {
+            cks();
+        }
+        
 
         //保存
         function Save() {
@@ -246,7 +256,7 @@
         }
     }
 
-    //绑定商品下拉框
+    //绑定商品
     function Goods() {
         $.ajax("http://localhost:52645/api/TuiHuo/GetGoods", {
             type: "get",
@@ -254,28 +264,52 @@
             success: function (d) {
                 //循环
                 $(d).each(function (index, item) {
-                    var str = '<option value="' + item.priceId + '">' + item.goodsName + '</option>';
-                    $("#GoodsName").append(str);
+                    var str = '<tr>' +
+                        '<th><input type="checkbox" class="che" value="'+ item.priceId + '" lay-skin="primary" /></th>' +
+                        '<th>' + item.priceId + '</th>' +
+                        '<th>' + item.goodsName + '</th>' +
+                        '</tr>';
+                    $("#tbodys").append(str);
                 })
             }
         })
     }
 
+    //全选/反选
+    function cks() {
+            if ($("#ck").prop("checked") == true) {
+                $(".che").prop("checked", true);
+            }
+            else {
+                $(".che").prop("checked", false);
+            }
+    }
+
     //添加商品
     function Save() {
-        var id = $("#GoodsName").val();
+        //复选框
+        var ids = "";
+        $(".che").each(function (index, item) {
+            if ($(item).prop("checked") == true) {
+                ids = ids + $(item).val() + ",";
+            }
+        })
+        ids = ids.substring(0, ids.length - 1);
         $.ajax({
             url: "http://localhost:52645/api/TuiHuo/AddGoods",
             type: "post",
             dataType: "text",
-            data: { id, id },
+            data: { id: ids} ,
             accepts: "application/x-www-form-urlencoded",
             contentType: "application/x-www-form-urlencoded",
             success: function (d) {
                 //判断
-                if (d > 0) {
+                if (d == 1) {
                     alert("添加成功!");
                     window.location.reload(); //刷新父窗口中的网页
+                }
+                else if (d == -1) {
+                    alert("数据添加不全!");
                 }
                 else {
                     alert("添加失败!");
@@ -283,6 +317,5 @@
             }
         })
     }
-
     
 </script>

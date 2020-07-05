@@ -87,7 +87,7 @@
     //绑定配送方式
     function GetDisList() {
         $.ajax({
-            url: "http://localhost:52645/api/OStorageManage/GetTbDisList",
+            url: "http://192.168.0.190:8085/api/OStorageManage/GetTbDisList",
             type: "get",
         }).done(function (data) {
             $.each(data, function (index, item) {
@@ -99,7 +99,7 @@
     //绑定仓库
     function GetStorageList() {
         $.ajax({
-            url: "http://localhost:52645/api/OStorageManage/GetStorageList",
+            url: "http://192.168.0.190:8085/api/OStorageManage/GetStorageList",
             type: "get",
         }).done(function (data) {
             $.each(data, function (index, item) {
@@ -119,7 +119,7 @@
             "orderNo": $("#order").val()
         }
         $.ajax({
-            url: "http://localhost:52645/api/OStorageManage/GetOsmList",
+            url: "http://192.168.0.190:8085/api/OStorageManage/GetOsmList",
             type: "post",
             data: obj,
             accepts: "application/x-www-form-urlencoded",
@@ -184,7 +184,7 @@
     function UpdateState(oId) {
         if (confirm("是否确认?")) {
             $.ajax({
-                url: "http://localhost:52645/api/OStorageManage/UpdateState?oId=" + oId,
+                url: "http://192.168.0.190:8085/api/OStorageManage/UpdateState?oId=" + oId,
                 type: "get",
             }).done(function (data) {
                 if (data > 0) {
