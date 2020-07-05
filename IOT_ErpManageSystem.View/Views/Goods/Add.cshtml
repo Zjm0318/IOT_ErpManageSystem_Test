@@ -287,7 +287,7 @@
             return;
         }
 
-        $.ajax("http://localhost:52645/api/Goods/AddGoodsInfo?obj=" + JSON.stringify(obj),
+        $.ajax("http://192.168.0.190:8085/api/Goods/AddGoodsInfo?obj=" + JSON.stringify(obj),
             {
                 type: "post",
                 data: form,
@@ -307,7 +307,7 @@
 
     //绑定一级分类
     function type() {
-        $.ajax("http://localhost:52645/api/Goods/BindInfo",
+        $.ajax("http://192.168.0.190:8085/api/Goods/BindInfo",
             {
                 type: "get",
                 dataType: "json"
@@ -323,7 +323,7 @@
     //绑定二级分类
     function two() {
         var TypeId = $("#type").val();
-        $.ajax("http://localhost:52645/api/Goods/BindTwoInfo?TypeId=" + TypeId,
+        $.ajax("http://192.168.0.190:8085/api/Goods/BindTwoInfo?TypeId=" + TypeId,
             {
                 type: "get",
                 dataType: "json"
@@ -339,7 +339,7 @@
     /********************************添加商品属性********************************/
 
     //绑定商品名称
-    $.ajax("http://localhost:52645/api/Goods/ShowName",
+    $.ajax("http://192.168.0.190:8085/api/Goods/ShowName",
         {
             type: "get",
             dataType: "json"
@@ -351,7 +351,7 @@
         })
 
     //绑定尺码
-    $.ajax("http://localhost:52645/api/Goods/ShowSize",
+    $.ajax("http://192.168.0.190:8085/api/Goods/ShowSize",
         {
             type: "get",
             dataType: "json"
@@ -365,7 +365,7 @@
         })
 
     //绑定颜色
-    $.ajax("http://localhost:52645/api/Goods/ShowColors",
+    $.ajax("http://192.168.0.190:8085/api/Goods/ShowColors",
         {
             type: "get",
             dataType: "json"
@@ -402,7 +402,7 @@
             return;
         }
 
-        $.ajax("http://localhost:52645/api/Goods/AddProperty",
+        $.ajax("http://192.168.0.190:8085/api/Goods/AddProperty",
             {
                 type: "post",
                 data: obj,
@@ -439,51 +439,19 @@
 
     //添加颜色
     function addcolor() {
-        if ($("#colors").val() == "" || $("#colors").val() == null || $("#colors").val() == undefined) {
-            alert("颜色不能为空!");
-            return;
-        }
-        var reg = /^[^\s]*$/;
-        if (!reg.test($("#colors").val())) {
-            $('#colors').focus();
-            alert("不能输入空格！");
-            return;
-        }
-
-        //判断是否已有颜色
-        var codes = 0;
-        $.ajax("http://localhost:52645/api/Goods/ShowColors",
+        $.ajax("http://localhost:52645/api/Goods/AddColors",
             {
-                type: "get"
-            }).done(function (data) {
-
-                $.each(data, function (index, item) {
-                    if ($("#colors").val() == item.color) {
-                        codes = 1
-                        return codes;
-                    }
-                })
-                if (codes > 0) {
-                    alert("此颜色已有!");
-                    return;
+                type: "post",
+                data: { "Color": $("#colors").val().toString() },
+                dataType: "json",
+                contentType: "application/x-www-form-urlencoded"
+            }).done(function (code) {
+                if (code > 0) {
+                    alert("添加成功!");
+                    location.reload();
                 }
                 else {
-                    $.ajax("http://localhost:52645/api/Goods/AddColors",
-                        {
-                            type: "post",
-                            data: { "Color": $("#colors").val().toString() },
-                            dataType: "json",
-                            contentType: "application/x-www-form-urlencoded"
-                        }).done(function (code) {
-                            if (code > 0) {
-                                alert("添加成功!");
-                                location.reload();
-                            }
-                            else {
-                                alert("添加失败!");
-                            }
-                        })
-
+                    alert("添加失败!");
                 }
             })
     }
@@ -494,7 +462,7 @@
         $("#tb").empty();
         var Id = $("#name").val();
 
-        $.ajax("http://localhost:52645/api/Goods/ShowGoodsSC?Id=" + Id,
+        $.ajax("http://192.168.0.190:8085/api/Goods/ShowGoodsSC?Id=" + Id,
             {
                 type: "get",
             }).done(function (data) {
@@ -516,7 +484,7 @@
     //删除商品属性信息
     function delPro(PId, obj) {
         if (confirm("确定删除吗?")) {
-            $.ajax("http://localhost:52645/api/Goods/DelPreperty?PId=" + PId,
+            $.ajax("http://192.168.0.190:8085/api/Goods/DelPreperty?PId=" + PId,
                 {
                     type: "get",
                 }).done(function (code) {

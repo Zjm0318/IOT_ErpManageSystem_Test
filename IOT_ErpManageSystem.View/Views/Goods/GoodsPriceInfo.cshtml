@@ -113,7 +113,7 @@
         };
 
 
-        $.ajax("http://localhost:52645/api/Goods/ShowGoodsPrice",
+        $.ajax("http://192.168.0.190:8085/api/Goods/ShowGoodsPrice",
             {
                 type: "post",
                 data: obj,
@@ -158,7 +158,7 @@
             });
 
             //反填信息
-            $.ajax("http://localhost:52645/api/Goods/SelectPrice?priceId=" + priceId,
+            $.ajax("http://192.168.0.190:8085/api/Goods/SelectPrice?priceId=" + priceId,
                 {
                     type: "get"
                 }).done(function (data) {
@@ -194,7 +194,7 @@
                     return;
                 }
 
-                $.ajax("http://localhost:52645/api/Goods/UpdatePrice",
+                $.ajax("http://192.168.0.190:8085/api/Goods/UpdatePrice",
                     {
                         type: "post",
                         data: obj,
@@ -279,7 +279,7 @@
                 }
 
                 var codes = 0;
-                $.ajax("http://localhost:52645/api/Goods/PricesInfo",
+                $.ajax("http://192.168.0.190:8085/api/Goods/PricesInfo",
                     {
                         type: "get"
                     }).done(function (data) {
@@ -323,7 +323,7 @@
 
     //绑定商品名称
     function goods() {
-        $.ajax("http://localhost:52645/api/Goods/ShowName",
+        $.ajax("http://192.168.0.190:8085/api/Goods/ShowName",
             {
                 type: "get",
                 dataType: "json"

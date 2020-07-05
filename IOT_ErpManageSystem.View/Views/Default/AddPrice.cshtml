@@ -28,7 +28,7 @@
     })
     function GoodsName() {
         $.ajax({
-            url: "http://localhost:52645/api/Default/ShowPrice",
+            url: "http://192.168.0.190:8085/api/Default/ShowPrice",
             type: "get",
         }).done(function (d) {
             console.log(d);
@@ -61,7 +61,7 @@
             "JinHPrice": $("#price").val(),
         }
         $.ajax({
-            url: "http://localhost:52645/api/Default/AddPrice",
+            url: "http://192.168.0.190:8085/api/Default/AddPrice",
             type: "post",
             accepts: "application/x-www-form-urlencoded",
             contentType: "application/x-www-form-urlencoded",
