@@ -86,7 +86,7 @@
     //部门绑定
     function Allt_Dep() {
         $.ajax({
-            url: "http://localhost:52645/api/RBAC_Role/GetDep",
+            url: "http://192.168.0.190:8085/api/RBAC_Role/GetDep",
             type: "get",
         }).done(function (data) {
             $("#RoleName").empty();
@@ -101,7 +101,7 @@
     //直属上级绑定
     function Role_Top() {
         $.ajax({
-            url: "http://localhost:52645/api/RBAC_Role/GetJob?RoleId=0",
+            url: "http://192.168.0.190:8085/api/RBAC_Role/GetJob?RoleId=0",
             type: "get",
         }).done(function (data) {
             $("#RoleTop").empty();
@@ -116,7 +116,7 @@
     //职位绑定
     function change(id) {
         $.ajax({
-            url: "http://localhost:52645/api/RBAC_Role/GetJob?RoleId=" + id,
+            url: "http://192.168.0.190:8085/api/RBAC_Role/GetJob?RoleId=" + id,
             type: "get",
         }).done(function (data) {
             $("#RoleJob").empty();
@@ -131,7 +131,7 @@
     function show() {
         var Eid = $("#eid").val();
         $.ajax({
-            url: "http://localhost:52645/api/RBAC_Role/FanRole?Id=" + Eid,
+            url: "http://192.168.0.190:8085/api/RBAC_Role/FanRole?Id=" + Eid,
             type: "get"
         }).done(function (data) {
             $("#RoleCode").val(data.role_Code);
@@ -242,7 +242,7 @@
             "Job_ID": $("#RoleJob").val()
         };
         $.ajax({
-            url: "http://localhost:52645/api/RBAC_Role/Update_Role",
+            url: "http://192.168.0.190:8085/api/RBAC_Role/Update_Role",
             data: obj,
             type: "post",
             dataType: "text",

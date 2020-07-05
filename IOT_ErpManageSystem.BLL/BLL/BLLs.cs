@@ -128,15 +128,6 @@ namespace IOT_ErpManageSystem.BLL.BLL
             return _dal.AddPrice(model);
         }
         /// <summary>
-        /// 删除商品
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public int DleGoodsInfo(string id)
-        {
-            return _dal.DleGoodsInfo(id);
-        }
-        /// <summary>
         /// 编辑商品信息
         /// </summary>
         /// <param name="id"></param>
@@ -161,6 +152,16 @@ namespace IOT_ErpManageSystem.BLL.BLL
         public int UpGoods(Models.GoodsInfo m)
         {
             return _dal.UpGoods(m);
+        }
+
+        public List<GoodsPrice> Price()
+        {
+            return _dal.Price();
+        }
+
+        public int UpState(int id)
+        {
+            return _dal.UpState(id);
         }
     }
 }

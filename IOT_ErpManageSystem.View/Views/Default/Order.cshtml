@@ -3,13 +3,11 @@
     ViewData["Title"] = "Order";
 }
 
-
 <style>
     .div1 {
         width: 1300px;
         height: 170px;
         border: 1px solid
-        
     }
 
     .div2 {
@@ -46,19 +44,23 @@
     }
 
     #fi {
-        height:280px;
+        height: 240px;
         border-top: 1px solid;
     }
-    #he{
-        padding-top:20px;
-        margin:0 auto;
-        width:1146px;
-        height:300px;
+
+    #he {
+        padding-top: 20px;
+        margin: 0 auto;
+        width: 1146px;
+        height: 300px;
     }
 </style>
-<div id="he">
-    <h4>订单报表</h4>
-    <div class="div1">
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+<link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+<link href="~/layuiadmin/style/admin.css" rel="stylesheet" />
+<h3 style="padding-left:46px">数据报表 / 订单报表</h3>
+<div class="layui-box" style="width:1400px;height:170px;border:1px solid;margin-left:50px">
+    <div class="layui-box">
         <div id="o">
             筛选查询
         </div>
@@ -72,44 +74,45 @@
         </div>
         <div id="th">
             订单状态：
-            <select id="stype" style="width:200px;height:40px">
+            <select id="stype" style="width:220px;height:40px">
                 <option value="">全部</option>
             </select>
             订单来源：
-            <select id="lai" style="width:200px;height:40px">
+            <select id="lai" style="width:220px;height:40px">
                 <option value="">全部</option>
             </select>
-            <input type="button" id="cha" value="搜索" style="background-color:#17978b;width:100px;height:35px" />
-            <input type="button" id="btnDeleteList" value="批量删除" class="btn-danger" />
-        </div>
-    </div>
-    <div class="div2">
-        <div id="f">
-            数据列表
-        </div>
-        <div id="fi">
-            <table class="table">
-                <tr class="active">
-                    <td><input type="checkbox" id="check" />选择</td>
-                    <td>订单编号</td>
-                    <td>提交时间</td>
-                    <td>用户账号</td>
-                    <td>订单金额</td>
-                    <td>支付方式</td>
-                    <td>订单来源</td>
-                    <td>订单状态</td>
-                    <td>操作</td>
-                </tr>
-                <tbody id="tb"></tbody>
-            </table>
-            <a href="#" style="margin-right:10px" onclick="First()">首页</a>
-            <a href="#" style="margin-right:10px" onclick="Pre()">上一页</a>
-            <a href="#" style="margin-right:10px" onclick="Next()">下一页</a>
-            <a href="#" style="margin-right:10px" onclick="Last()">尾页</a>
+            <a class="layui-btn search_btn" id="cha" style="color:white;margin-left:82px"><i class="layui-icon layui-icon-search"></i> 查询</a>
+            <a class="layui-btn layui-btn-danger" id="btnDeleteList" style="color:white;margin-left:10px"> 批量删除订单</a>
         </div>
     </div>
 </div>
-
+<div class="layui-box" style="width:1400px;height:270px;border:1px solid;margin-left:50px;margin-top:30px">
+    <div id="f">
+        数据列表
+    </div>
+    <div id="fi">
+        <table class="layui-table" style="width:1400px">
+            <tr class="active">
+                <td><input type="checkbox" id="check" />选择</td>
+                <td>订单编号</td>
+                <td>提交时间</td>
+                <td>用户账号</td>
+                <td>订单金额</td>
+                <td>支付方式</td>
+                <td>订单来源</td>
+                <td>订单状态</td>
+                <td>操作</td>
+            </tr>
+            <tbody id="tb"></tbody>
+        </table>
+    </div>
+    <div style="float:left;margin-right:50px">
+        <button type="button" class="layui-btn layui-btn-sm" onclick="First()">首页</button>
+        <button type="button" class="layui-btn layui-btn-sm" onclick="Pre()">上一页</button>
+        <button type="button" class="layui-btn layui-btn-sm" onclick="Next()">下一页</button>
+        <button type="button" class="layui-btn layui-btn-sm" onclick="Last()">尾页</button>
+    </div>
+</div>
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script>
     //页码
@@ -140,7 +143,7 @@
             from = 0;
         }
         $.ajax({
-            url: "http://localhost:52645/api/Default/ShowOrder?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&ddh=" +
+            url: "http://192.168.0.190:8085/api/Default/ShowOrder?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&ddh=" +
                 $("#dh").val() + "&userName=" + $("#zh").val() + "&time=" + $("#time").val() + "&type=" + type + "&from=" + from,
             type: "get",
         }).done(function (d) {
@@ -149,6 +152,14 @@
             var tr = "";
             $("#tb").empty();
             $.each(d.list, function (index, item) {
+                var state = "";
+                if (item.state == 0) {
+                    state += "";
+                    
+                }
+                else {
+                    state += "<button type='button' id='Gb' onclick='Guan(" + item.id + ")' class='layui-btn layui-btn-warm'>关闭</button>";
+                }
                 tr += "<tr class='active'>";
                 tr += "<td><input type='checkbox' class='checkAll' value='" + item.id + "' /></td>";
                 tr += "<td>" + item.orderId + "</td>";
@@ -158,7 +169,7 @@
                 tr += "<td>" + item.payment + "</td>";
                 tr += "<td>" + item.fromName + "</td>";
                 tr += "<td>" + item.stateName + "</td>";
-                tr += "<td><input type='button' id='Gb' value='关闭' onclick='Del(" + item.id + ")' style='background - color: orange' /></td>";
+                tr += "<td>" + state + "</td>";
                 tr += "</tr>";
             });
             $("#tb").append(tr);
@@ -171,7 +182,7 @@
     });
     function ShowState() {
         $.ajax({
-            url: "http://localhost:52645/api/Default/OrderState",
+            url: "http://192.168.0.190:8085/api/Default/OrderState",
             type: "get",
         }).done(function (d) {
             console.log(d);
@@ -184,7 +195,7 @@
     }
     function ShowFrom() {
         $.ajax({
-            url: "http://localhost:52645/api/Default/OrderFrom",
+            url: "http://192.168.0.190:8085/api/Default/OrderFrom",
             type: "get",
         }).done(function (d) {
             var tr = "";
@@ -202,12 +213,12 @@
                 idStr = idStr + $(item).val() + ",";
             });
             idStr = idStr.substr(0, idStr.length - 1);
-            if (idStr==0) {
+            if (idStr == 0) {
                 alert("请先选择一行数据！");
                 return;
             }
             $.ajax({
-                url: "http://localhost:52645/api/Default/Del",
+                url: "http://192.168.0.190:8085/api/Default/Del",
                 type: "post",
                 accepts: "application/x-www-form-urlencoded",
                 contentType: "application/x-www-form-urlencoded",
@@ -216,7 +227,6 @@
                 console.log(d);
                 if (d > 0) {
                     alert("删除成功！");
-                    //$(obj).parent().parent().remove();
                     location.reload();
                 }
                 else {
@@ -225,32 +235,33 @@
             });
         }
     })
-    
 
-    //删除
-    function Del(id) {
-        if (confirm("是否确认删除？")) {
 
+    //关闭
+    function Guan(id) {
+        var obj = {
+            "id": id
+        }
+        if (confirm("是否确认关闭此订单？")) {
             $.ajax({
-                url: "http://localhost:52645/api/Default/Del",
+                url: "http://192.168.0.190:8085/api/Default/UpState",
                 type: "post",
                 accepts: "application/x-www-form-urlencoded",
                 contentType: "application/x-www-form-urlencoded",
-                data: { id: id }
+                data: obj,
             }).done(function (d) {
                 console.log(d);
                 if (d > 0) {
-                    alert("删除成功！");
-                    //$(obj).parent().parent().remove();
+                    alert("关闭成功！");
                     location.reload();
                 }
                 else {
-                    alert("删除失败！");
+                    alert("关闭失败！");
                 }
             });
 
         }
-        
+
     }
     //首页
     function First() {
@@ -264,7 +275,7 @@
             alert("已经是第一页了！");
         }
         else {
-            pageIndex = pageIndex - 1;          
+            pageIndex = pageIndex - 1;
         }
         ShowOrder(pageSize);
     }
@@ -275,7 +286,7 @@
             alert("已经是最后一页了！");
         }
         else {
-            pageIndex = pageIndex + 1;   
+            pageIndex = pageIndex + 1;
         }
         ShowOrder(pageSize);
     }
@@ -286,5 +297,4 @@
 
     }
 </script>
-
 

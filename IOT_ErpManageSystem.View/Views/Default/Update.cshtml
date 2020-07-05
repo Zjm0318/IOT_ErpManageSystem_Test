@@ -2,51 +2,60 @@
 @{
     ViewData["Title"] = "Update";
 }
-<h1>编辑</h1>
-<table>
-    <tr>
-        <td>
-            商品名称<input type="text" id="goodname" />
+<h3>编辑</h3>
+<form class="layui-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width:100px">商品名称</label>
+        <div class="layui-input-inline">
+            <input type="tel"  id="goodname" name="goodname" style="width:300px;margin-left:10px" lay-verify="required|phone" autocomplete="off" class="layui-input">
             <input type="hidden" id="id" value="@ViewBag.gId" />
             <input type="hidden" id="pid" value="@ViewBag.pId" />
-        </td>
-    </tr>
-    <tr>
-        <td>
-            商品品牌<input type="text" id="brand" />
-        </td>
-    </tr>
-    <tr>
-        <td>
-            商品分类<select id="type">
-            <option value="">请选择</option>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width:100px">商品品牌</label>
+        <div class="layui-input-inline">
+            <input type="tel"  id="brand" name="brand" style="width:300px;margin-left:10px" lay-verify="required|phone" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width:100px">商品分类</label>
+        <div class="layui-input-block" style="width:300px">
+            <select name="type" lay-filter="test" lay-verify="required" id="type">
+                <option value="">全部</option>
+
             </select>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            商品规格<input type="text" id="rule" />
-        </td>
-    </tr>
-    <tr>
-        <td>
-            商品单位<input type="text" id="danwei" />
-        </td>
-    </tr>
-    <tr>
-        <td>
-            出售价格<input type="text" id="chuprice" />
-        </td>
-    </tr>
-    <tr>
-        <td>
-            进货价格<input type="text" id="jinprice" />
-        </td>
-    </tr>
-    <tr>
-        <td><input type="button" value="保存" id="add" /></td>
-    </tr>
-</table>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width:100px">商品规格</label>
+        <div class="layui-input-inline">
+            <input type="tel"  id="rule" name="rule" style="width:300px;margin-left:10px" lay-verify="required|phone" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width:100px">商品单位</label>
+        <div class="layui-input-inline">
+            <input type="tel"  id="danwei" name="danwei" style="width:300px;margin-left:10px" lay-verify="required|phone" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width:100px">出售价格</label>
+        <div class="layui-input-inline">
+            <input type="tel"  id="chuprice" name="chuprice" style="width:300px;margin-left:10px" lay-verify="required|phone" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width:100px">进货价格</label>
+        <div class="layui-input-inline">
+            <input type="tel"  id="jinprice" name="jinprice" style="width:300px;margin-left:10px" lay-verify="required|phone" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div style="margin-left:120px">
+        <button type="reset" class="layui-btn layui-btn-danger" id="fan">返回</button>
+        <button type="button" class="layui-btn" id="add">保存</button>
+    </div>
+</form>
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script>
     $(function () {
@@ -54,7 +63,7 @@
     });
     function Type() {
         $.ajax({
-            url: "http://localhost:52645/api/Default/Type",
+            url: "http://192.168.0.190:8085/api/Default/Type",
             type: "get"
         }).done(function (d) {
             console.log(d);
@@ -62,13 +71,17 @@
                 var option = "<option value='" + item.tId + "'>" + item.typeName + "</option>";
                 $("#type").append(option);
             });
+            layui.use('form', function () {
+                var form = layui.form;
+                form.render();
+            });
             FanTian();
         });
     }
     function FanTian() {
         var id = $("#id").val();
         $.ajax({
-            url: "http://localhost:52645/api/Default/GoodsThree?id=" + id,
+            url: "http://192.168.0.190:8085/api/Default/GoodsThree?id=" + id,
             type: "get"
         }).done(function (d) {
             console.log(d);
@@ -81,7 +94,9 @@
             $("#jinprice").val(d.jinHPrice);
         });
     }
-
+    $("#fan").click(function () {
+        location.href = "/Default/ProPrice";
+    });
     //保存
     $("#add").click(function () {
         if (jQuery('#goodname').val() == "") {
@@ -118,10 +133,10 @@
             return;
         }
         //正则表达式
-        var reg = /(^\d+$)/;
+        var reg = /^[^\s]*$/;
         if (!reg.test(jQuery('#rule').val())) {
             jQuery('#rule').focus();
-            alert("规格只能输入数值！");
+            alert("规格不能输入空格！");
             return;
         }
         if (jQuery('#danwei').val() == "") {
@@ -130,10 +145,10 @@
             return;
         }
         //正则表达式
-        var reg = /(^[\u4E00-\u9FA5]{1,2}$)/;
+        var reg = /(^[\u4E00-\u9FA5]{1,20}$)/;
         if (!reg.test(jQuery('#danwei').val())) {
             jQuery('#danwei').focus();
-            alert("单位只能输入汉字,长度为1-2！");
+            alert("单位只能输入汉字");
             return;
         }
         if (jQuery('#chuprice').val() == "") {
@@ -172,7 +187,7 @@
             "JinHPrice": $("#jinprice").val(),
         }
         $.ajax({
-            url: "http://localhost:52645/api/Default/UpdateGoods",
+            url: "http://192.168.0.190:8085/api/Default/UpdateGoods",
             type: "post",
             accepts: "application/x-www-form-urlencoded",
             contentType: "application/x-www-form-urlencoded",
@@ -188,5 +203,9 @@
             }
 
         });
+    });
+    layui.use(['form'], function () {
+        var form = layui.form;
+        form.render();
     });
 </script> 

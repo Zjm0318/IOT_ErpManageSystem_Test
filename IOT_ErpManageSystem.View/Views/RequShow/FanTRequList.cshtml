@@ -61,7 +61,7 @@
 
     //显示反填信息
     function show() {
-        $.ajax("http://localhost:52645/api/RequList/FanTRequ?QId=" + $("#qid").val(), {
+        $.ajax("http://192.168.0.190:8085/api/RequList/FanTRequ?QId=" + $("#qid").val(), {
             data: "get",
             dataType: "json"
         }).done(function (da) {
@@ -74,7 +74,7 @@
 
     //显示商品信息
     function showlist() {
-        $.ajax("http://localhost:52645/api/RequList/GetRequGoods?Id=" + $("#id").val(), {
+        $.ajax("http://192.168.0.190:8085/api/RequList/GetRequGoods?Id=" + $("#id").val(), {
             type: "get",
             dataType: "json"
         }).done(function (da) {
@@ -103,7 +103,7 @@
 
     //绑定商品下拉框
     function BingXia() {
-        $.ajax("http://localhost:52645/api/RequList/GetChaGoodsID", {
+        $.ajax("http://192.168.0.190:8085/api/RequList/GetChaGoodsID", {
             type: "get",
             dataType: "json"
         }).done(function (da) {
@@ -123,7 +123,7 @@
             "GId": $("#goodid").val()
         };
 
-        $.ajax("http://localhost:52645/api/RequList/AddRequGoods", {
+        $.ajax("http://192.168.0.190:8085/api/RequList/AddRequGoods", {
             type: "post",
             data: obj,
             dataType: "json",
@@ -143,7 +143,7 @@
     //删除
     function shan(Id) {
         if (confirm("确认要删除吗?")) {
-            $.ajax("http://localhost:52645/api/RequList/DeleteGoods?RpgId=" + Id, {
+            $.ajax("http://192.168.0.190:8085/api/RequList/DeleteGoods?RpgId=" + Id, {
                 type: "get",
                 dataType: "text",
             }).done(function (da) {
@@ -181,7 +181,7 @@
             return;
         }
 
-        $.ajax("http://localhost:52645/api/RequList/UpdateRequ", {
+        $.ajax("http://192.168.0.190:8085/api/RequList/UpdateRequ", {
             type: "post",
             data: obj,
             dataType: "json",

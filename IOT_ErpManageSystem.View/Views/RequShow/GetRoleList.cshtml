@@ -33,7 +33,7 @@
     })
     //显示
     function show() {
-        $.ajax("http://localhost:52645/api/RequList/GetRoleList?rolename=" + $("#rolename").val() + '&rolecode=' + $("#rolecode").val(), {
+        $.ajax("http://192.168.0.190:8085/api/RequList/GetRoleList?rolename=" + $("#rolename").val() + '&rolecode=' + $("#rolecode").val(), {
             data: "get",
             dataType: "json"
         }).done(function (da) {
@@ -64,7 +64,7 @@
         RId = $("input[type='radio']:checked").val();
 
         if (RId != null) {
-            $.ajax("http://localhost:52645/api/RequList/UpdateRole?RId=" + RId + '&QgId=' + $("#qgid").val(), {
+            $.ajax("http://192.168.0.190:8085/api/RequList/UpdateRole?RId=" + RId + '&QgId=' + $("#qgid").val(), {
                 data: "get",
                 dataType: "text"
             }).done(function (da) {
@@ -87,7 +87,7 @@
         RId = $("input[type='radio']:checked").val();
 
         if (RId != null) {
-            $.ajax("http://localhost:52645/api/RequList/ZhiPaiPur?Id=" + $("#qgid").val() + '&Cgclr=' + RId, {
+            $.ajax("http://192.168.0.190:8085/api/RequList/ZhiPaiPur?Id=" + $("#qgid").val() + '&Cgclr=' + RId, {
                 data: "get",
                 dataType: "text"
             }).done(function (da) {

@@ -127,6 +127,16 @@ namespace IOT_ErpManageSystem.API.Controllers
             return _bll.OrderState();
         }
         /// <summary>
+        /// 关闭订单
+        /// </summary>
+        /// <param name="m"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public int UpState([FromForm]int id)
+        {
+            return _bll.UpState(id);
+        }
+        /// <summary>
         /// 删除
         /// </summary>
         /// <param name="id"></param>
@@ -135,17 +145,6 @@ namespace IOT_ErpManageSystem.API.Controllers
         public int Del([FromForm]string id)
         {
             return _bll.Dle(id);
-        }
-        /// <summary>
-        /// 删除商品
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public int DelGoods([FromForm]string id)
-        {
-            var iid = id.Trim('/');
-            return _bll.DleGoodsInfo(iid);
         }
         /// <summary>
         /// 商品价格本
@@ -204,6 +203,15 @@ namespace IOT_ErpManageSystem.API.Controllers
             }
             
             return model;
+        }
+        /// <summary>
+        /// 判断是否有商品在价格本存在
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public List<GoodsPrice> SPrice()
+        {
+            return _bll.Price();
         }
         /// <summary>
         /// 修改商品表的数据

@@ -65,7 +65,7 @@
         var time = "13526552356";
         var reg = new RegExp("");
         $.ajax({
-            url: "http://localhost:52645/api/StorageStructure/GetStorageList?pageIndex=" + pageIndex + "&pageSize=" + pageSize,
+            url: "http://192.168.0.190:8085/api/StorageStructure/GetStorageList?pageIndex=" + pageIndex + "&pageSize=" + pageSize,
             type: "get",
         }).done(function (data) {
             $("#tb").empty();
@@ -168,7 +168,7 @@
                     "StorageId": storageId
                 }
                 $.ajax({
-                    url: "http://localhost:52645/api/StorageStructure/AddArea",
+                    url: "http://192.168.0.190:8085/api/StorageStructure/AddArea",
                     type: "post",
                     accepts: "application/x-www-from-urlencoded",
                     data: obj
@@ -188,7 +188,7 @@
     //绑定仓库
     function BindStorage() {
         $.ajax({
-            url: "http://localhost:52645/api/StorageStructure/GetStorList",
+            url: "http://192.168.0.190:8085/api/StorageStructure/GetStorList",
             type: "get",
         }).done(function (data) {
             $.each(data, function (index, item) {
@@ -200,7 +200,7 @@
     //绑定区域
     function BindArea() {
         $.ajax({
-            url: "http://localhost:52645/api/StorageStructure/GetAreaList",
+            url: "http://192.168.0.190:8085/api/StorageStructure/GetAreaList",
             type: "get",
         }).done(function (data) {
             $.each(data, function (index, item) {
@@ -281,7 +281,7 @@
                     "AreaId": area
                 };
                 $.ajax({
-                    url: "http://localhost:52645/api/StorageStructure/AddShelf",
+                    url: "http://192.168.0.190:8085/api/StorageStructure/AddShelf",
                     type: "post",
                     accepts: "application/x-www-from-urlencoded",
                     data: obj

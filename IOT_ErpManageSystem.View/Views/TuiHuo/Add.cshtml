@@ -73,7 +73,7 @@
 
     //绑定下拉框
     function CangKu() {
-        $.ajax("http://localhost:52645/api/TuiHuo/GetStorage", {
+        $.ajax("http://192.168.0.190:8085/api/TuiHuo/GetStorage", {
             type: "get",
             dataType: "json",
             success: function (d) {
@@ -88,7 +88,7 @@
 
     //绑定下拉框
     function GongYingShang() {
-        $.ajax("http://localhost:52645/api/TuiHuo/GetSuppliers", {
+        $.ajax("http://192.168.0.190:8085/api/TuiHuo/GetSuppliers", {
             type: "get",
             dataType: "json",
             success: function (d) {
@@ -104,7 +104,7 @@
     //显示商品
     function show() {
         $.ajax({
-            url: "http://localhost:52645/api/TuiHuo/GetShowGoods",
+            url: "http://192.168.0.190:8085/api/TuiHuo/GetShowGoods",
             type: "get",
             dataType: "json",
             success: function (d) {
@@ -165,7 +165,7 @@
         if (s > 0) {
             //添加
             $.ajax({
-                url: "http://localhost:52645/api/TuiHuo/AddTuiHuo",
+                url: "http://192.168.0.190:8085/api/TuiHuo/AddTuiHuo",
                 type: "post",
                 dataType: "text",
                 data: { m: obj },
@@ -192,7 +192,7 @@
     function Del(id) {
         if (confirm("确认删除吗?")) {
             $.ajax({
-                url: "http://localhost:52645/api/TuiHuo/DeleteGoods",
+                url: "http://192.168.0.190:8085/api/TuiHuo/DeleteGoods",
                 type: "post",
                 dataType: "text",
                 data: { id: id },
@@ -248,7 +248,7 @@
 
     //绑定商品下拉框
     function Goods() {
-        $.ajax("http://localhost:52645/api/TuiHuo/GetGoods", {
+        $.ajax("http://192.168.0.190:8085/api/TuiHuo/GetGoods", {
             type: "get",
             dataType: "json",
             success: function (d) {
@@ -265,7 +265,7 @@
     function Save() {
         var id = $("#GoodsName").val();
         $.ajax({
-            url: "http://localhost:52645/api/TuiHuo/AddGoods",
+            url: "http://192.168.0.190:8085/api/TuiHuo/AddGoods",
             type: "post",
             dataType: "text",
             data: { id, id },

@@ -157,7 +157,7 @@ namespace IOT_ErpManageSystem.DAL.Dall
         {
             string proName = "DelOrder";
             SqlParameter[] parameters = new SqlParameter[] {
-             new SqlParameter{ ParameterName="@Id",DbType=DbType.Int32,Direction=ParameterDirection.Input,Value=id},
+             new SqlParameter{ ParameterName="@Id",DbType=DbType.String,Direction=ParameterDirection.Input,Value=id},
             };
             return _db.ExecuteNonQueryProc(proName, parameters);
         }
@@ -211,19 +211,6 @@ namespace IOT_ErpManageSystem.DAL.Dall
             return _db.ExecuteNonQueryProc(proName, parameters);
         }
         /// <summary>
-        /// 删除商品表里数据
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public int DleGoodsInfo(string id)
-        {
-            string proName = "DelGoodsInfo";
-            SqlParameter[] parameters = new SqlParameter[] {
-             new SqlParameter{ ParameterName="@Id",DbType=DbType.String,Direction=ParameterDirection.Input,Value=id},
-            };
-            return _db.ExecuteNonQueryProc(proName, parameters);
-        }
-        /// <summary>
         /// 编辑商品信息
         /// </summary>
         /// <param name="id"></param>
@@ -238,6 +225,19 @@ namespace IOT_ErpManageSystem.DAL.Dall
             return JsonConvert.DeserializeObject<List<GoodsInfo>>(JsonConvert.SerializeObject(tb));
         }
         /// <summary>
+        /// 关闭订单
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public int UpState(int id)
+        {
+            string proName = "Upstate";
+            SqlParameter[] parameters = new SqlParameter[] {
+             new SqlParameter{ ParameterName="@Id",DbType=DbType.Int32,Direction=ParameterDirection.Input,Value=id},
+            };
+            return _db.ExecuteNonQueryProc(proName, parameters);
+        }
+        /// <summary>
         /// 商品类型
         /// </summary>
         /// <returns></returns>
@@ -247,6 +247,7 @@ namespace IOT_ErpManageSystem.DAL.Dall
             SqlParameter[] parameters = new SqlParameter[] { };
             return _db.GetList<GoodsType>(proName, parameters);
         }
+        
         //修改商品信息
         public int UpGoods(GoodsInfo m)
         {
@@ -263,6 +264,13 @@ namespace IOT_ErpManageSystem.DAL.Dall
              new SqlParameter{ ParameterName="@JinHPrice",DbType=DbType.String,Direction=ParameterDirection.Input,Value=m.JinHPrice},
             };
             return _db.ExecuteNonQueryProc(proName, parameters);
+        }
+        //判断价格是否有此商品
+        public List<GoodsPrice> Price()
+        { 
+            string proName = "SPrice";
+            SqlParameter[] parameters = new SqlParameter[] { };
+            return _db.GetList<GoodsPrice>(proName, parameters);
         }
     }
 }

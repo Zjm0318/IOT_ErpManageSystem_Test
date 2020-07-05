@@ -106,7 +106,7 @@
     //显示
     function show() {
         $.ajax({
-            url: "http://localhost:52645/api/Supplier/ShowSup?id=" + $("#id").val(),
+            url: "http://192.168.0.190:8085/api/Supplier/ShowSup?id=" + $("#id").val(),
             type: "get",
             dataType: "json",
             success: function (d) {
@@ -153,7 +153,7 @@
         };
         //修改
         $.ajax({
-            url: "http://localhost:52645/api/Supplier/EditSup",
+            url: "http://192.168.0.190:8085/api/Supplier/EditSup",
             type: "post",
             dataType: "text",
             data: { supplier: obj, contacts: obj1 },

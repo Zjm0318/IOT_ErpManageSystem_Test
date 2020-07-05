@@ -59,7 +59,7 @@
     //部门绑定
     function Allt_Dep() {
         $.ajax({
-            url: "http://localhost:52645/api/RBAC_Allot/GetDep",
+            url: "http://192.168.0.190:8085/api/RBAC_Allot/GetDep",
             type: "get",
         }).done(function (data) {
             $("#RoleName").empty();
@@ -79,7 +79,7 @@
     function GetQuan() {
 
         $.ajax({
-            url:"http://localhost:52645/api/RBAC_Allot/GetQuan?Uid=0",
+            url:"http://192.168.0.190:8085/api/RBAC_Allot/GetQuan?Uid=0",
             type:"get",
             dataType:"json",
             async:false,
@@ -100,7 +100,7 @@
     function show() {
         var Eid = $("#eid").val();
         $.ajax({
-            url: "http://localhost:52645/api/RBAC_Allot/FanRole?Id=" + Eid,
+            url: "http://192.168.0.190:8085/api/RBAC_Allot/FanRole?Id=" + Eid,
             type: "get"
         }).done(function (data) {
             
@@ -185,7 +185,7 @@
             "Allot_BaoId": ids,
         };
         $.ajax({
-            url: "http://localhost:52645/api/RBAC_Allot/Update_Role",
+            url: "http://192.168.0.190:8085/api/RBAC_Allot/Update_Role",
             type: "post",
             data: obj,
             dataType: "text",
