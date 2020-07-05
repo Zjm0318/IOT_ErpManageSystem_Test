@@ -41,5 +41,6 @@ namespace IOT_ErpManageSystem.View.Controllers
             ViewBag.pId = PId;
             return View();
         }
+
     }
 }

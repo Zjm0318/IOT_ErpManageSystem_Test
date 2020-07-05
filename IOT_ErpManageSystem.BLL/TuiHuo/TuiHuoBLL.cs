@@ -83,10 +83,40 @@ namespace IOT_ErpManageSystem.BLL.TuiHuo
         {
             //存储过程名称
             string proc = "TH_AddGoods";
-            SqlParameter[] parameters = new SqlParameter[] {
-            new SqlParameter{ParameterName="@id",Value=id,DbType=DbType.String,Direction=ParameterDirection.Input },
-            };
-            return _db.ExecuteNonQueryProc(proc, parameters);
+            //获取数据
+            var ids = id.Split(',');
+            int s = ids.Length;
+            int code = 0;
+            //循环
+            for (int i = 0; i < ids.Length; i++)
+            {
+                string SId = ids[i];
+                SqlParameter[] parameters = new SqlParameter[] {
+                new SqlParameter{ParameterName="@id",Value=SId,DbType=DbType.String,Direction=ParameterDirection.Input },
+                };
+                int c= _db.ExecuteNonQueryProc(proc, parameters);
+                if(c>0)
+                {
+                    code += c;
+                }
+            }
+            if(code==s)
+            {
+                return 1;
+            }
+            else
+            {
+                //删除数据
+                int a=_db.ExecuteNonQueryProc("TH_DelTHOrder", null);
+                if(a>0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return -1;
+                }
+            }
         }
 
         //显示退货商品

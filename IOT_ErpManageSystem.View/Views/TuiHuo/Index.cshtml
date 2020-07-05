@@ -39,9 +39,8 @@
         </div>
     </div>
 </div>
-
-<input type="button" id="Cha" value="搜索" style="background-color:forestgreen" class="layui-btn" />
-<input type="button" id="Add" value="添加" style="background-color:cornflowerblue" class="layui-btn layui-btn-normal" />
+<button class="layui-btn " id="Cha" style="width:80px"><i class="layui-icon layui-icon-search"></i>搜索</button>
+<button class="layui-btn layui-btn-normal " id="Add" style="width:80px"><i class="layui-icon layui-icon-add-1"></i>添加</button>
 
 <table class="layui-table">
     <colgroup>
@@ -65,16 +64,16 @@
     <tbody id="tbody"></tbody>
 </table>
 
-<div>
-    <a id="First" class="layui-form-label">首页</a>
-    <a id="Per" class="layui-form-label">上一页</a>
-    <a id="Next" class="layui-form-label">下一页</a>
-    <a id="Last" class="layui-form-label">尾页</a>
+<div style="float:left;margin-right:50px">
+    <button type="button" class="layui-btn layui-btn-sm" id="First">首页</button>
+    <button type="button" class="layui-btn layui-btn-sm" id="Per">上一页</button>
+    <button type="button" class="layui-btn layui-btn-sm" id="Next">下一页</button>
+    <button type="button" class="layui-btn layui-btn-sm" id="Last">尾页</button>
 </div>
 
 <script>
     var PageIndex = 1;
-    var PageSize = 3;
+    var PageSize = 10;
     var count = 0;
 
     //页面初始化
@@ -89,7 +88,7 @@
             "PageSize": PageSize,
             "States": $("#States").val(),
             "CreateDate": $("#CreateDate").val(),
-            "DwName": $("#GysName").val(), 
+            "DwName": $("#GysName").val(),
             "StorageName": $("#CangKu").val()
         };
         //显示
@@ -121,10 +120,10 @@
                         '<td>' + item.storageName + '</td>' +
                         '<td>' + item.lxrName + '</td>';
                     if (item.states == 0) {
-                        str += '<td><input type="button" class="layui-btn layui-btn-primary" onclick="TongGuo(\'' + item.id + '\')" value="通过" /><input type="button" class="layui-btn layui-btn-primary" onclick="JuJue(\'' + item.id + '\')" value="拒绝" /></td></tr >';
+                        str += '<td><input type="button" class="layui-btn layui-btn-warm" onclick="TongGuo(\'' + item.id + '\')" value="通过" /><input type="button" class="layui-btn layui-btn-warm" onclick="JuJue(\'' + item.id + '\')" value="拒绝" /></td></tr >';
                     }
                     else {
-                        str += '<td></td></tr >';
+                        str += '<td></td></tr>';
                     }
                     $("#tbody").append(str);
                 })
@@ -198,9 +197,9 @@
         if (confirm("确认通过吗?")) {
             $.ajax({
                 url: "http://localhost:52645/api/TuiHuo/ShenHe",
-                type:"post",
+                type: "post",
                 dataType: "text",
-                data: { id: id,sta:1 },
+                data: { id: id, sta: 1 },
                 success: function (d) {
                     if (d > 0) {
                         alert("通过成功");

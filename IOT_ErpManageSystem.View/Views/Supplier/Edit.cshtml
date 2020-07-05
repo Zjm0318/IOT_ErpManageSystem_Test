@@ -95,9 +95,8 @@
         </div>
     </div>
 </div>
-<input type="button" id="Back" value="返回" style="background-color:gray" class="layui-btn layui-btn-normal" />
-<input type="button" id="Save" value="修改" style="background-color:cornflowerblue" class="layui-btn layui-btn-normal" />
-
+<button type="button" id="Save" class="layui-btn" onclick="Role_Add()">修改</button>
+<button type="button" id="Back" class="layui-btn" onclick="Back()">返回</button>
 <script>
     //页面初始化
     $(function () {
@@ -151,6 +150,78 @@
             "Addresss": $("#DiZhi").val().toString(),
             "Url": $("#Url").val().toString()
         };
+        //判断 负责人
+        if (obj.YJfzr == '' || obj.YJfzr == null || obj.YJfzr == undefined) {
+            return alert("引进负责人不能为空!");
+        }
+        else {
+            var re = /[^u4e00-u9fa5]/;
+            if (!re.test(obj.YJfzr)) {
+                return alert("负责人只能输入汉字");
+            }
+        }
+        //供应商来源
+        if (obj.GLaiYuan == '' || obj.GLaiYuan == null || obj.GLaiYuan == undefined) {
+            return alert("供应商来源不能为空!");
+        }
+        //单位名称
+        if (obj.DwName == '' || obj.DwName == null || obj.DwName == undefined) {
+            return alert("单位名称不能为空!");
+        }
+        //品牌
+        if (obj.PinPai == '' || obj.PinPai == null || obj.PinPai == undefined) {
+            return alert("品牌不能为空!");
+        }
+        //经营范围
+        if (obj.JYRange == '' || obj.JYRange == null || obj.JYRange == undefined) {
+            return alert("经营范围不能为空!");
+        }
+        //联系人
+        if (obj1.LxrName == '' || obj1.LxrName == null || obj1.LxrName == undefined) {
+            return alert("联系人不能为空!");
+        }
+        else {
+            var re = /[^u4e00-u9fa5]/;
+            if (!re.test(obj1.LxrName)) {
+                return alert("联系人只能输入汉字");
+            }
+        }
+        //手机
+        if (obj1.Phone == '' || obj1.Phone == null || obj1.Phone == undefined) {
+            return alert("手机不能为空!");
+        }
+        else {
+            var sj = /^1[34578]\d{9}$/;
+            if (!sj.test(obj1.Phone)) {
+                return alert("请输入正确的手机号");
+            }
+        }
+        //固定电话
+        if (obj1.GDphone != "") {
+            var gd = /^(\d{3,4}-)\d{7,8}$/;
+            if (!gd.test(obj1.GDphone)) {
+                alert("请输入正确格式的固定电话,格式为000-0000000 （(3或4)位-(7或8)位）");
+                return;
+            }
+        }
+        //邮箱
+        if (obj1.Email!="") {
+            var em = /^[A-Za-z0-9\u4e00-\u9fa5]+@{@Html.Raw("@");}[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+            if (!em.test(obj1.Email)) {
+                return alert("请输入正确的邮箱!");
+            }
+        }
+        //QQ
+        if (obj1.QQ != "") {
+            var qq = /[1-9][0-9]{4,14}/;
+            if (!qq.test(obj1.QQ)) {
+                return alert("请输入正确的QQ!");
+            }
+        }
+        //地址
+        if (obj1.Addresss == '' || obj1.Addresss == null || obj1.Addresss == undefined) {
+            return alert("地址不能为空!");
+        }
         //修改
         $.ajax({
             url: "http://localhost:52645/api/Supplier/EditSup",
@@ -171,7 +242,6 @@
             }
         })
     })
-
     //取消
     $("#Back").click(function () {
         window.location.href = "Index";
