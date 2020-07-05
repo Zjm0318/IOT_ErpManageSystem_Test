@@ -3,6 +3,8 @@ namespace IOT_ErpManageSystem.Models
 {
     public class PurChaseInfo
     {
+        //采购单主键ID
+        public Guid PId { get; set; }
         //采购信息ID
         public Guid ID { get; set; }
         //创建日期

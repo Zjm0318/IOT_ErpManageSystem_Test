@@ -119,6 +119,16 @@ namespace IOT_ErpManageSystem.DAL.liuning
         }
         #endregion
 
+        #region 查询商品信息
+          public List<RequGoods> SelectGoods()
+        {
+            DataTable tb = _dBHelper.ExecuteProc("SelectGoods", null);
+            string json = JsonConvert.SerializeObject(tb);
+            List<RequGoods> list = JsonConvert.DeserializeObject<List<RequGoods>>(json);
+            return list;
+        }
+        #endregion
+
         #region 显示请购单商品信息
         public List<RequGoods> GetRequGoods(string Id)
         {
@@ -140,12 +150,77 @@ namespace IOT_ErpManageSystem.DAL.liuning
                 new SqlParameter{ParameterName="@QgName",SqlDbType=SqlDbType.VarChar,Value=m.QgName,Direction=ParameterDirection.Input },
                 new SqlParameter{ParameterName="@DeptName",SqlDbType=SqlDbType.VarChar,Value=m.DeptName,Direction=ParameterDirection.Input },
                 new SqlParameter{ParameterName="@QId",SqlDbType=SqlDbType.UniqueIdentifier,Value=m.QId,Direction=ParameterDirection.Input },
+                new SqlParameter{ParameterName="@QGId",SqlDbType=SqlDbType.UniqueIdentifier,Value=m.QgId,Direction=ParameterDirection.Input }
             };
             return _dBHelper.ExecuteNonQueryProc("UpdRequInfo", param);
         }
         #endregion
 
+        #region 查询员工名称 查询部门名称
+          public List<RBAC_Role> SelectRole()
+        {
+            DataTable tb = _dBHelper.ExecuteProc("SelectRole", null);
+            string json = JsonConvert.SerializeObject(tb);
+            List<RBAC_Role> list = JsonConvert.DeserializeObject<List<RBAC_Role>>(json);
+            return list;
+        }
+
+        public List<RBAC_Dep> SelectDep()
+        {
+            DataTable tb = _dBHelper.ExecuteProc("SelectDep", null);
+            string json = JsonConvert.SerializeObject(tb);
+            List<RBAC_Dep> list = JsonConvert.DeserializeObject<List<RBAC_Dep>>(json);
+            return list;
+        }
         #endregion
+
+        #endregion
+
+        #region  添加请购单,采购单与商品的中间表数据2
+        public int AddRequGood(string GId,int Num)
+        {
+            //获取数据
+            string[] ids = GId.Split(',');
+            int s = ids.Length;
+            int code = 0;
+
+            //循环
+            for (int i = 0; i < ids.Length; i++)
+            {
+                string gid = ids[i];
+                SqlParameter[] param = new SqlParameter[] {
+                new SqlParameter{ParameterName="@GId",SqlDbType=SqlDbType.VarChar,Value=gid,Direction=ParameterDirection.Input },
+                new SqlParameter{ParameterName="@Bynum",SqlDbType=SqlDbType.Int,Value=Num,Direction=ParameterDirection.Input }
+               };
+                int flag= _dBHelper.ExecuteNonQueryProc("AddRequGoods", param);
+
+                if(flag>0)
+                {
+                    code += flag;
+                }
+            }
+
+            if(code==s)
+            {
+                return 1;
+            }
+            else
+            {
+                //删除
+                int a = _dBHelper.ExecuteNonQueryProc("DeleRequPurGood", null);
+                if(a>0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+            
+        }
+        #endregion
+
 
         #region 采购单模块
 
@@ -280,17 +355,6 @@ namespace IOT_ErpManageSystem.DAL.liuning
             string json = JsonConvert.SerializeObject(tb);
             List<GoodsInfo> list = JsonConvert.DeserializeObject<List<GoodsInfo>>(json);
             return list;
-        }
-        #endregion
-
-        #region  添加请购单,采购单与商品的中间表数据
-        public int AddRequGoods(string QgId, string GId)
-        {
-            SqlParameter[] param = new SqlParameter[] {
-                new SqlParameter{ParameterName="@QgId",SqlDbType=SqlDbType.VarChar,Value=QgId,Direction=ParameterDirection.Input },
-                new SqlParameter{ParameterName="@GId",SqlDbType=SqlDbType.VarChar,Value=GId,Direction=ParameterDirection.Input }
-            };
-            return _dBHelper.ExecuteNonQueryProc("AddRequGoods", param);
         }
         #endregion
 

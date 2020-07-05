@@ -30,13 +30,20 @@ namespace IOT_ErpManageSystem.DAL.liuning
 
         //查询商品ID
         List<GoodsInfo> GetGoodsId();
+        //查询商品信息
+        List<RequGoods> SelectGoods();
         //添加请购单,采购单与商品的中间表数据
-        int AddRequGoods(string QgId, string GId);
+        int AddRequGood(string GId,int Num);
 
         //根据ID删除相关的商品信息
         int DeleteGoods(int RpgId);
         //修改请购单信息
         int UpdateRequ(RequisitionInfo m);
+
+        //查询员工名称
+        public List<RBAC_Role> SelectRole();
+        //查询部门名称
+        public List<RBAC_Dep> SelectDep();
         #endregion
 
         #region 采购单
@@ -60,7 +67,7 @@ namespace IOT_ErpManageSystem.DAL.liuning
         List<SupplierInfo> SelectGysIdProc();
         //添加采购单信息
         int AddPur(PurChaseInfo m);
-        //显示请购单商品信息
+        //显示采购单商品信息
         List<RequGoods> GetPurGoods(string Id);
 
         //修改采购单信息

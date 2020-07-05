@@ -107,6 +107,14 @@ namespace IOT_ErpManageSystem.API.Controllers
             return list;
         }
 
+        //查询商品信息
+        [HttpGet]
+        public List<RequGoods> SelectGoods()
+        {
+            List<RequGoods> list = _IRequBLL.SelectGoods();
+            return list;
+        }
+
         //修改请购单信息
         [HttpPost]
         public int UpdateRequ([FromForm]RequisitionInfo m)
@@ -115,7 +123,28 @@ namespace IOT_ErpManageSystem.API.Controllers
             return flag;
         }
 
+        //查询角色名称
+        public List<RBAC_Role> SelectRole()
+        {
+            List<RBAC_Role> list = _IRequBLL.SelectRole();
+            return list;
+        }
+        //查询部门名称
+        public List<RBAC_Dep> SelectDep()
+        {
+            List<RBAC_Dep> list = _IRequBLL.SelectDep();
+            return list;
+        }
         #endregion
+
+        #region
+        [HttpPost]
+        public int AddRequGood([FromForm]string GId,[FromForm]int Num)
+        {
+            return _IRequBLL.AddRequGood(GId,Num);
+        }
+        #endregion
+
 
         //采购单模块
         #region
@@ -218,14 +247,7 @@ namespace IOT_ErpManageSystem.API.Controllers
             return list;
         }
         //添加请购单,采购单与商品的中间表数据
-        [HttpPost]
-        public int AddRequGoods([FromForm]RequPurGood m)
-        {
-            string qgid = m.QPId.ToString();
-            string gid = m.GId.ToString();
-            int flag = _IRequBLL.AddRequGoods(qgid, gid);
-            return flag;
-        }
+
 
         //根据ID删除相关的商品信息
         [HttpGet]
