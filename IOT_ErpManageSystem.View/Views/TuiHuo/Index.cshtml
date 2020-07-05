@@ -40,8 +40,8 @@
     </div>
 </div>
 
-<input type="button" id="Cha" value="搜索" style="background-color:forestgreen" class="layui-btn" />
-<input type="button" id="Add" value="添加" style="background-color:cornflowerblue" class="layui-btn layui-btn-normal" />
+<input type="button" id="Cha" value="搜索" style="background-color:cornflowerblue" class="layui-btn" />
+<input type="button" id="Add" value="添加" style="background-color:forestgreen" class="layui-btn layui-btn-normal" />
 
 <table class="layui-table">
     <colgroup>
@@ -74,7 +74,7 @@
 
 <script>
     var PageIndex = 1;
-    var PageSize = 3;
+    var PageSize = 10;
     var count = 0;
 
     //页面初始化
@@ -89,7 +89,7 @@
             "PageSize": PageSize,
             "States": $("#States").val(),
             "CreateDate": $("#CreateDate").val(),
-            "DwName": $("#GysName").val(), 
+            "DwName": $("#GysName").val(),
             "StorageName": $("#CangKu").val()
         };
         //显示
@@ -121,7 +121,7 @@
                         '<td>' + item.storageName + '</td>' +
                         '<td>' + item.lxrName + '</td>';
                     if (item.states == 0) {
-                        str += '<td><input type="button" class="layui-btn layui-btn-primary" onclick="TongGuo(\'' + item.id + '\')" value="通过" /><input type="button" class="layui-btn layui-btn-primary" onclick="JuJue(\'' + item.id + '\')" value="拒绝" /></td></tr >';
+                        str += '<td><input type="button" style="background-color:orangered" class="layui-btn layui-btn-primary" onclick="TongGuo(\'' + item.id + '\')" value="通过" /><input type="button" style="background-color:orangered" class="layui-btn layui-btn-primary" onclick="JuJue(\'' + item.id + '\')" value="拒绝" /></td></tr >';
                     }
                     else {
                         str += '<td></td></tr >';
@@ -198,9 +198,9 @@
         if (confirm("确认通过吗?")) {
             $.ajax({
                 url: "http://localhost:52645/api/TuiHuo/ShenHe",
-                type:"post",
+                type: "post",
                 dataType: "text",
-                data: { id: id,sta:1 },
+                data: { id: id, sta: 1 },
                 success: function (d) {
                     if (d > 0) {
                         alert("通过成功");

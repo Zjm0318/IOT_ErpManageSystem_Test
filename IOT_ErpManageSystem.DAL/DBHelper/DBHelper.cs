@@ -46,7 +46,10 @@ namespace IOT_ErpManageSystem.DAL.DBHelper
                 using (SqlCommand cmd = new SqlCommand(procName, con))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddRange(sqlParameters);
+                    if (sqlParameters != null)
+                    {
+                        cmd.Parameters.AddRange(sqlParameters);
+                    }
                     code = cmd.ExecuteNonQuery();
                 }
             }

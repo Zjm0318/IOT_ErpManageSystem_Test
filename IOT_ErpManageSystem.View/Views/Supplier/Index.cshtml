@@ -54,8 +54,8 @@
     </div>
 </div>
 
-<input type="button" id="Cha" value="搜索" style="background-color:forestgreen" class="layui-btn" />
-<input type="button" id="Add" value="添加" style="background-color:cornflowerblue" class="layui-btn layui-btn-normal" />
+<input type="button" id="Cha" value="搜索" style="background-color:cornflowerblue" class="layui-btn" />
+<input type="button" id="Add" value="添加" style="background-color:forestgreen" class="layui-btn layui-btn-normal" />
 
 <table class="layui-table">
     <colgroup>
@@ -87,7 +87,7 @@
 
 <script>
     var PageIndex = 1;
-    var PageSize = 3;
+    var PageSize = 10;
     var count = 0;
 
     //页面初始化
@@ -128,7 +128,7 @@
                         '<td>' + item.jyRange + '</td>' +
                         '<td>' + item.yJfzr + '</td>' +
                         '<td>' + item.createDate.split('T')[0] + '</td>' +
-                        '<td><input type="button" class="layui-btn layui-btn-primary" onclick="Edit(\'' + item.gysId + '\')" value="编辑" /></td>' +
+                        '<td><input type="button" style="background-color:orangered" class="layui-btn layui-btn-primary" onclick="Edit(\'' + item.gysId + '\')" value="编辑" /></td>' +
                         '</tr>';
                     $("#tbody").append(str);
                 })
