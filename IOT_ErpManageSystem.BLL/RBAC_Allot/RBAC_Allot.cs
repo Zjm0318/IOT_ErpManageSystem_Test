@@ -29,6 +29,15 @@ namespace IOT_ErpManageSystem.BLL.RBAC_Allot
             return _idbhelper.ExecuteNonQueryProc(ProName, parametr);
         }
 
+        public int AddDep(RBAC_Dep model)
+        {
+            string ProName = "procAdd_Dep";
+            SqlParameter[] parametr = new SqlParameter[] {
+
+                new SqlParameter{ParameterName="@Dep_Name",Value=model.Dep_Name, DbType= DbType.String,Direction= ParameterDirection.Input },            };
+            return _idbhelper.ExecuteNonQueryProc(ProName, parametr);
+        }
+
         //权限的显示
         public List<RBAC_Allots> GetAllot(int PageIndex, int PageSize, string DepName, ref int RowsCount)
         {

@@ -20,5 +20,10 @@ namespace IOT_ErpManageSystem.View.Controllers
             ViewBag.Id = Id;
             return View();
         }
+        //添加部门
+        public IActionResult AddDep()
+        {
+            return View();
+        }
     }
 }

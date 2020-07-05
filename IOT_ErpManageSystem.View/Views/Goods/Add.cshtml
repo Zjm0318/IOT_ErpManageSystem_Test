@@ -3,7 +3,7 @@
     ViewData["Title"] = "Add";
 }
 
-<h1>Add</h1>
+<h1>添加商品</h1>
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
 <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
@@ -169,7 +169,7 @@
     });
 
     layui.use('element', function () {
-        var element = layui.element;s
+        var element = layui.element;
 
     });
     /********************************添加商品信息********************************/
@@ -196,7 +196,7 @@
         };
 
         //非空判断
-        if (obj.GoodsId == "" || obj.GoodsId == null || obj.GoodsId == undefined || obj.GoodsId.length>50) {
+        if (obj.GoodsId == "" || obj.GoodsId == null || obj.GoodsId == undefined || obj.GoodsId.length > 50) {
             alert("商品编号不能为空或不能过长!");
             return;
         }
@@ -270,7 +270,7 @@
         if (obj.StockYJ == "" || obj.StockYJ == null || obj.StockYJ == undefined || parseInt(obj.StockYJ) < 0 || parseInt(obj.StockYJ) > parseInt(obj.GoodsStock)) {
             alert("库存预警不能为空或小于0或大于库存!");
             return;
-        }      
+        }
 
         if (obj.UpTime == "" || obj.UpTime == null || obj.UpTime == undefined) {
             alert("上架时间不能为空!");
@@ -296,8 +296,8 @@
                 processData: false
             }).done(function (code) {
                 if (code > 0) {
-                    alert("上架成功!");
-                    location.href = "Index";
+                    alert("上架成功,请添加商品属性!");
+                    location.reload();
                 }
                 else {
                     alert("上架失败!");
@@ -422,10 +422,9 @@
     //删除颜色
     function del(CId) {
         if (confirm("确定删除吗?")) {
-            $.ajax("http://192.168.0.190:8085/api/Goods/DelColors",
+            $.ajax("http://localhost:52645/api/Goods/DelColors?CId=" + CId,
                 {
                     type: "get",
-                    data: CId
                 }).done(function (code) {
                     if (code > 0) {
                         alert("删除成功!");
@@ -440,7 +439,7 @@
 
     //添加颜色
     function addcolor() {
-        $.ajax("http://192.168.0.190:8085/api/Goods/AddColors",
+        $.ajax("http://localhost:52645/api/Goods/AddColors",
             {
                 type: "post",
                 data: { "Color": $("#colors").val().toString() },
@@ -456,6 +455,7 @@
                 }
             })
     }
+
 
     //显示商品颜色+尺码
     function showsc() {
@@ -474,7 +474,7 @@
                         "<td>" + item.goodsStock + "</td>" +
                         "<td>" + item.stockYJ + "</td>" +
                         "<td>" + item.sku + "</td>" +
-                        '<td><input id="Button1" type="button" value="删除" onclick="delPro(\''+item.pId+'\',this)" class="layui-btn layui-btn-danger" /></td>' +
+                        '<td><input id="Button1" type="button" value="删除" onclick="delPro(\'' + item.pId + '\',this)" class="layui-btn layui-btn-danger" /></td>' +
                         "</tr>";
                     $("#tb").append(list);
                 })
@@ -482,7 +482,7 @@
     }
 
     //删除商品属性信息
-    function delPro(PId,obj) {
+    function delPro(PId, obj) {
         if (confirm("确定删除吗?")) {
             $.ajax("http://192.168.0.190:8085/api/Goods/DelPreperty?PId=" + PId,
                 {
