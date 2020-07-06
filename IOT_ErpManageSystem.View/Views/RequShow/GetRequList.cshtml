@@ -32,9 +32,8 @@
 </div>
 
 <br />
-<input type="button" value="搜索" id="cha" class="layui-btn" />
-<input type="button" value="添加" id="add" class="layui-btn layui-btn-normal" />
-
+<button class="layui-btn " id="cha" style="width:80px"><i class="layui-icon layui-icon-search"></i>搜索</button>
+<button class="layui-btn layui-btn-normal " id="add" style="width:80px"><i class="layui-icon layui-icon-add-1"></i>添加</button>
 <table class="layui-table" border="1">
     <tr>
         <td>选择</td>
@@ -49,8 +48,10 @@
     <tbody id="body">
     </tbody>
     <tr>
+       
         <td><input type="button" id="zhipai" value="指派" class="layui-btn" /></td>
         <td><input type="button" id="chehui" value="撤回" class="layui-btn" /></td>
+   
     </tr>
 </table>
 
@@ -64,7 +65,7 @@
 
 <script>
     //别忘了给查询加上判断空格的
-    
+
     var pageindex = 1;
     var pagesize = 10;
     var count = 0;
@@ -109,9 +110,9 @@
                     + "<td>" + item.qgName + "</td>"
                     + "<td>" + item.role_Name + "</td>"
                     + "<td>" + item.qgShr + "</td>"
-                    + "<td><input type='button' value='编辑' onclick='edit(\"" + item.qId + "\",\"" + item.qgId + "\")' class='layui-btn layui-btn-danger' />"
-                    + "<input type = 'button' value ='审核通过' class='layui-btn layui-btn-warm' onclick = 'Update1(\"" + item.qgId + "\")'/>"
-                    + "<input type = 'button' value ='审核不通过' class='layui-btn layui-btn-warm' onclick = 'Update2(\"" + item.qgId + "\")'/>"
+                    + "<td><input type='button' value='编辑' onclick='edit(\"" + item.qId + "\",\"" + item.qgId + "\")' class='layui-btn layui-btn-warm layui-btn-sm' /><br />"
+                    + "<input type = 'button' value ='审核通过' class='layui-btn layui-btn-warm layui-btn-sm' onclick = 'Update1(\"" + item.qgId + "\")'/><br />"
+                    + "<input type = 'button' value ='审核不通过' class='layui-btn layui-btn-warm layui-btn-sm' onclick = 'Update2(\"" + item.qgId + "\")'/>"
                     + "</td> "
                     + "</tr>";
             }
@@ -124,7 +125,7 @@
                     + "<td>" + item.qgName + "</td>"
                     + "<td>" + item.role_Name + "</td>"
                     + "<td>" + item.qgShr + "</td>"
-                    + "<td><input type='button' value='编辑' onclick='edit(\"" + item.qId + "\",\"" + item.qgId + "\")' class='layui-btn layui-btn-danger' />"
+                    + "<td><input type='button' value='编辑' onclick='edit(\"" + item.qId + "\",\"" + item.qgId + "\")' class='layui-btn layui-btn-warm layui-btn-sm' />"
                     + "</td> "
                     + "</tr>";
             }
@@ -137,7 +138,7 @@
                     + "<td>" + item.qgName + "</td>"
                     + "<td>" + item.role_Name + "</td>"
                     + "<td>" + item.qgShr + "</td>"
-                    + "<td><input type='button' value='编辑' onclick='edit(\"" + item.qId + "\",\"" + item.qgId + "\")' class='layui-btn layui-btn-danger' />"
+                    + "<td><input type='button' value='编辑' onclick='edit(\"" + item.qId + "\",\"" + item.qgId + "\")' class='layui-btn layui-btn-warm layui-btn-sm' />"
                     + "</td> "
                     + "</tr>";
             }
@@ -215,7 +216,7 @@
 
     //撤回
     $("#chehui").click(function () {
-       
+
         QgId = $("input[type='radio']:checked").val();  //获取请购单ID
         //根据获取的值是否为空来判断单选框是否选中
         if (QgId != null) {
