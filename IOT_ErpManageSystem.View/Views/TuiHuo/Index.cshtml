@@ -92,7 +92,7 @@
             "StorageName": $("#CangKu").val()
         };
         //显示
-        $.ajax("http://localhost:52645/api/TuiHuo/GetTuiHuos", {
+        $.ajax("http://192.168.0.190:8085/api/TuiHuo/GetTuiHuos", {
             type: "post",
             dataType: "json",
             data: obj,
@@ -133,7 +133,7 @@
 
     //绑定下拉框
     function CangKu() {
-        $.ajax("http://localhost:52645/api/TuiHuo/GetStorage", {
+        $.ajax("http://192.168.0.190:8085/api/TuiHuo/GetStorage", {
             type: "get",
             dataType: "json",
             success: function (d) {
@@ -196,8 +196,8 @@
     function TongGuo(id) {
         if (confirm("确认通过吗?")) {
             $.ajax({
-                url: "http://localhost:52645/api/TuiHuo/ShenHe",
-                type: "post",
+                url: "http://192.168.0.190:8085/api/TuiHuo/ShenHe",
+                type:"post",
                 dataType: "text",
                 data: { id: id, sta: 1 },
                 success: function (d) {
@@ -215,7 +215,7 @@
     function JuJue(id) {
         if (confirm("确认拒绝吗?")) {
             $.ajax({
-                url: "http://localhost:52645/api/TuiHuo/ShenHe",
+                url: "http://192.168.0.190:8085/api/TuiHuo/ShenHe",
                 type: "post",
                 dataType: "text",
                 data: { id: id, sta: 2 },

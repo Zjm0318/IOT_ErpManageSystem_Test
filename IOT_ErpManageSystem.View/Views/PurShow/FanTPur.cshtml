@@ -73,7 +73,7 @@
 
     //显示反填信息
     function show() {
-        $.ajax("http://localhost:52645/api/RequList/FanTPur?CId=" + $("#cid").val(), {
+        $.ajax("http://192.168.0.190:8085/api/RequList/FanTPur?CId=" + $("#cid").val(), {
             data: "get",
             dataType: "json"
         }).done(function (da) {
@@ -99,7 +99,7 @@
 
     //显示商品信息
     function showlist() {
-        $.ajax("http://localhost:52645/api/RequList/GetPurGoods?Id=" + $("#id").val(), {
+        $.ajax("http://192.168.0.190:8085/api/RequList/GetPurGoods?Id=" + $("#id").val(), {
             type: "get",
             dataType: "json"
         }).done(function (da) {
@@ -150,6 +150,13 @@
         });
 
         goodshow();   //查询商品信息
+    //绑定商品下拉框
+    function BingXia() {
+        $.ajax("http://192.168.0.190:8085/api/RequList/GetChaGoodsID", {
+            type: "get",
+            dataType: "json"
+        }).done(function (da) {
+            $("#goodid").empty();
 
     }
 
@@ -186,51 +193,22 @@
                 return;
             }
 
-            $.ajax("http://localhost:52645/api/RequList/AddRequGood", {
-                type: "post",
-                data: { GId: ids, Num: $("#num").val() },
-                dataType: "text",
-                contentType: "application/x-www-form-urlencoded",
-                accepts: "application/x-www-form-urlencoded"
-            }).done(function (da) {
-                if (da == 1) {
-                    alert("添加成功");
-                    window.location.reload();
-                }
-                else if (da == -1) {
-                    alert("数据添加不全!");
-                }
-                else {
-                    alert("添加失败");
-                }
-            });
-        }
-
-       
-    }
-
-
-
-    //查询商品信息
-    function goodshow() {
-        $.ajax("http://localhost:52645/api/RequList/SelectGoods", {
-            type: "get",
-            dataType: "json"
+        $.ajax("http://localhost:52645/api/RequList/AddRequGoods", {
+            type: "post",
+            data: obj,
+            dataType: "json",
+            contentType: "application/x-www-form-urlencoded",
+            accepts: "application/x-www-form-urlencoded"
         }).done(function (da) {
-            $("#tbody").empty();
-
-            $.each(da, function (index, item) {
-                var str = "<tr>"
-                    + "<td><input type='checkbox' class='chk' value='" + item.id + "' /></td>"
-                    + "<td>" + item.goodsName + "</td>"
-                    + "<td>" + item.goodsBrand + "</td>"
-                    + "<td>" + item.goodsPrices + "</td>"
-                    + "<td>" + item.goodsStock + "</td>"
-                    + "</tr>";
-
-                $("#tbody").append(str);
-            })
+            if (da > 0) {
+                alert("添加成功");
+                window.location.reload();
+            }
+            else {
+                alert("添加失败");
+            }
         })
+    })
 
     }
 
@@ -238,7 +216,7 @@
     //删除
     function shan(Id) {
         if (confirm("确认要删除吗?")) {
-            $.ajax("http://localhost:52645/api/RequList/DeleteGoods?RpgId=" + Id, {
+            $.ajax("http://192.168.0.190:8085/api/RequList/DeleteGoods?RpgId=" + Id, {
                 type: "get",
                 dataType: "text",
             }).done(function (da) {
@@ -289,7 +267,7 @@
             return;
         }
 
-        $.ajax("http://localhost:52645/api/RequList/UpdatePurInfo", {
+        $.ajax("http://192.168.0.190:8085/api/RequList/UpdatePurInfo", {
             type: "post",
             data: obj,
             dataType: "json",

@@ -4,83 +4,100 @@
 }
 <style>
     #he {
+        margin-left: 50px;
         padding-top: 20px;
         margin: 0 auto;
         width: 1146px;
         height: 300px;
     }
 </style>
-<div id="he">
-    <h4>商品价格本</h4>
-    <input type="text" id="bh" placeholder="请输入商品编号" /><input type="button" value="搜索" id="sousuo" style="background-color:forestgreen" />
-    <input type="button" value="添加" id="add" style="background-color:dodgerblue" />
-    <input type="button" id="btnDeleteList" value="批量删除" class="btn-danger" />
-    <div class="box" style="width:1049px;height:350px;border:1px solid">
-        <table class="table">
-            <tr class="active">
-                <td><input type="checkbox" id="check" />选择</td>
-                <td>商品编号</td>
-                <td>商品名称</td>
-                <td>品牌</td>
-                <td>分类</td>
-                <td>规格</td>
-                <td>单位</td>
-                <td>出售价格</td>
-                <td>进货价格</td>
-                <td>操作</td>
-            </tr>
-            <tbody id="tb"></tbody>
-        </table>
-        <a href="#" style="margin-right:10px" onclick="First()">首页</a>
-        <a href="#" style="margin-right:10px" onclick="Pre()">上一页</a>
-        <a href="#" style="margin-right:10px" onclick="Next()">下一页</a>
-        <a href="#" style="margin-right:10px" onclick="Last()">尾页</a>
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+<link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+<link href="~/layuiadmin/style/admin.css" rel="stylesheet" />
+
+<h3 style="margin-left:20px">商品价格本</h3>
+<div class="layui-inline">
+    <div class="layui-input-inline" style="margin-left:20px">
+        <input id="bh" type="text" placeholder="请输入商品编号" class="layui-input search_input">
     </div>
+    <a class="layui-btn search_btn" id="sousuo" style="color:white"><i class="layui-icon layui-icon-search"></i> 查询</a>
+    <div class="layui-inline">
+        <a style="color:white" class="layui-btn layui-btn-normal newsAdd_btn" id="add">
+            <i class="layui-icon layui-icon-add-1"></i>
+            添加商品价格
+        </a>
+    </div>
+</div>
+<div style="padding: 15px;width:1400px" >
+    <table class="layui-table" style="margin-left:20px">
+        <tr>
+            <td><input type="checkbox" id="check" />选择</td>
+            <td>商品编号</td>
+            <td>商品名称</td>
+            <td>品牌</td>
+            <td>分类</td>
+            <td>规格</td>
+            <td>单位</td>
+            <td>出售价格</td>
+            <td>进货价格</td>
+            <td>操作</td>
+        </tr>
+        <tbody id="tb"></tbody>
+    </table>
+    </div>
+<div style="float:left;margin-left:20px">
+    <button type="button" class="layui-btn layui-btn-sm" onclick="First()">首页</button>
+    <button type="button" class="layui-btn layui-btn-sm" onclick="Pre()">上一页</button>
+    <button type="button" class="layui-btn layui-btn-sm" onclick="Next()">下一页</button>
+    <button type="button" class="layui-btn layui-btn-sm" onclick="Last()">尾页</button>
 </div>
 
 
-<script src="~/lib/jquery/dist/jquery.js"></script>
-<script>
-    $("#add").click(function () {
-        location.href = "/default/addprice";
-    });
-    //页码
-    var pageIndex = 1;
-    //每页显示几条数据
-    var pageSize = 3;
-    var Count = 0;
-    $(function () {
-        GoodsPrice();
-    });
-    $("#sousuo").click(function () {
-        GoodsPrice();
-    });
-    function GoodsPrice() {
-        $.ajax({
-            url: "http://192.168.0.190:8085/api/Default/GoodsPrice?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&proBh=" + $("#bh").val(),    
-        }).done(function (d) {
-            console.log(d);
-            Count = d.count;
-            console.log(d.list);
-            var tr = "";
-            $("#tb").empty();
-            $.each(d.list, function (index, item) {
-                tr += "<tr class='active'>";
-                tr += "<td><input type='checkbox' class='checkAll' value='" + item.id + "' /></td>";
-                tr += "<td>" + item.goodsId + "</td>";
-                tr += "<td>" + item.goodsName + "</td>";
-                tr += "<td>" + item.goodsBrand + "</td>";
-                tr += "<td>" + item.typeName + "</td>";
-                tr += "<td>" + item.goodsRule + "</td>";
-                tr += "<td>" + item.sku + "</td>";
-                tr += "<td>" + item.goodsPrices + "</td>";
-                tr += "<td>" + item.jinHPrice + "</td>";
-                tr += "<td><a href='#' onclick='Del(/" + item.id + "/)' >删除</a> <a href='../Default/Update?GId=/" + item.id + "/&PId=/" + item.priceId + "/' >编辑</a></td>";
-                tr += "</tr>";
-            });
-            $("#tb").append(tr);
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script>
+        $("#add").click(function () {
+            location.href = "/default/addprice";
         });
-    }
+        //页码
+        var pageIndex = 1;
+        //每页显示几条数据
+        var pageSize = 3;
+        var Count = 0;
+        $(function () {
+            GoodsPrice();
+        });
+        $("#sousuo").click(function () {
+            GoodsPrice();
+        });
+        function GoodsPrice() {
+            $.ajax({
+                url: "http://192.168.0.190:8085/api/Default/GoodsPrice?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&proBh=" + $("#bh").val(),
+            }).done(function (d) {
+                console.log(d);
+                Count = d.count;
+                console.log(d.list);
+                var tr = "";
+                $("#tb").empty();
+                $.each(d.list, function (index, item) {
+                    tr += "<tr class='active'>";
+                    tr += "<td><input type='checkbox' class='checkAll' value='" + item.id + "' /></td>";
+                    tr += "<td>" + item.goodsId + "</td>";
+                    tr += "<td>" + item.goodsName + "</td>";
+                    tr += "<td>" + item.goodsBrand + "</td>";
+                    tr += "<td>" + item.typeName + "</td>";
+                    tr += "<td>" + item.goodsRule + "</td>";
+                    tr += "<td>" + item.sku + "</td>";
+                    tr += "<td>" + item.goodsPrices + "</td>";
+                    tr += "<td>" + item.jinHPrice + "</td>";
+                    tr += "<td><button type='button' id='Gb' onclick='Edit(/" + item.id + "/,/" + item.priceId + "/)' class='layui-btn layui-btn-warm'>编辑</button></td>";
+                    tr += "</tr>";
+                });
+                $("#tb").append(tr);
+            });
+        }
+        function Edit(id, pid) {
+            location.href = "../Default/Update?GId=" + id + "&PId=" + pid + "";
+        };
     //全选反选
     $("#check").click(function () {
         $(".checkAll").prop("checked", $(this).prop("checked"));
@@ -144,36 +161,36 @@
         pageIndex = 1;
         GoodsPrice();
 
-    }
-    //上一页
-    function Pre() {
-        if (pageIndex == 1) {
-            alert("已经是第一页了！");
         }
-        else {
-            pageIndex = pageIndex - 1;
-           
+        //上一页
+        function Pre() {
+            if (pageIndex == 1) {
+                alert("已经是第一页了！");
+            }
+            else {
+                pageIndex = pageIndex - 1;
+
+
+            }
+            GoodsPrice();
+        }
+
+        //下一页
+        function Next() {
+            if (pageIndex == Count) {
+                alert("已经是最后一页了！");
+            }
+            else {
+                pageIndex = pageIndex + 1;
+
+
+            }
+            GoodsPrice();
+        }
+        //尾页
+        function Last() {
+            pageIndex = Count;
+            GoodsPrice();
 
         }
-        GoodsPrice();
-    }
-
-    //下一页
-    function Next() {
-        if (pageIndex == Count) {
-            alert("已经是最后一页了！");
-        }
-        else {
-            pageIndex = pageIndex + 1;
-           
-
-        }
-        GoodsPrice();
-    }
-    //尾页
-    function Last() {
-        pageIndex = Count;
-        GoodsPrice();
-
-    }
-</script>
+    </script>

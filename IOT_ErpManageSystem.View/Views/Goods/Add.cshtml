@@ -422,7 +422,7 @@
     //删除颜色
     function del(CId) {
         if (confirm("确定删除吗?")) {
-            $.ajax("http://localhost:52645/api/Goods/DelColors?CId=" + CId,
+            $.ajax("http://192.168.0.190:8085/api/Goods/DelColors",
                 {
                     type: "get",
                 }).done(function (code) {
@@ -439,7 +439,7 @@
 
     //添加颜色
     function addcolor() {
-        $.ajax("http://localhost:52645/api/Goods/AddColors",
+        $.ajax("http://192.168.0.190:8085/api/Goods/AddColors",
             {
                 type: "post",
                 data: { "Color": $("#colors").val().toString() },

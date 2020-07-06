@@ -11,6 +11,7 @@ namespace IOT_ErpManageSystem.Models
         public string Payment { get; set; }
         public int OrFrom { get; set; }
         public int OrState { get; set; }
+        public int State { get; set; }
 
         public string UserName { get; set; }
         public string FromName { get; set; }

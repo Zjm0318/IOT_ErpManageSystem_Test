@@ -57,7 +57,7 @@
     //部门绑定
     function Allt_Dep() {
         $.ajax({
-            url: "http://localhost:52645/api/RBAC_Allot/GetDep",
+            url: "http://192.168.0.190:8085/api/RBAC_Allot/GetDep",
             type: "get",
         }).done(function (data) {
             $.each(data, function (Index, item) {
@@ -76,7 +76,7 @@
     function GetQuan() {
 
         $.ajax({
-            url: "http://localhost:52645/api/RBAC_Allot/GetQuan?Uid=0",
+            url: "http://192.168.0.190:8085/api/RBAC_Allot/GetQuan?Uid=0",
             type: "get",
             dataType: "json",
             async: false,
@@ -157,7 +157,7 @@
             "Allot_BaoId": ids,
         };
         $.ajax({
-            url: "http://localhost:52645/api/RBAC_Allot/Add_Allot",
+            url: "http://192.168.0.190:8085/api/RBAC_Allot/Add_Allot",
             type: "post",
             data: obj,
             dataType: "text",
