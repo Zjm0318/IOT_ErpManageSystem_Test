@@ -98,56 +98,6 @@
         function Edit(id, pid) {
             location.href = "../Default/Update?GId=" + id + "&PId=" + pid + "";
         };
-        //全选反选
-        $("#check").click(function () {
-            $(".checkAll").prop("checked", $(this).prop("checked"));
-        });
-        //首页
-        function First() {
-            pageIndex = 1;
-            GoodsPrice();
-<script src="~/lib/jquery/dist/jquery.js"></script>
-<script>
-    $("#add").click(function () {
-        location.href = "/default/addprice";
-    });
-    //页码
-    var pageIndex = 1;
-    //每页显示几条数据
-    var pageSize = 3;
-    var Count = 0;
-    $(function () {
-        GoodsPrice();
-    });
-    $("#sousuo").click(function () {
-        GoodsPrice();
-    });
-    function GoodsPrice() {
-        $.ajax({
-            url: "http://192.168.0.190:8085/api/Default/GoodsPrice?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&proBh=" + $("#bh").val(),    
-        }).done(function (d) {
-            console.log(d);
-            Count = d.count;
-            console.log(d.list);
-            var tr = "";
-            $("#tb").empty();
-            $.each(d.list, function (index, item) {
-                tr += "<tr class='active'>";
-                tr += "<td><input type='checkbox' class='checkAll' value='" + item.id + "' /></td>";
-                tr += "<td>" + item.goodsId + "</td>";
-                tr += "<td>" + item.goodsName + "</td>";
-                tr += "<td>" + item.goodsBrand + "</td>";
-                tr += "<td>" + item.typeName + "</td>";
-                tr += "<td>" + item.goodsRule + "</td>";
-                tr += "<td>" + item.sku + "</td>";
-                tr += "<td>" + item.goodsPrices + "</td>";
-                tr += "<td>" + item.jinHPrice + "</td>";
-                tr += "<td><a href='#' onclick='Del(/" + item.id + "/)' >删除</a> <a href='../Default/Update?GId=/" + item.id + "/&PId=/" + item.priceId + "/' >编辑</a></td>";
-                tr += "</tr>";
-            });
-            $("#tb").append(tr);
-        });
-    }
     //全选反选
     $("#check").click(function () {
         $(".checkAll").prop("checked", $(this).prop("checked"));
