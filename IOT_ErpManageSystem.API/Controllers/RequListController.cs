@@ -137,7 +137,7 @@ namespace IOT_ErpManageSystem.API.Controllers
         }
         #endregion
 
-        #region
+        #region  添加商品信息
         [HttpPost]
         public int AddRequGood([FromForm]string GId,[FromForm]int Num)
         {
@@ -246,7 +246,7 @@ namespace IOT_ErpManageSystem.API.Controllers
 
             return list;
         }
-        //添加请购单,采购单与商品的中间表数据
+
 
 
         //根据ID删除相关的商品信息
