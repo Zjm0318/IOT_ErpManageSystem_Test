@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = "FanTRequList";
+    ViewData["Title"] = "FanTRequList1";
 }
 
 
@@ -48,7 +48,9 @@
 
 <input type="button" value="保存" id="update" class="layui-btn" />
 <input type="button" value="返回" id="back" class="layui-btn layui-btn-normal" />
+
 <script src="~/lib/jquery/dist/jquery.js"></script>
+
 <script>
     //初始化
     $(function () {
@@ -58,7 +60,7 @@
 
     //显示反填信息
     function show() {
-        $.ajax("http://192.168.0.190:8085/api/RequList/FanTRequ?QId=" + $("#qid").val(), {
+        $.ajax("http://localhost:52645/api/RequList/FanTRequ?QId=" + $("#qid").val(), {
             data: "get",
             dataType: "json"
         }).done(function (da) {
@@ -71,7 +73,7 @@
 
     //显示商品信息
     function showlist() {
-        $.ajax("http://192.168.0.190:8085/api/RequList/GetRequGoods?Id=" + $("#id").val(), {
+        $.ajax("http://localhost:52645/api/RequList/GetRequGoods?Id=" + $("#id").val(), {
             type: "get",
             dataType: "json"
         }).done(function (da) {
@@ -90,7 +92,7 @@
                     + "<td>" + item.goodsStock + "</td>"
                     + "<td>" + item.goodsPrices + "</td>"
                     + "<td>" + (item.goodsPrices * item.buyNum) + "</td>"
-                    + "<td><input type='button' value='删除'  onclick='shan(" + item.rpgid + ")' /></td>"
+                    + "<td><input type='button' value='删除'  class='layui-btn layui-btn-warm layui-btn-sm' onclick='shan(" + item.rpgid + ")' /></td>"
                     + "</tr>";
                 $("#body").append(str);
             })
@@ -115,7 +117,7 @@
                     + '<td>商品库存</td>'
                     + '</tr>'
                     + '<tbody id="tbody"></tbody></table>'
-                    +'购买量  <input type="number" id="num"> <br />'
+                    + '购买量  <input type="number" id="num"> <br />'
                     + '<input type="button" onclick="Save()" value="保存" style="background-color:forestgreen" class="layui-btn layui-btn-normal" />'
             })
         });
@@ -124,23 +126,19 @@
 
     }
 
-    
     //查询商品信息
     function goodshow() {
         $.ajax("http://localhost:52645/api/RequList/SelectGoods", {
-    //绑定商品下拉框
-    function BingXia() {
-        $.ajax("http://192.168.0.190:8085/api/RequList/GetChaGoodsID", {
             type: "get",
             dataType: "json"
         }).done(function (da) {
             $("#tbody").empty();
 
-            $.each(da, function (index,item) {
+            $.each(da, function (index, item) {
                 var str = "<tr>"
-                    + "<td><input type='checkbox' class='chk' value='"+item.id+"' /></td>"
-                        + "<td>" + item.goodsName + "</td>"
-                    + "<td>" + item.goodsBrand+"</td>"
+                    + "<td><input type='checkbox' class='chk' value='" + item.id + "' /></td>"
+                    + "<td>" + item.goodsName + "</td>"
+                    + "<td>" + item.goodsBrand + "</td>"
                     + "<td>" + item.goodsPrices + "</td>"
                     + "<td>" + item.goodsStock + "</td>"
                     + "</tr>";
@@ -161,18 +159,16 @@
         }
     }
 
-    //添加商品
     function Save() {
-          //获取复选框的值
         var ids = "";
+        //获取复选框的值
         $(".chk").each(function (index, item) {
             if ($(item).prop("checked") == true) {
-                ids = ids + $(item).val()+",";
+                ids = ids + $(item).val() + ",";
             }
         })
 
         ids = ids.substr(0, ids.length - 1);
-
         if (ids == "") {
             alert("请选择商品");
             return;
@@ -184,27 +180,32 @@
                 return;
             }
 
-        $.ajax("http://localhost:52645/api/RequList/AddRequGoods", {
-            type: "post",
-            data: obj,
-            dataType: "json",
-            contentType: "application/x-www-form-urlencoded",
-            accepts:"application/x-www-form-urlencoded"
-        }).done(function (da) {
-            if (da > 0) {
-                alert("添加成功");
-                window.location.reload();
-            }
-            else {
-                alert("添加失败");
-            }
-        })
-    })
+            $.ajax("http://localhost:52645/api/RequList/AddRequGood", {
+                type: "post",
+                data: { GId: ids, Num: $("#num").val() },
+                dataType: "json",
+                contentType: "application/x-www-form-urlencoded",
+                accepts: "application/x-www-form-urlencoded"
+            }).done(function (da) {
+                if (da==1) {
+                    alert("添加成功");
+                    window.location.reload();
+                }
+                else if (da==-1)
+                {
+                    alert("添加数据不全！");
+                }
+                else {
+                    alert("添加失败");
+                }
+            })
+        }
+    }
 
     //删除
     function shan(Id) {
         if (confirm("确认要删除吗?")) {
-            $.ajax("http://192.168.0.190:8085/api/RequList/DeleteGoods?RpgId=" + Id, {
+            $.ajax("http://localhost:52645/api/RequList/DeleteGoods?RpgId=" + Id, {
                 type: "get",
                 dataType: "text",
             }).done(function (da) {
@@ -243,7 +244,7 @@
             return;
         }
 
-        $.ajax("http://192.168.0.190:8085/api/RequList/UpdateRequ", {
+        $.ajax("http://localhost:52645/api/RequList/UpdateRequ", {
             type: "post",
             data: obj,
             dataType: "json",
