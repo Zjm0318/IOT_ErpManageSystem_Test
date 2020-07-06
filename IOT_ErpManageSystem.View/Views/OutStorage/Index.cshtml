@@ -50,9 +50,6 @@
         <div>
             <table class="layui-table" style="width:1400px;text-align:center;margin-left:45px">
                 <tr>
-                    <td>
-                        <input type="checkbox" id="ckALL"  lay-skin="primary">
-                    </td>
                     <td>出库日期</td>
                     <td>订单编号</td>
                     <td>配送方式</td>
@@ -146,7 +143,6 @@
             $("#tb").empty();
             $.each(data.list, function (index, item) {
                 var tr = "<tr>" +
-                    "<td><input type='checkbox' class='ck' lay-skin='primary'></td>" +
                     "<td>" + item.outTime + "</td>" +
                     "<td>" + item.orderNo + "</td>" +
                     "<td>" + item.dispatching + "</td>" +
@@ -220,8 +216,8 @@
     function Look() {
         Show();
     }
-    //全选反选
-    $("#ckALL").click(function () {
-        $(".ck").prop("checked", $("#ckALL").prop("checked"))
-    })
+    ////全选反选
+    //$("#ckALL").click(function () {
+    //    $(".ck").prop("checked", $("#ckALL").prop("checked"))
+    //})
 </script>
