@@ -44,7 +44,7 @@
 <div class="layui-form-item">
     <label class="layui-form-label" style="width:100px">部门名称</label>
     <div class="layui-input-block" style="width:300px">
-        <select name="city" lay-filter="test" lay-verify="required" id="DepName">
+        <select name="city" lay-filter="test" lay-verify="required" id="RolName">
             <option value="">请选择部门</option>
 
         </select>
@@ -81,10 +81,10 @@
 
     //初始化
     $(function () {
-        show();
+
         Allt_Dep();
         Role_Top();
-
+        show();    
     })
 
     //部门绑定
@@ -93,11 +93,15 @@
             url: "http://192.168.0.190:8085/api/RBAC_Role/GetDep",
             type: "get",
         }).done(function (data) {
-            $("#DepName").empty();
+            $("#RolName").empty();
             $.each(data, function (Index, item) {
                 var option = '<option value=' + item.dep_ID + '>' + item.dep_Name + '</option>';
-                $("#DepName").append(option);
+                $("#RolName").append(option);
             })
+            layui.use('form', function () {
+                var form = layui.form;
+                form.render();
+            });
         })
     }
 
@@ -149,7 +153,7 @@
             }
             $("#RoleTel").val(data.role_Tel);
             $("#RoleTop").val(data.job_ID);
-            $("#DepName").val(data.dep_ID);
+            $("#RolName").val(data.dep_ID);
             change(data.job_ID);
             $("#RoleJob").val(data.job_ID);
         })
