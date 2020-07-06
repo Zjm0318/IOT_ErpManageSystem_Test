@@ -55,11 +55,11 @@
     </tr>
 </table>
 
-<div>
-    <a onclick="Shouye()">首页</a>
-    <a onclick="Up()">上一页</a>
-    <a onclick="Next()">下一页</a>
-    <a onclick="WeiYe()">尾页</a>
+<div style="float:left;margin-right:50px">
+    <button type="button" class="layui-btn layui-btn-sm"onclick="Shouye()">首页</button>
+    <button type="button" class="layui-btn layui-btn-sm" onclick="Up()">上一页</button>
+    <button type="button" class="layui-btn layui-btn-sm" onclick="Next()">下一页</button>
+    <button type="button" class="layui-btn layui-btn-sm" onclick="WeiYe()">尾页</button>
 </div>
 <script src="~/lib/jquery/dist/jquery.js"></script>
 
@@ -251,7 +251,6 @@
 
     //编辑
     function edit(QId, QgId) {
-        window.location.href = "/RequShow/FanTRequList?QId=" + QId + "&QgId=" + QgId;
+        window.location.href = "/RequShow/FanTRequList1?QId=" + QId + "&QgId=" + QgId;
     }
-
 </script>

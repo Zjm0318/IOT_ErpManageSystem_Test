@@ -44,7 +44,7 @@
 <div class="layui-form-item">
     <label class="layui-form-label" style="width:100px">部门名称</label>
     <div class="layui-input-block" style="width:300px">
-        <select name="city" lay-filter="test" lay-verify="required" id="RolName">
+        <select name="city" lay-filter="test" lay-verify="required" id="DepName">
             <option value="">请选择部门</option>
 
         </select>
@@ -96,7 +96,7 @@
             $("#RolName").empty();
             $.each(data, function (Index, item) {
                 var option = '<option value=' + item.dep_ID + '>' + item.dep_Name + '</option>';
-                $("#RolName").append(option);
+                $("#DepName").append(option);
             })
             layui.use('form', function () {
                 var form = layui.form;
@@ -140,6 +140,7 @@
             url: "http://192.168.0.190:8085/api/RBAC_Role/FanRole?Id=" + Eid,
             type: "get"
         }).done(function (data) {
+            console.log(data);
             $("#RoleCode").val(data.role_Code);
             $("#RoleName").val(data.role_Name);
             $("#RoleAccount").val(data.role_Account);
@@ -153,7 +154,7 @@
             }
             $("#RoleTel").val(data.role_Tel);
             $("#RoleTop").val(data.job_ID);
-            $("#RolName").val(data.dep_ID);
+            $("#DepName").val(data.dep_ID);
             change(data.job_ID);
             $("#RoleJob").val(data.job_ID);
         })
@@ -237,8 +238,8 @@
         }
 
         //部门名称
-        if (jQuery('#RolName').val() == "") {
-            jQuery('#RolName').focus();
+        if (jQuery('#DepName').val() == "") {
+            jQuery('#DepName').focus();
             alert("部门不能为空！");
             return;
         }
@@ -264,7 +265,7 @@
             "RoleSex": $("input[type='radio']:checked").val(),
             "Role_Tel": $("#RoleTel").val(),
             "Job_ID": $("#RoleJob").val(),
-            "Dep_ID": $("#RolName").val()
+            "Dep_ID": $("#DepName").val()
         };
         $.ajax({
             url: "http://192.168.0.190:8085/api/RBAC_Role/Update_Role",

@@ -12,70 +12,69 @@
     }
 </style>
 <div class="layui-form">
-    <div class="layui-fluid" style="margin-top:20px;width:1400px;height:140px;border:solid 1px;border-color:darkgrey;padding-top:30px">
-        <div class="layui-inline">
-            <label class="layui-form-label">配送方式</label>
-            <div class="layui-input-inline">
-                <select id="disPath" name="city" lay-verify="">
-                    <option value="">--配送方式--</option>
-                </select>
+    <div class="layui-form-item">
+        <div class="layui-fluid" style="margin-top:20px;width:1400px;height:140px;border:solid 1px;border-color:darkgrey;padding-top:30px">
+            <div class="layui-inline">
+                <label class="layui-form-label">配送方式</label>
+                <div class="layui-input-inline">
+                    <select id="disPath" name="city" lay-verify="">
+                        <option value="">--配送方式--</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">出库日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" id="time" placeholder="yyyy-MM-dd">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">出货仓库</label>
+                <div class="layui-input-inline">
+                    <select id="oStorage" name="city" lay-verify="">
+                        <option value="">--出货仓库--</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">订单编号</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="order" placeholder="请输入" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div style="padding-bottom: 10px;">
+                <button style="margin-left:40px" class="layui-btn layuiadmin-btn-list" onclick="Look()">搜索</button>
+                <button style="margin-left:40px" class="layui-btn layuiadmin-btn-list" onclick="window.location='/OutStorage/AddOutStorage'">添加</button>
             </div>
         </div>
-        <div class="layui-inline">
-            <label class="layui-form-label">出库日期</label>
-            <div class="layui-input-inline">
-                <input type="text" class="layui-input" id="time" placeholder="yyyy-MM-dd">
-            </div>
-        </div>
-        <div class="layui-inline">
-            <label class="layui-form-label">出货仓库</label>
-            <div class="layui-input-inline">
-                <select id="oStorage" name="city" lay-verify="">
-                    <option value="">--出货仓库--</option>
-                </select>
-            </div>
-        </div>
-        <div class="layui-inline">
-            <label class="layui-form-label">订单编号</label>
-            <div class="layui-input-inline">
-                <input type="text" name="id" id="order" placeholder="请输入" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div style="padding-bottom: 10px;">
-            <button style="margin-left:40px" class="layui-btn layuiadmin-btn-list" onclick="Look()">搜索</button>
-            <button style="margin-left:40px" class="layui-btn layuiadmin-btn-list" onclick="window.location='/OutStorage/AddOutStorage'">添加</button>
-        </div>
-    </div>
-    <div>
-        <table class="layui-table" style="width:1400px;text-align:center;margin-left:45px">
-            <tr>
-                <td>
-                    <input type="checkbox" class="ckALL" name="" lay-skin="primary">
-                </td>
-                <td>出库日期</td>
-                <td>订单编号</td>
-                <td>配送方式</td>
-                <td>收货人</td>
-                <td>收货人联系方式</td>
-                <td>配送区域</td>
-                <td>出货仓库</td>
-                <td>仓管员</td>
-                <td>打包员</td>
-                <td>操作</td>
-            </tr>
-            <tbody id="tb">
-            </tbody>
-        </table>
-        <div style="margin-top:30px" class="layui-btn-container">
-            <div class="page" style="width:300px;float:left;margin-left:45px">
-                @*<a href="#" style="margin-right:25px" onclick="First()">首页</a>
-        <a href="#" style="margin-right:25px" onclick="Pre()">上一页</a>
-        <a href="#" style="margin-right:25px" onclick="Next()">下一页</a>
-        <a href="#" style="margin-right:25px" onclick="Last()">尾页</a>*@
-                <button class="layui-btn layui-btn-sm" onclick="First()">首页</button>
-                <button class="layui-btn layui-btn-sm" onclick="Pre()">上一页</button>
-                <button class="layui-btn layui-btn-sm" onclick="Next()">下一页</button>
-                <button class="layui-btn layui-btn-sm" onclick="Last()">尾页</button>
+        <div>
+            <table class="layui-table" style="width:1400px;text-align:center;margin-left:45px">
+                <tr>
+                    <td>出库日期</td>
+                    <td>订单编号</td>
+                    <td>配送方式</td>
+                    <td>收货人</td>
+                    <td>收货人联系方式</td>
+                    <td>配送区域</td>
+                    <td>出货仓库</td>
+                    <td>仓管员</td>
+                    <td>打包员</td>
+                    <td>操作</td>
+                </tr>
+                <tbody id="tb">
+                </tbody>
+            </table>
+            <div style="margin-top:30px" class="layui-btn-container">
+                <div class="page" style="width:300px;float:left;margin-left:45px">
+                    @*<a href="#" style="margin-right:25px" onclick="First()">首页</a>
+                    <a href="#" style="margin-right:25px" onclick="Pre()">上一页</a>
+                    <a href="#" style="margin-right:25px" onclick="Next()">下一页</a>
+                    <a href="#" style="margin-right:25px" onclick="Last()">尾页</a>*@
+                    <button class="layui-btn layui-btn-sm" onclick="First()">首页</button>
+                    <button class="layui-btn layui-btn-sm" onclick="Pre()">上一页</button>
+                    <button class="layui-btn layui-btn-sm" onclick="Next()">下一页</button>
+                    <button class="layui-btn layui-btn-sm" onclick="Last()">尾页</button>
+                </div>
             </div>
         </div>
     </div>
@@ -84,7 +83,7 @@
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script>
     var pageIndex = 1;
-    var pageSize = 2;
+    var pageSize = 5;
     var pageCount = 0;
     $(function () {
         GetDisList();
@@ -144,7 +143,6 @@
             $("#tb").empty();
             $.each(data.list, function (index, item) {
                 var tr = "<tr>" +
-                    "<td><input type='checkbox' class='ck' lay-skin='primary'> </td>" +
                     "<td>" + item.outTime + "</td>" +
                     "<td>" + item.orderNo + "</td>" +
                     "<td>" + item.dispatching + "</td>" +
@@ -218,8 +216,8 @@
     function Look() {
         Show();
     }
-    //全选反选
-    $("#ckALL").click(function () {
-        $(".ck").prop("checked", $("#ckALL").prop("checked"))
-    })
+    ////全选反选
+    //$("#ckALL").click(function () {
+    //    $(".ck").prop("checked", $("#ckALL").prop("checked"))
+    //})
 </script>
