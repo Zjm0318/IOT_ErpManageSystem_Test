@@ -119,7 +119,7 @@
                     + "<td>" + item.goodsPrices + "</td>"
                     + "<td>" + item.jinHPrice + "</td>"
                     + "<td>" + (item.goodsPrices * item.buyNum) + "</td>"
-                    + "<td><input type='button' value='删除'  onclick='shan(" + item.rpgid + ")'/></td>"
+                    + "<td><input type='button' value='删除' class='layui-btn layui-btn-warm layui-btn-sm'  onclick='shan(" + item.rpgid + ")'/></td>"
                     + "</tr>";
                 $("#body").append(str);
             })
@@ -150,13 +150,28 @@
         });
 
         goodshow();   //查询商品信息
-    //绑定商品下拉框
-    function BingXia() {
-        $.ajax("http://192.168.0.190:8085/api/RequList/GetChaGoodsID", {
+    }
+
+    //查询商品信息
+    function goodshow() {
+        $.ajax("http://192.168.0.190:8085/api/RequList/SelectGoods", {
             type: "get",
             dataType: "json"
         }).done(function (da) {
-            $("#goodid").empty();
+            $("#tbody").empty();
+
+            $.each(da, function (index, item) {
+                var str = "<tr>"
+                    + "<td><input type='checkbox' class='chk' value='" + item.id + "' /></td>"
+                    + "<td>" + item.goodsName + "</td>"
+                    + "<td>" + item.goodsBrand + "</td>"
+                    + "<td>" + item.goodsPrices + "</td>"
+                    + "<td>" + item.goodsStock + "</td>"
+                    + "</tr>";
+
+                $("#tbody").append(str);
+            })
+        })
 
     }
 
@@ -193,24 +208,26 @@
                 return;
             }
 
-        $.ajax("http://localhost:52645/api/RequList/AddRequGoods", {
-            type: "post",
-            data: obj,
+            $.ajax("http://192.168.0.190:8085/api/RequList/AddRequGood", {
+                type: "post",
+                data: { GId: ids, Num: $("#num").val() },
             dataType: "json",
             contentType: "application/x-www-form-urlencoded",
             accepts: "application/x-www-form-urlencoded"
         }).done(function (da) {
-            if (da > 0) {
+            if (da == 1) {
                 alert("添加成功");
                 window.location.reload();
+            }
+            else if (da == -1) {
+                alert("添加数据不全！");
             }
             else {
                 alert("添加失败");
             }
         })
-    })
-
-    }
+        }
+      }
 
 
     //删除

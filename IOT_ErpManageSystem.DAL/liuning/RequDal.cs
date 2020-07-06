@@ -120,7 +120,7 @@ namespace IOT_ErpManageSystem.DAL.liuning
         #endregion
 
         #region 查询商品信息
-          public List<RequGoods> SelectGoods()
+        public List<RequGoods> SelectGoods()
         {
             DataTable tb = _dBHelper.ExecuteProc("SelectGoods", null);
             string json = JsonConvert.SerializeObject(tb);
@@ -153,11 +153,12 @@ namespace IOT_ErpManageSystem.DAL.liuning
                 new SqlParameter{ParameterName="@QGId",SqlDbType=SqlDbType.UniqueIdentifier,Value=m.QgId,Direction=ParameterDirection.Input }
             };
             return _dBHelper.ExecuteNonQueryProc("UpdRequInfo", param);
+            
         }
         #endregion
 
         #region 查询员工名称 查询部门名称
-          public List<RBAC_Role> SelectRole()
+        public List<RBAC_Role> SelectRole()
         {
             DataTable tb = _dBHelper.ExecuteProc("SelectRole", null);
             string json = JsonConvert.SerializeObject(tb);
@@ -177,7 +178,7 @@ namespace IOT_ErpManageSystem.DAL.liuning
         #endregion
 
         #region  添加请购单,采购单与商品的中间表数据2
-        public int AddRequGood(string GId,int Num)
+        public int AddRequGood(string GId, int Num)
         {
             //获取数据
             string[] ids = GId.Split(',');
@@ -192,15 +193,15 @@ namespace IOT_ErpManageSystem.DAL.liuning
                 new SqlParameter{ParameterName="@GId",SqlDbType=SqlDbType.VarChar,Value=gid,Direction=ParameterDirection.Input },
                 new SqlParameter{ParameterName="@Bynum",SqlDbType=SqlDbType.Int,Value=Num,Direction=ParameterDirection.Input }
                };
-                int flag= _dBHelper.ExecuteNonQueryProc("AddRequGoods", param);
+                int flag = _dBHelper.ExecuteNonQueryProc("AddRequGoods", param);
 
-                if(flag>0)
+                if (flag > 0)
                 {
                     code += flag;
                 }
             }
 
-            if(code==s)
+            if (code == s)
             {
                 return 1;
             }
@@ -208,7 +209,7 @@ namespace IOT_ErpManageSystem.DAL.liuning
             {
                 //删除
                 int a = _dBHelper.ExecuteNonQueryProc("DeleRequPurGood", null);
-                if(a>0)
+                if (a > 0)
                 {
                     return 0;
                 }
@@ -217,7 +218,7 @@ namespace IOT_ErpManageSystem.DAL.liuning
                     return -1;
                 }
             }
-            
+
         }
         #endregion
 

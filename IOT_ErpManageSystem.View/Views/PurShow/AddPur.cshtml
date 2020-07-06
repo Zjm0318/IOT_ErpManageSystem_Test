@@ -104,7 +104,7 @@
     }
 
     //绑定员工名称
-    $.ajax("http://localhost:52645/api/RequList/SelectRole", {
+    $.ajax("http://192.168.0.190:8085/api/RequList/SelectRole", {
         type: "get",
         dataType: "json",
     }).done(function (da) {
@@ -115,7 +115,7 @@
         })
     })
     //绑定部门名称
-    $.ajax("http://localhost:52645/api/RequList/SelectDep", {
+    $.ajax("http://192.168.0.190:8085/api/RequList/SelectDep", {
         type: "get",
         dataType: "json",
     }).done(function (da) {

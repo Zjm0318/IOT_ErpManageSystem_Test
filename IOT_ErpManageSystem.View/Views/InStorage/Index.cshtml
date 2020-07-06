@@ -79,7 +79,7 @@
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script>
     var pageIndex = 1;
-    var pageSize = 2;
+    var pageSize = 10;
     var state = 0;
     var cTime = "";
     var sName = "";
@@ -118,7 +118,7 @@
             $("#tb").empty();
             $.each(data.iSMShowList, function (index, item) {
                 var tr = "<tr>" +
-                    "<td><input type='checkbox' class='ck' lay-skin='primary'> </td>" +
+                    "<td><input type='checkbox' class='ck' lay-skin='primary'></td>" +
                     "<td>" + item.inStorageTime + "</td>" +
                     "<td>" + item.inStorageNo + "</td>" +
                     "<td>" + item.buyListNo + "</td>" +

@@ -23,8 +23,9 @@ namespace IOT_ErpManageSystem.View.Controllers
             return View();
         }
 
+
         //反填信息
-        public IActionResult FanTRequList(string QId, string QgId)
+        public IActionResult FanTRequList1(string QId, string QgId)
         {
             ViewBag.QId = QId;
             ViewBag.QgId = QgId;
