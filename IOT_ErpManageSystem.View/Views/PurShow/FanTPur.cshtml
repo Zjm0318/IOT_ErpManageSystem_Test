@@ -71,6 +71,8 @@
         showlist();  //显示商品信息
     })
 
+    var num1;   //数量
+
     //显示反填信息
     function show() {
         $.ajax("http://192.168.0.190:8085/api/RequList/FanTPur?CId=" + $("#cid").val(), {
@@ -161,6 +163,7 @@
             $("#tbody").empty();
 
             $.each(da, function (index, item) {
+                num1 = item.goodsStock;
                 var str = "<tr>"
                     + "<td><input type='checkbox' class='chk' value='" + item.id + "' /></td>"
                     + "<td>" + item.goodsName + "</td>"
@@ -205,6 +208,10 @@
             //判断是否输入数量
             if ($("#num").val() == '' || $("#num").val() == undefined || $("#num").val() == null || $("#num").val() < 0) {
                 alert("请输入数量,并且不能是负数");
+                return;
+            }
+            if ($("#num").val() > num1) {
+                alert("购买量不能大于库存量");
                 return;
             }
 
