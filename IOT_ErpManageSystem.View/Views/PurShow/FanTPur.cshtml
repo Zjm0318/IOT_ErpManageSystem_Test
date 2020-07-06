@@ -154,7 +154,7 @@
 
     //查询商品信息
     function goodshow() {
-        $.ajax("http://localhost:52645/api/RequList/SelectGoods", {
+        $.ajax("http://192.168.0.190:8085/api/RequList/SelectGoods", {
             type: "get",
             dataType: "json"
         }).done(function (da) {
