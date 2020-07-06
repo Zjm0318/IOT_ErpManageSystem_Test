@@ -108,9 +108,8 @@
         }).done(function (data) {
             
             $("#RoleCode").val(data.allot_Code);
-            $("#RoleName").val(data.allot_Name);              
+            $("#DepName").val(data.allot_Name);              
             $("#RoleTop").val(data.allot_Grade);
-            $("#DepName").val(data.dep_ID);
             var xuan = data.allot_BaoId.split('/');
 
             $("#GetAllot").find("[type=checkbox]").each(function (index, item) {
@@ -204,7 +203,7 @@
     }
     //返回
     function Back() {
-        window.location.href = "/RBAC_Role/Index";
+        window.location.href = "/RBAC_Allot/Index";
     }
       
 
