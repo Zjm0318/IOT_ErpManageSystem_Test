@@ -84,7 +84,7 @@
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script>
     var pageIndex = 1;
-    var pageSize = 2;
+    var pageSize = 5;
     var pageCount = 0;
     $(function () {
         GetDisList();
@@ -144,7 +144,7 @@
             $("#tb").empty();
             $.each(data.list, function (index, item) {
                 var tr = "<tr>" +
-                    "<td><input type='checkbox' class='ck' lay-skin='primary'> </td>" +
+                    "<td><input type='checkbox' class='ck' lay-skin='primary'></td>" +
                     "<td>" + item.outTime + "</td>" +
                     "<td>" + item.orderNo + "</td>" +
                     "<td>" + item.dispatching + "</td>" +
