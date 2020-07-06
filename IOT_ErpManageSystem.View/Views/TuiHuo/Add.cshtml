@@ -239,9 +239,11 @@
                     '<tbody id="tbodys"></tbody></table>' +
                     '<input type="button" onclick="Save()" value="保存" style="background-color:forestgreen" class="layui-btn layui-btn-normal" />',
             });
+
+            //显示商品
+            Goods();
         });
-        //显示商品
-        Goods();
+        
 
         //全选/反选
         function cks() {
@@ -299,7 +301,7 @@
         else {
             ids = ids.substring(0, ids.length - 1);
             $.ajax({
-                url: "http://localhost:52645/api/TuiHuo/AddGoods",
+                url: "http://192.168.0.190:8085/api/TuiHuo/AddGoods",
                 type: "post",
                 dataType: "text",
                 data: { id: ids },
