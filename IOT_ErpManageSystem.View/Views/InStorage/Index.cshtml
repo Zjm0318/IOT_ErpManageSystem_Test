@@ -45,9 +45,6 @@
     <div class="layui-inline">
         <table class="layui-table" style="width:1340px;text-align:center;margin-left:75px">
             <tr>
-                <td>
-                    <input type="checkbox" name="" lay-skin="primary" id="ckALL">
-                </td>
                 <td>入库日期</td>
                 <td>入库单编号</td>
                 <td>采购单编号</td>
@@ -118,7 +115,6 @@
             $("#tb").empty();
             $.each(data.iSMShowList, function (index, item) {
                 var tr = "<tr>" +
-                    "<td><input type='checkbox' class='ck' lay-skin='primary'></td>" +
                     "<td>" + item.inStorageTime + "</td>" +
                     "<td>" + item.inStorageNo + "</td>" +
                     "<td>" + item.buyListNo + "</td>" +
