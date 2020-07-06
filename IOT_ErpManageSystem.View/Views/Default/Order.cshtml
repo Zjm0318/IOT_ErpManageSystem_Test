@@ -55,9 +55,6 @@
         height: 300px;
     }
 </style>
-<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
-<link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
-<link href="~/layuiadmin/style/admin.css" rel="stylesheet" />
 <h3 style="padding-left:46px">数据报表 / 订单报表</h3>
 <div class="layui-box" style="width:1400px;height:170px;border:1px solid;margin-left:50px">
     <div class="layui-box">
@@ -86,7 +83,7 @@
         </div>
     </div>
 </div>
-<div class="layui-box" style="width:1400px;height:270px;border:1px solid;margin-left:50px;margin-top:30px">
+<div class="layui-box" style="width:1400px;height:660px;border:1px solid;margin-left:50px;margin-top:30px">
     <div id="f">
         数据列表
     </div>
@@ -106,19 +103,19 @@
             <tbody id="tb"></tbody>
         </table>
     </div>
-    <div style="float:left;margin-right:50px">
-        <button type="button" class="layui-btn layui-btn-sm" onclick="First()">首页</button>
-        <button type="button" class="layui-btn layui-btn-sm" onclick="Pre()">上一页</button>
-        <button type="button" class="layui-btn layui-btn-sm" onclick="Next()">下一页</button>
-        <button type="button" class="layui-btn layui-btn-sm" onclick="Last()">尾页</button>
-    </div>
+</div>
+<div style="float:left;margin-left:50px">
+    <button type="button" class="layui-btn layui-btn-sm" onclick="First()">首页</button>
+    <button type="button" class="layui-btn layui-btn-sm" onclick="Pre()">上一页</button>
+    <button type="button" class="layui-btn layui-btn-sm" onclick="Next()">下一页</button>
+    <button type="button" class="layui-btn layui-btn-sm" onclick="Last()">尾页</button>
 </div>
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script>
     //页码
     var pageIndex = 1;
     //每页显示几条数据
-    var pageSize = 3;
+    var pageSize = 10;
     var Count = 0;
     var type = 0;
     var from = 0;
