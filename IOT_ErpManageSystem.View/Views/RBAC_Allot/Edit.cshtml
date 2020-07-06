@@ -30,6 +30,7 @@
                 <option value="Ⅱ">Ⅱ</option>
                 <option value="Ⅲ">Ⅲ</option>
                 <option value="Ⅳ">Ⅳ</option>
+                <option value="Ⅳ">S</option>
             </select>
         </div>
     </div>
@@ -51,11 +52,11 @@
 </div>
 <script>
     $(function () {
-        show();
-        Allt_Dep();
-        
-        GetQuan();
        
+        Allt_Dep();
+       
+        GetQuan();
+        show();
     })
 
     //部门绑定
@@ -69,6 +70,10 @@
                 var option = '<option value=' + item.dep_ID + '>' + item.dep_Name + '</option>';
                 $("#DepName").append(option);
             })   
+            layui.use('form', function () {
+                var form = layui.form;
+                form.render();
+            });
         })
     }
            
