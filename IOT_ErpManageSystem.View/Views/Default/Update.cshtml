@@ -68,7 +68,7 @@
             type: "get"
         }).done(function (d) {
             console.log(d);
-            //$("#type").empty();
+            $("#type").empty();
             $.each(d, function (index, item) {
                 var option = "<option value='" + item.tId + "'>" + item.typeName + "</option>";
                 $("#type").append(option);
