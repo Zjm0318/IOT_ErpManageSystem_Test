@@ -185,7 +185,18 @@
 
     });
     $("#qued").click(function () {
-
+        if ($("#oldPwd").val() == "") {
+            alert("旧密码不能为空！");
+            return;
+        }
+        if ($("#newPwd").val() == "") {
+            alert("新密码不能为空！");
+            return;
+        }
+        if ($("#quePwd").val() == "") {
+            alert("确认密码不能为空！");
+            return;
+        }
         if ($("#oldPwd").val() != pwd) {
             alert("您输入的旧密码有误，请重新输入！");
             return;
