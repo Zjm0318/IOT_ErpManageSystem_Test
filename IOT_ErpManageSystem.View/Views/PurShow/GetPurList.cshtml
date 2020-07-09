@@ -100,8 +100,13 @@
                     + "<td>" + item.gid + "</td>"
                     + "<td>" + item.gLaiYuan + "</td>"
                     + "<td>" + item.bgName + "</td>"
-                    + "<td>" + item.role_Name + "</td>"
-                    + "<td>" + item.cgShr + "</td>"
+                    if (item.role_Name == null) {
+                        str += "<td  style='color: orangered'>请指派采购负责人</td>"
+                    }
+                    else {
+                        str += "<td>" + item.role_Name + "</td>"
+                    }
+                    str += "<td>" + item.cgShr + "</td>"
                     + "<td>" + item.cwShr + "</td>"
                     + "<td><input type='button' value='编辑' onclick='edit(\"" + item.cid + "\",\"" + item.id + "\")' class='layui-btn layui-btn-warm layui-btn-sm' /><br /><br />"
                     + "<input type = 'button' value ='审核通过' class='layui-btn layui-btn-warm layui-btn-sm' onclick = 'Update1(\"" + item.id + "\")'/><br /><br />"
@@ -118,8 +123,13 @@
                     + "<td>" + item.gid + "</td>"
                     + "<td>" + item.gLaiYuan + "</td>"
                     + "<td>" + item.bgName + "</td>"
-                    + "<td>" + item.role_Name + "</td>"
-                    + "<td>" + item.cgShr + "</td>"
+                    if (item.role_Name == null) {
+                        str += "<td style='color: orangered'>请指派采购负责人</td>"
+                    }
+                    else {
+                        str += "<td>" + item.role_Name + "</td>"
+                    }
+                    str += "<td>" + item.cgShr + "</td>"
                     + "<td>" + item.cwShr + "</td>"
                     + "<td><input type='button' value='编辑' onclick='edit(\"" + item.cid + "\",\"" + item.id + "\")' class='layui-btn layui-btn-warm layui-btn-sm' />"
                     + "</td > "
@@ -134,8 +144,13 @@
                     + "<td>" + item.gid + "</td>"
                     + "<td>" + item.gLaiYuan + "</td>"
                     + "<td>" + item.bgName + "</td>"
-                    + "<td>" + item.role_Name + "</td>"
-                    + "<td>" + item.cgShr + "</td>"
+                    if (item.role_Name == null) {
+                        str += "<td style='color: orangered'>请指派采购负责人</td>"
+                    }
+                    else {
+                        str += "<td>" + item.role_Name + "</td>"
+                    }
+                    str += "<td>" + item.cgShr + "</td>"
                     + "<td>" + item.cwShr + "</td>"
                     + "<td><input type='button' value='编辑' onclick='edit(\"" + item.cid + "\",\"" + item.id + "\")' class='layui-btn layui-btn-warm layui-btn-sm' />"
                     + "</td > "
