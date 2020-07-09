@@ -40,7 +40,7 @@
     var reg =/^[^\s]*$/;
 
       //绑定员工名称
-    $.ajax("http://192.168.0.190:8085/api/RequList/SelectRole", {
+    $.ajax("http://172.20.10.2:8085/api/RequList/SelectRole", {
         type: "get",
         dataType: "json",
     }).done(function (da) {
@@ -51,7 +51,7 @@
         })
     })
     //绑定部门名称
-    $.ajax("http://192.168.0.190:8085/api/RequList/SelectDep", {
+    $.ajax("http://172.20.10.2:8085/api/RequList/SelectDep", {
         type: "get",
         dataType: "json",
     }).done(function (da) {
@@ -87,7 +87,7 @@
             return;
         }
 
-        $.ajax("http://192.168.0.190:8085/api/RequList/AddRequInfo", {
+        $.ajax("http://172.20.10.2:8085/api/RequList/AddRequInfo", {
             type: "post",
             data: { m: obj },
             dataType: "json",

@@ -186,12 +186,12 @@ namespace IOT_ErpManageSystem.API.Controllers
         [HttpGet]
         public Models.GoodsInfo GoodsThree(string id)
         {
-            Models.GoodsInfo model = _bll.GoodsThree(id).FirstOrDefault();
+            //Models.GoodsInfo model = _bll.GoodsThree(id).FirstOrDefault();
 
-            model.TypeId = Guid.Parse(model.TypeId.ToString().ToUpper());
+            //model.TypeId = Guid.Parse(model.TypeId.ToString().ToUpper());
 
             
-            return model;
+            return _bll.GoodsThree(id).FirstOrDefault();
         }
         [HttpGet]
         public List<GoodsType> Type()

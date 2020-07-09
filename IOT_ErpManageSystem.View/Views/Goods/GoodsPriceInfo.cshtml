@@ -105,7 +105,7 @@
         };
 
 
-        $.ajax("http://192.168.0.190:8085/api/Goods/ShowGoodsPrice",
+        $.ajax("http://172.20.10.2:8085/api/Goods/ShowGoodsPrice",
             {
                 type: "post",
                 data: obj,
@@ -150,7 +150,7 @@
             });
 
             //反填信息
-            $.ajax("http://192.168.0.190:8085/api/Goods/SelectPrice?priceId=" + priceId,
+            $.ajax("http://172.20.10.2:8085/api/Goods/SelectPrice?priceId=" + priceId,
                 {
                     type: "get"
                 }).done(function (data) {
@@ -186,7 +186,7 @@
                     return;
                 }
 
-                $.ajax("http://192.168.0.190:8085/api/Goods/UpdatePrice",
+                $.ajax("http://172.20.10.2:8085/api/Goods/UpdatePrice",
                     {
                         type: "post",
                         data: obj,
@@ -271,7 +271,7 @@
                 }
 
                 var codes = 0;
-                $.ajax("http://192.168.0.190:8085/api/Goods/PricesInfo",
+                $.ajax("http://172.20.10.2:8085/api/Goods/PricesInfo",
                     {
                         type: "get"
                     }).done(function (data) {
@@ -292,7 +292,7 @@
                     })
 
                 function addp() {
-                    $.ajax("http://192.168.0.190:8085/api/Goods/AddPrice",
+                    $.ajax("http://172.20.10.2:8085/api/Goods/AddPrice",
                         {
                             type: "post",
                             data: obj,
@@ -321,7 +321,7 @@
 
     //绑定商品名称
     function goods() {
-        $.ajax("http://192.168.0.190:8085/api/Goods/ShowName",
+        $.ajax("http://172.20.10.2:8085/api/Goods/ShowName",
             {
                 type: "get",
                 dataType: "json"

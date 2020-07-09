@@ -63,15 +63,15 @@
     });
     function Type() {
         $.ajax({
-            url: "http://192.168.0.190:8085/api/Default/Type",
+            url: "http://172.20.10.2:8085/api/Default/Type",
             type: "get"
         }).done(function (d) {
-            //console.log(d);
+            console.log(d);
             $.each(d, function (index, item) {
                 var option = "<option value='" + item.tId + "'>" + item.typeName + "</option>";
                 $("#type").append(option);
             });
-            layui.use('form', function (g) {
+            layui.use('form', function () {
                 var form = layui.form;
                 form.render();
             });
@@ -80,11 +80,12 @@
     }
     function FanTian() {
         var id = $("#id").val();
+        var pid = $("#pid").val();
         $.ajax({
-            url: "http://192.168.0.190:8085/api/Default/GoodsThree?id=" + id,
+            url: "http://172.20.10.2:8085/api/Default/GoodsThree?id=" + id + "&pid=" + pid,
             type: "get"
         }).done(function (d) {
-            //console.log(d);
+            console.log(d);
             $("#goodname").val(d.goodsName);
             $("#brand").val(d.goodsBrand);
             $("#type").val(d.typeId);
@@ -187,7 +188,7 @@
             "JinHPrice": $("#jinprice").val(),
         }
         $.ajax({
-            url: "http://192.168.0.190:8085/api/Default/UpdateGoods",
+            url: "http://172.20.10.2:8085/api/Default/UpdateGoods",
             type: "post",
             accepts: "application/x-www-form-urlencoded",
             contentType: "application/x-www-form-urlencoded",

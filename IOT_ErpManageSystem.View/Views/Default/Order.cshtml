@@ -140,7 +140,7 @@
             from = 0;
         }
         $.ajax({
-            url: "http://192.168.0.190:8085/api/Default/ShowOrder?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&ddh=" +
+            url: "http://172.20.10.2:8085/api/Default/ShowOrder?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&ddh=" +
                 $("#dh").val() + "&userName=" + $("#zh").val() + "&time=" + $("#time").val() + "&type=" + type + "&from=" + from,
             type: "get",
         }).done(function (d) {
@@ -179,7 +179,7 @@
     });
     function ShowState() {
         $.ajax({
-            url: "http://192.168.0.190:8085/api/Default/OrderState",
+            url: "http://172.20.10.2:8085/api/Default/OrderState",
             type: "get",
         }).done(function (d) {
             console.log(d);
@@ -192,7 +192,7 @@
     }
     function ShowFrom() {
         $.ajax({
-            url: "http://192.168.0.190:8085/api/Default/OrderFrom",
+            url: "http://172.20.10.2:8085/api/Default/OrderFrom",
             type: "get",
         }).done(function (d) {
             var tr = "";
@@ -204,18 +204,18 @@
     }
     //批量删除
     $("#btnDeleteList").click(function () {
+        var idStr = "";
+        $(".checkAll:checked").each(function (index, item) {
+            idStr = idStr + $(item).val() + ",";
+        });
+        if (idStr == "") {
+            alert("请先选择一行数据！");
+            return;
+        }
+        idStr = idStr.substr(0, idStr.length - 1);
         if (confirm("是否确认删除？")) {
-            var idStr = "";
-            $(".checkAll:checked").each(function (index, item) {
-                idStr = idStr + $(item).val() + ",";
-            });
-            idStr = idStr.substr(0, idStr.length - 1);
-            if (idStr == 0) {
-                alert("请先选择一行数据！");
-                return;
-            }
             $.ajax({
-                url: "http://192.168.0.190:8085/api/Default/Del",
+                url: "http://172.20.10.2:8085/api/Default/Del",
                 type: "post",
                 accepts: "application/x-www-form-urlencoded",
                 contentType: "application/x-www-form-urlencoded",
@@ -241,7 +241,7 @@
         }
         if (confirm("是否确认关闭此订单？")) {
             $.ajax({
-                url: "http://192.168.0.190:8085/api/Default/UpState",
+                url: "http://172.20.10.2:8085/api/Default/UpState",
                 type: "post",
                 accepts: "application/x-www-form-urlencoded",
                 contentType: "application/x-www-form-urlencoded",

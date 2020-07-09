@@ -79,7 +79,7 @@
     })
     //绑定请购单ID
     function selectqgid() {
-        $.ajax("http://192.168.0.190:8085/api/RequList/selectQgId", {
+        $.ajax("http://172.20.10.2:8085/api/RequList/selectQgId", {
             type: "get",
             dataType: "json"
         }).done(function (da) {
@@ -92,7 +92,7 @@
     }
     //绑定供应商ID
     function selectgysid() {
-        $.ajax("http://192.168.0.190:8085/api/RequList/selectGysId", {
+        $.ajax("http://172.20.10.2:8085/api/RequList/selectGysId", {
             type: "get",
         }).done(function (da) {
             //循环
@@ -104,7 +104,7 @@
     }
 
     //绑定员工名称
-    $.ajax("http://192.168.0.190:8085/api/RequList/SelectRole", {
+    $.ajax("http://172.20.10.2:8085/api/RequList/SelectRole", {
         type: "get",
         dataType: "json",
     }).done(function (da) {
@@ -115,7 +115,7 @@
         })
     })
     //绑定部门名称
-    $.ajax("http://192.168.0.190:8085/api/RequList/SelectDep", {
+    $.ajax("http://172.20.10.2:8085/api/RequList/SelectDep", {
         type: "get",
         dataType: "json",
     }).done(function (da) {
@@ -176,7 +176,7 @@
             return;
         }
 
-        $.ajax("http://192.168.0.190:8085/api/RequList/AddPur", {
+        $.ajax("http://172.20.10.2:8085/api/RequList/AddPur", {
             type: "post",
             data: { m: obj },
             dataType: "json",

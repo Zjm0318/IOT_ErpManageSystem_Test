@@ -107,7 +107,7 @@
     //显示
     function show() {
         $.ajax({
-            url: "http://192.168.0.190:8085/api/Supplier/ShowSup?id=" + $("#id").val(),
+            url: "http://172.20.10.2:8085/api/Supplier/ShowSup?id=" + $("#id").val(),
             type: "get",
             dataType: "json",
             success: function (d) {
@@ -226,7 +226,7 @@
         }
         //修改
         $.ajax({
-            url: "http://192.168.0.190:8085/api/Supplier/EditSup",
+            url: "http://172.20.10.2:8085/api/Supplier/EditSup",
             type: "post",
             dataType: "text",
             data: { supplier: obj, contacts: obj1 },

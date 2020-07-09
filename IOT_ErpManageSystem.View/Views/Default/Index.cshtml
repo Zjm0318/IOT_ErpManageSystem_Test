@@ -160,7 +160,7 @@
 
     $(function () {
 
-        $.ajax("http://192.168.0.190:8085/api/RBAC_Allot/UserQuanInfo?token=" + localStorage["token"],
+        $.ajax("http://172.20.10.2:8085/api/RBAC_Allot/UserQuanInfo?token=" + localStorage["token"],
             {
                 data: "get",
                 async: false
@@ -168,7 +168,7 @@
                 list = data.allot_BaoId.split('/');
             });
 
-        $.ajax("http://192.168.0.190:8085/api/RBAC_Allot/ShowQuanInfo?UId=0",
+        $.ajax("http://172.20.10.2:8085/api/RBAC_Allot/ShowQuanInfo?UId=0",
             {
                 type: "get",
                 async: false,
@@ -200,7 +200,7 @@
     });
 
     function FindTwo(id) {
-        $.ajax("http://192.168.0.190:8085/api/RBAC_Allot/ShowQuanInfo?UId=" + id,
+        $.ajax("http://172.20.10.2:8085/api/RBAC_Allot/ShowQuanInfo?UId=" + id,
             {
                 type: "get",
                 async: false,
