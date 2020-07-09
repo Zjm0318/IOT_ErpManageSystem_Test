@@ -76,7 +76,7 @@
 
     //显示
     function show(pageindex) {
-        $.ajax("http://192.168.0.190:8085/api/RequList/GetPurList?state=" + $("#States").val() + "&time=" + $("#Time").val() + "&gname=" + $("#Gname").val() + "&bgname=" + $("#Bgname").val() + "&pageindex=" + pageindex + "&pagesize=" + pagesize, {
+        $.ajax("http://172.20.10.2:8085/api/RequList/GetPurList?state=" + $("#States").val() + "&time=" + $("#Time").val() + "&gname=" + $("#Gname").val() + "&bgname=" + $("#Bgname").val() + "&pageindex=" + pageindex + "&pagesize=" + pagesize, {
             type: "get",
             dataType: "json"
         }).done(function (da) {
@@ -192,7 +192,7 @@
 
     //审核通过
     function Update1(Id) {
-        $.ajax("http://192.168.0.190:8085/api/RequList/UpdPurState1?Id=" + Id, {
+        $.ajax("http://172.20.10.2:8085/api/RequList/UpdPurState1?Id=" + Id, {
             type: "get",
             dataType: "text"
         }).done(function (da) {
@@ -208,7 +208,7 @@
 
     //审核未通过
     function Update2(Id) {
-        $.ajax("http://192.168.0.190:8085/api/RequList/UpdPurState2?Id=" + Id, {
+        $.ajax("http://172.20.10.2:8085/api/RequList/UpdPurState2?Id=" + Id, {
             type: "get",
             dataType: "text"
         }).done(function (da) {
@@ -242,7 +242,7 @@
                 alert("不能撤回为null的值，请重新选择");
             }
             else {
-                $.ajax("http://192.168.0.190:8085/api/RequList/CheHuiPur?Id=" + Id, {
+                $.ajax("http://172.20.10.2:8085/api/RequList/CheHuiPur?Id=" + Id, {
                     type: "get",
                     dataType: "text"
                 }).done(function (da) {

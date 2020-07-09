@@ -84,7 +84,7 @@
 
     // 显示
     function show(pageindex) {
-        $.ajax("http://192.168.0.190:8085/api/RequList/GetRequList?state=" + $("#states").val() + "&time=" + $("#time").val() + "&qgren=" + $("#qgren").val() + "&shren=" + $("#shren").val() + "&pageindex=" + pageindex + "&pagesize=" + pagesize, {
+        $.ajax("http://172.20.10.2:8085/api/RequList/GetRequList?state=" + $("#states").val() + "&time=" + $("#time").val() + "&qgren=" + $("#qgren").val() + "&shren=" + $("#shren").val() + "&pageindex=" + pageindex + "&pagesize=" + pagesize, {
             type: "get",
             dataType: "json",
         }).done(function (da) {
@@ -188,7 +188,7 @@
 
     //修改状态  审核通过
     function Update1(id) {
-        $.ajax("http://192.168.0.190:8085/api/RequList/UpdateState?Id=" + id, {
+        $.ajax("http://172.20.10.2:8085/api/RequList/UpdateState?Id=" + id, {
             type: "get",
             dataType: "text",
         }).done(function (da) {
@@ -204,7 +204,7 @@
 
     //修改状态  审核未通过
     function Update2(id) {
-        $.ajax("http://192.168.0.190:8085/api/RequList/UpdateState2?Id=" + id, {
+        $.ajax("http://172.20.10.2:8085/api/RequList/UpdateState2?Id=" + id, {
             type: "get",
             dataType: "text",
         }).done(function (da) {
@@ -241,7 +241,7 @@
                 alert("不能撤回为null的值，请重新选择");
             }
             else {
-                $.ajax("http://192.168.0.190:8085/api/RequList/DelRole?QgId=" + QgId, {
+                $.ajax("http://172.20.10.2:8085/api/RequList/DelRole?QgId=" + QgId, {
                     type: "get",
                     dataType: "text"
                 }).done(function (da) {

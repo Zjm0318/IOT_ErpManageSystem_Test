@@ -101,7 +101,7 @@
     //绑定配送方式
     function GetDisList() {
         $.ajax({
-            url: "http://192.168.0.190:8085/api/OStorageManage/GetTbDisList",
+            url: "http://172.20.10.2:8085/api/OStorageManage/GetTbDisList",
             type: "get",
         }).done(function (data) {
             $.each(data, function (index, item) {
@@ -113,7 +113,7 @@
     //绑定仓库
     function GetStorageList() {
         $.ajax({
-            url: "http://192.168.0.190:8085/api/OStorageManage/GetStorageList",
+            url: "http://172.20.10.2:8085/api/OStorageManage/GetStorageList",
             type: "get",
         }).done(function (data) {
             $.each(data, function (index, item) {
@@ -181,7 +181,7 @@
             "OutStorageId": OutStorage
         };
         $.ajax({
-            url: "http://192.168.0.190:8085/api/OStorageManage/AddOutStorage",
+            url: "http://172.20.10.2:8085/api/OStorageManage/AddOutStorage",
             type: "post",
             data: obj,
             accepts: "application/x-www-form-urlencoded",

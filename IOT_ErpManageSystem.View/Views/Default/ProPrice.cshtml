@@ -68,7 +68,7 @@
         });
         function GoodsPrice() {
             $.ajax({
-                url: "http://192.168.0.190:8085/api/Default/GoodsPrice?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&proBh=" + $("#bh").val(),
+                url: "http://172.20.10.2:8085/api/Default/GoodsPrice?pageIndex=" + pageIndex + "&pageSize=" + pageSize + "&proBh=" + $("#bh").val(),
             }).done(function (d) {
                 console.log(d);
                 Count = d.count;
@@ -112,7 +112,7 @@
                 return;
             }
             $.ajax({
-                url: "http://192.168.0.190:8085/api/Default/DelGoods",
+                url: "http://172.20.10.2:8085/api/Default/DelGoods",
                 type: "post",
                 accepts: "application/x-www-form-urlencoded",
                 contentType: "application/x-www-form-urlencoded",
@@ -134,7 +134,7 @@
         if (confirm("是否确认删除？")) {
 
             $.ajax({
-                url: "http://192.168.0.190:8085/api/Default/DelGoods",
+                url: "http://172.20.10.2:8085/api/Default/DelGoods",
                 type: "post",
                 accepts: "application/x-www-form-urlencoded",
                 contentType: "application/x-www-form-urlencoded",

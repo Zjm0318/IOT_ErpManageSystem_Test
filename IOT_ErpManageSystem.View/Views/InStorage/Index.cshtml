@@ -106,7 +106,7 @@
             "sName": sName
         };
         $.ajax({
-            url: "http://192.168.0.190:8085/api/IStorageManage/GetInStorageList",
+            url: "http://172.20.10.2:8085/api/IStorageManage/GetInStorageList",
             type: "post",
             data: obj,
             accepts: "application/x-www-form-urlencoded",
@@ -169,7 +169,7 @@
     function UpdateState(iId) {
         if (confirm("是否确认?")) {
             $.ajax({
-                url: "http://192.168.0.190:8085/api/IStorageManage/UpdateState?iId=" + iId,
+                url: "http://172.20.10.2:8085/api/IStorageManage/UpdateState?iId=" + iId,
                 type: "get",
             }).done(function (data) {
                 if (data > 0) {

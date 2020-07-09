@@ -8,7 +8,7 @@ namespace IOT_ErpManageSystem.DAL.DBHelper
 {
     public class DBHelper : IDBHelper
     {
-        private string Connection = "Data Source=192.168.0.190;Initial Catalog=ERP;User ID=sa;pwd=1234";
+        private string Connection = "Data Source=172.20.10.2;Initial Catalog=ERP;User ID=sa;pwd=1234";
         /// <summary>
         /// 登录存储过程
         /// <param name="procName"></param>

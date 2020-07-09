@@ -32,7 +32,7 @@
         })
         function GoodsName() {
             $.ajax({
-                url: "http://192.168.0.190:8085/api/Default/ShowPrice",
+                url: "http://172.20.10.2:8085/api/Default/ShowPrice",
                 type: "get",
             }).done(function (d) {
                 console.log(d);
@@ -73,7 +73,7 @@
             }
             var code = 0;
             $.ajax({
-                url: "http://192.168.0.190:8085/api/Default/SPrice",
+                url: "http://172.20.10.2:8085/api/Default/SPrice",
                 type: "get"
             }).done(function (d) {
                 $.each(d, function (index, item) {
@@ -88,7 +88,7 @@
                 }
                 else {
                     $.ajax({
-                        url: "http://192.168.0.190:8085/api/Default/AddPrice",
+                        url: "http://172.20.10.2:8085/api/Default/AddPrice",
                         type: "post",
                         accepts: "application/x-www-form-urlencoded",
                         contentType: "application/x-www-form-urlencoded",
