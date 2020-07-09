@@ -81,10 +81,10 @@
 
     //初始化
     $(function () {
-        show();
+
         Allt_Dep();
         Role_Top();
-
+        show();    
     })
 
     //部门绑定
@@ -93,12 +93,15 @@
             url: "http://192.168.0.190:8085/api/RBAC_Role/GetDep",
             type: "get",
         }).done(function (data) {
-            console.log(data);
-            $("#DepName").empty();
+            $("#RolName").empty();
             $.each(data, function (Index, item) {
                 var option = '<option value=' + item.dep_ID + '>' + item.dep_Name + '</option>';
                 $("#DepName").append(option);
             })
+            layui.use('form', function () {
+                var form = layui.form;
+                form.render();
+            });
         })
     }
 

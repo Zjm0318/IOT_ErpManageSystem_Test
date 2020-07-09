@@ -30,6 +30,7 @@
                 <option value="Ⅱ">Ⅱ</option>
                 <option value="Ⅲ">Ⅲ</option>
                 <option value="Ⅳ">Ⅳ</option>
+                <option value="S">S</option>
             </select>
         </div>
     </div>
@@ -51,11 +52,11 @@
 </div>
 <script>
     $(function () {
-        show();
-        Allt_Dep();
-        
-        GetQuan();
        
+        Allt_Dep();
+       
+        GetQuan();
+        show();
     })
 
     //部门绑定
@@ -69,6 +70,10 @@
                 var option = '<option value=' + item.dep_ID + '>' + item.dep_Name + '</option>';
                 $("#DepName").append(option);
             })   
+            layui.use('form', function () {
+                var form = layui.form;
+                form.render();
+            });
         })
     }
            
@@ -103,9 +108,8 @@
         }).done(function (data) {
             
             $("#RoleCode").val(data.allot_Code);
-            $("#RoleName").val(data.allot_Name);              
+            $("#DepName").val(data.allot_Name);              
             $("#RoleTop").val(data.allot_Grade);
-            $("#DepName").val(data.dep_ID);
             var xuan = data.allot_BaoId.split('/');
 
             $("#GetAllot").find("[type=checkbox]").each(function (index, item) {
@@ -176,7 +180,7 @@
         var obj = {
             "ID": $("#eid").val(),
             "Allot_Code": $("#RoleCode").val(),
-            "Allot_Name": $("#RoleName").val(),
+            "Allot_Name": $("#DepName").val(),
             "Allot_Grade": $("#RoleTop").val(),
             "Allot_BaoId": ids,
         };
@@ -199,7 +203,7 @@
     }
     //返回
     function Back() {
-        window.location.href = "/RBAC_Role/Index";
+        window.location.href = "/RBAC_Allot/Index";
     }
       
 

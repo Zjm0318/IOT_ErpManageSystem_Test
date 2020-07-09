@@ -136,8 +136,9 @@
         var SHPhone = $("#LinkPath").val();
         var Address = $("#Address").val();
         var OutStorage = $("#OutStorage").val();
-        if (OrderNo.length > 0) {
+        if (OrderNo.length > 10) {
             alert("请输入正确的订单编号");
+            return;
         }
         if (shouHuoMan == "") {
             alert("请输入收货人");

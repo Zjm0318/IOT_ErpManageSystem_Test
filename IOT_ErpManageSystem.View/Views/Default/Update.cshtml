@@ -80,8 +80,9 @@
     }
     function FanTian() {
         var id = $("#id").val();
+        var pid = $("#pid").val();
         $.ajax({
-            url: "http://192.168.0.190:8085/api/Default/GoodsThree?id=" + id,
+            url: "http://192.168.0.190:8085/api/Default/GoodsThree?id=" + id + "&pid=" + pid,
             type: "get"
         }).done(function (d) {
             console.log(d);
